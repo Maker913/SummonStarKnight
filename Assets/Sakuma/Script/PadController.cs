@@ -10,18 +10,35 @@ public class PadController : MonoBehaviour
     [SerializeField]
     private int controllerRadius;
 
+
+    [SerializeField]
+    private GameObject atkObj;
+    [SerializeField]
+    private int atkRadius;
+
+
+
     private Vector2 fastControllerPosition;
-    private bool moveFlg=false;
+    public bool moveFlg=false;
     private Vector2 moveStartPosition;
     [SerializeField]
     private int limit;
     private int touchController = 0;
+
+    private Vector2 angleFastPos;
+    private int angleController = 0;
+
 
     public float ControllerMoveX;
     public float ControllerMoveY;
     public bool Atktouch;
     public bool Summontouch;
     public bool Menutouch;
+    public float angle;
+    public float cameraangle;
+
+
+
 
 
     void Start()
@@ -48,16 +65,21 @@ public class PadController : MonoBehaviour
             {
                 // タッチ開始
 
-                float dis = Vector2.Distance(new Vector2(touch.position.x, touch.position.y), controller.transform.position);
-                if (dis < controllerRadius&&moveFlg ==false &&touchController==0)
+                //float dis = Vector2.Distance(new Vector2(touch.position.x, touch.position.y), controller.transform.position);
+                if (Vector2.Distance(new Vector2(touch.position.x, touch.position.y), controller.transform.position) < controllerRadius&&moveFlg ==false &&touchController==0)
                 {
-                    Debug.Log("controllerタップしたで");
                     moveStartPosition = new Vector2(touch.position.x, touch.position.y);
                     moveFlg = true;
                     touchController = 1;
                 }
+                else if (Vector2.Distance(new Vector2(touch.position.x, touch.position.y), atkObj.transform.position) < controllerRadius && Atktouch == false)
+                {
+                    Atktouch = true;
+                }
                 else
                 {
+                    angleFastPos = new Vector2(touch.position.x, touch.position.y);
+                    angleController = 1;
                 }
                 
             }
@@ -65,27 +87,29 @@ public class PadController : MonoBehaviour
             {
                 // タッチ移動
                 float dis = Vector2.Distance(new Vector2(touch.position.x, touch.position.y) - moveStartPosition + fastControllerPosition, fastControllerPosition);
+                angle = Mathf.Atan2((touch.position.y - moveStartPosition.y + fastControllerPosition.y) - fastControllerPosition.y, (touch.position.x - moveStartPosition.x + fastControllerPosition.x) - fastControllerPosition.x);
+                if (angle < 0)
+                {
+                    angle = angle + 2 * Mathf.PI;
+                }
+
+
                 if (dis < limit)
                 {
                     controller.transform.position = new Vector2(touch.position.x, touch.position.y)- moveStartPosition+fastControllerPosition;
                 }
                 else
                 {
-                    float angle = Mathf.Atan2((touch.position.y-moveStartPosition.y+fastControllerPosition.y) - fastControllerPosition.y , (touch.position.x - moveStartPosition.x + fastControllerPosition.x) - fastControllerPosition.x);
-                    if (angle < 0)
-                    {
-                        angle = angle + 2 * Mathf.PI;
-                    }
                     controller.transform.position = new Vector2(fastControllerPosition.x+(Mathf.Cos(angle)*limit), fastControllerPosition.y+ (Mathf.Sin(angle) * limit));
 
                     
                 }
 
             }
-            else if(touch.phase == TouchPhase.Moved &&touchController != 1)
+            else if(touch.phase == TouchPhase.Moved &&angleController == 1)
             {
-                Debug.Log("チャージ攻撃");
-
+                cameraangle = angleFastPos.x - touch.position.x;
+                angleFastPos.x = touch.position.x;
 
 
             }
@@ -103,6 +127,23 @@ public class PadController : MonoBehaviour
                 {
                     touchController = 1;
                 }
+
+
+                if (angleController == 1)
+                {
+                    angleController = 0;
+                }
+                if (angleController == 2)
+                {
+                    angleController = 1;
+                }
+
+                if (Atktouch)
+                {
+                    Atktouch = false;
+                }
+
+
             }
 
 
@@ -115,18 +156,20 @@ public class PadController : MonoBehaviour
                 if (touch.phase == TouchPhase.Began)
                 {
                     // タッチ開始
-
-                    float dis = Vector2.Distance(new Vector2(touch.position.x, touch.position.y), controller.transform.position);
-                    if (dis < controllerRadius && moveFlg == false && touchController == 0)
+                    if (Vector2.Distance(new Vector2(touch.position.x, touch.position.y), controller.transform.position) < controllerRadius && moveFlg == false && touchController == 0)
                     {
-                        Debug.Log("controllerタップしたで");
                         moveStartPosition = new Vector2(touch.position.x, touch.position.y);
                         moveFlg = true;
                         touchController = 2;
                     }
+                    else if (Vector2.Distance(new Vector2(touch.position.x, touch.position.y), atkObj.transform.position) < controllerRadius && Atktouch == false)
+                    {
+                        Atktouch = true;
+                    }
                     else
                     {
-
+                        angleFastPos = new Vector2(touch.position.x, touch.position.y);
+                        angleController = 2;
                     }
 
                 }
@@ -134,27 +177,29 @@ public class PadController : MonoBehaviour
                 {
                     // タッチ移動
                     float dis = Vector2.Distance(new Vector2(touch.position.x, touch.position.y) - moveStartPosition + fastControllerPosition, fastControllerPosition);
+                    angle = Mathf.Atan2((touch.position.y - moveStartPosition.y + fastControllerPosition.y) - fastControllerPosition.y, (touch.position.x - moveStartPosition.x + fastControllerPosition.x) - fastControllerPosition.x);
+                    if (angle < 0)
+                    {
+                        angle = angle + 2 * Mathf.PI;
+                    }
                     if (dis < limit)
                     {
                         controller.transform.position = new Vector2(touch.position.x, touch.position.y) - moveStartPosition + fastControllerPosition;
                     }
                     else
                     {
-                        float angle = Mathf.Atan2((touch.position.y - moveStartPosition.y + fastControllerPosition.y) - fastControllerPosition.y, (touch.position.x - moveStartPosition.x + fastControllerPosition.x) - fastControllerPosition.x);
-                        if (angle < 0)
-                        {
-                            angle = angle + 2 * Mathf.PI;
-                        }
+
                         controller.transform.position = new Vector2(fastControllerPosition.x + (Mathf.Cos(angle) * limit), fastControllerPosition.y + (Mathf.Sin(angle) * limit));
 
 
                     }
 
                 }
-                else if (touch.phase == TouchPhase.Moved && touchController != 2)
+                else if (touch.phase == TouchPhase.Moved && angleController == 2)
                 {
 
-
+                    cameraangle = angleFastPos.x - touch.position.x;
+                    angleFastPos.x = touch.position.x;
 
 
                 }
@@ -168,16 +213,37 @@ public class PadController : MonoBehaviour
                         moveFlg = false;
                         touchController = 0;
                     }
+
+
+
+                    if (angleController == 2)
+                    {
+                        angleController = 0;
+                    }
+
+                    if (Atktouch)
+                    {
+                        Atktouch = false;
+                    }
+
                 }
             }
         }
 
+        if (angleController == 0)
+        {
+            cameraangle /= 2;
+        }
+        if(Mathf.Abs(cameraangle) <= 1)
+        {
+            cameraangle = 0;
+        } 
 
-        ControllerMoveX= (fastControllerPosition.x- controller.transform.position.x)/limit;
-        ControllerMoveY= (fastControllerPosition.y - controller.transform.position.y) / limit;
+        ControllerMoveY= -1 * (fastControllerPosition.x- controller.transform.position.x)/limit;
+        ControllerMoveX= (fastControllerPosition.y - controller.transform.position.y) / limit;
 
-        Debug.Log("Atktouch = "+ Atktouch +",X = "+ ControllerMoveX + ",Y = "+ ControllerMoveY);
-
+        //Debug.Log("Atktouch = "+ Atktouch +",X = "+ ControllerMoveX + ",Y = "+ ControllerMoveY + ",angle = " +angle*180/Mathf.PI );
+        Debug.Log("Atk=" + Atktouch);
     }
 
 
