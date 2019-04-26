@@ -33,7 +33,7 @@ public class CameraController : MonoBehaviour
 
         this.transform.rotation = Quaternion.Euler(Mathf.Atan(height /distance)*180/Mathf.PI, -1*(angle+90), transform.rotation.z);
         //transform.Rotate( new Vector3(transform.rotation.x, angle, transform.rotation.z));
-        Debug.Log((Mathf.Atan(height / distance) * 180 / Mathf.PI));
+        //Debug.Log((Mathf.Atan(height / distance) * 180 / Mathf.PI));
         if (Input.GetKey(KeyCode.DownArrow))
         {
 
