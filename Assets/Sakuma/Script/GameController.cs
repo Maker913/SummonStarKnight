@@ -77,6 +77,9 @@ public class GameController : MonoBehaviour
             case 4:
                 EnemyAtk();
                 break;
+            case 5:
+                Menu();
+                break;
             default:
                 break;
         }
@@ -111,6 +114,13 @@ public class GameController : MonoBehaviour
         text.text = "ゲーム開始";
         ModeChange(2, 3f);
     }
+
+    private void Menu()
+    {
+        textPadObj.SetActive(false);
+    }
+
+
 
 
 

@@ -39,6 +39,9 @@ public class CameraController2 : MonoBehaviour
             case 0:
                 Rot();
                 break;
+            case 1:
+                Fix();
+                break;
             default:
                 break;
         }
@@ -70,6 +73,15 @@ public class CameraController2 : MonoBehaviour
         Mathf.Sin(angle / 180 * Mathf.PI) * distance + midpoint.z);
 
         this.transform.rotation = Quaternion.Euler(Mathf.Atan(height / distance) * 180 / Mathf.PI, -1 * (angle + 90), transform.rotation.z);
+
+
+    }
+
+
+
+    private void Fix()
+    {
+
 
 
     }
