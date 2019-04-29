@@ -42,6 +42,11 @@ public class PadController2 : MonoBehaviour
     private Image[]glowSterImage=new Image[9];
 
     [SerializeField]
+    private GameObject[] SterEf;
+    private Animator[] SterEfAnime = new Animator[9];
+
+
+    [SerializeField]
     private GameObject sterLineObj;
     private UILineRenderer sterUILine;
 
@@ -62,6 +67,8 @@ public class PadController2 : MonoBehaviour
     private GameObject gameControllerObj;
     private GameController gameController;
 
+    private bool move=false ;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -71,6 +78,7 @@ public class PadController2 : MonoBehaviour
         for (int i = 0; i < glowSterImage.Length; i++)
         {
             glowSterImage[i] = SterPos[i].GetComponent<Image>();
+            SterEfAnime[i] = SterEf[i].GetComponent<Animator>();
         }
     }
 
@@ -109,7 +117,13 @@ public class PadController2 : MonoBehaviour
                         {
                             SterController = 1;
                             catchster = i + 1;
-                            //glowStar[catchster - 1] = true;
+                            if(glowStar[catchster - 1] == true) {
+                                move = true;
+                            } else {
+                                glowStar[catchster - 1] = true;
+                                move = false;
+                            }
+                            SterEfAnime[catchster - 1].SetBool("Change", true);
                             radius = (int)Vector2.Distance(new Vector2(touch.position.x, touch.position.y), SterPos[i].transform.position);
                         }
                     }
@@ -147,8 +161,11 @@ public class PadController2 : MonoBehaviour
                     }
                     if (moveFlg)
                     {
+                        move = true;
                         glowStar[catchster2 - 1] = true;
                         glowStar[catchster - 1] = true;
+                        SterEfAnime[catchster2 - 1].SetBool("Change", true);
+                        SterEfAnime[catchster - 1].SetBool("Change", false);
                         int num = 0;
                         for (int a = 1; a <= 9; a++)
                         {
@@ -186,7 +203,7 @@ public class PadController2 : MonoBehaviour
                                             sterLineamount++;
 
                                             RectTransform CanvasRect = canvas.GetComponent<RectTransform>();
-                                            GameObject obj = (GameObject)Instantiate(linePr, transform.position, Quaternion.identity, lineParent.transform );
+                                            GameObject obj = (GameObject)Instantiate(linePr, transform.position, Quaternion.identity, lineParent.transform);
                                             UILineRenderer data2 = obj.GetComponent<UILineRenderer>();
                                             data2.points[0] = new Vector2((SterPos[catchster - 1].transform.position.x - Screen.width / 2) / Screen.width * CanvasRect.sizeDelta.x, (SterPos[catchster - 1].transform.position.y - Screen.height / 2) / Screen.height * CanvasRect.sizeDelta.y);
                                             data2.points[1] = new Vector2((SterPos[catchster2 - 1].transform.position.x - Screen.width / 2) / Screen.width * CanvasRect.sizeDelta.x, (SterPos[catchster2 - 1].transform.position.y - Screen.height / 2) / Screen.height * CanvasRect.sizeDelta.y);
@@ -197,7 +214,7 @@ public class PadController2 : MonoBehaviour
                                 }
                             }
                         }
-                        
+
 
 
 
@@ -209,7 +226,7 @@ public class PadController2 : MonoBehaviour
                     {
                         RectTransform CanvasRect = canvas.GetComponent<RectTransform>();
                         sterUILine.points[1] = new Vector2((touch.position.x - Screen.width / 2) / Screen.width * CanvasRect.sizeDelta.x, (touch.position.y - Screen.height / 2) / Screen.height * CanvasRect.sizeDelta.y);
-                        sterUILine.points[0] = new Vector2((SterPos[catchster-1].transform.position.x - Screen.width / 2) / Screen.width * CanvasRect.sizeDelta.x, (SterPos[catchster-1].transform.position.y - Screen.height / 2) / Screen.height * CanvasRect.sizeDelta.y);
+                        sterUILine.points[0] = new Vector2((SterPos[catchster - 1].transform.position.x - Screen.width / 2) / Screen.width * CanvasRect.sizeDelta.x, (SterPos[catchster - 1].transform.position.y - Screen.height / 2) / Screen.height * CanvasRect.sizeDelta.y);
 
 
                     }
@@ -230,8 +247,17 @@ public class PadController2 : MonoBehaviour
                 if (SterController == 1)
                 {
                     SterController = 0;
-                    sterUILine.points[1] = new Vector2(0,0);
-                    sterUILine.points[0] = new Vector2(0,0);
+                    sterUILine.points[1] = new Vector2(0, 0);
+                    sterUILine.points[0] = new Vector2(0, 0);
+                    if (move == false)
+                    {
+                        glowStar[catchster - 1] = false;
+                    }
+                }
+
+                for (int i = 0; i < glowSterImage.Length; i++)
+                {
+                    SterEfAnime[i].SetBool("Change", false);
                 }
             }
 
@@ -246,6 +272,7 @@ public class PadController2 : MonoBehaviour
                 {
                     glowSterImage[i].enabled = false;
                 }
+               
             }
 
 
