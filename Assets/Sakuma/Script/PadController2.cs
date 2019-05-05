@@ -33,6 +33,8 @@ public class PadController2 : MonoBehaviour
     private int SterController = 0;
     private int catchster;
     private int catchster2=0;
+    private bool angleController = false;
+    private float angle;
 
     public int[] SterLine = new int[36];
     private int sterLineamount = 0;
@@ -130,7 +132,12 @@ public class PadController2 : MonoBehaviour
                 }
                 else
                 {
-                    Debug.Log("aaaaa");
+                    angle = Mathf.Atan2(touch.position.y - boardObj.transform.position.y, touch.position.x - boardObj.transform.position.x);
+                        if (angle < 0) {
+                            angle = angle + 2 * Mathf.PI;
+                        }
+                    angle = angle * 180 / Mathf.PI;
+                    angleController = true;
                 }
 
 
@@ -232,6 +239,19 @@ public class PadController2 : MonoBehaviour
                     }
 
                 }
+                if (angleController)
+                {
+                    float angle2 = Mathf.Atan2(touch.position.y - boardObj.transform.position.y, touch.position.x - boardObj.transform.position.x);
+                    if (angle2 < 0)
+                    {
+                        angle2 = angle2 + 2 * Mathf.PI;
+                    }
+                    angle2 = angle2 * 180 / Mathf.PI;
+
+
+                    boardObj.transform.eulerAngles +=new Vector3(0,0,((angle)-(angle2))*-1);
+                    angle = angle2;
+                }
 
 
 
@@ -253,6 +273,10 @@ public class PadController2 : MonoBehaviour
                     {
                         glowStar[catchster - 1] = false;
                     }
+                }
+                if (angleController)
+                {
+                    angleController = false;
                 }
 
                 for (int i = 0; i < glowSterImage.Length; i++)
