@@ -35,16 +35,16 @@ public class PadController2 : MonoBehaviour
     private bool angleController = false;
     private float angle;
 
-    public int[] SterLine = new int[36];
+    public int[] SterLine = new int[91];
     private int sterLineamount = 0;
     private bool moveFlg=false;
 
-    private bool[] glowStar = new bool[9];
-    private Image[]glowSterImage=new Image[9];
+    private bool[] glowStar = new bool[14];
+    private Image[]glowSterImage=new Image[14];
 
     [SerializeField]
     private GameObject[] SterEf;
-    private Animator[] SterEfAnime = new Animator[9];
+    private Animator[] SterEfAnime = new Animator[14];
 
 
     [SerializeField]
@@ -173,9 +173,9 @@ public class PadController2 : MonoBehaviour
                         SterEfAnime[catchster2 - 1].SetBool("Change", true);
                         SterEfAnime[catchster - 1].SetBool("Change", false);
                         int num = 0;
-                        for (int a = 1; a <= 9; a++)
+                        for (int a = 1; a <= SterPos.Length ; a++)
                         {
-                            for (int b = a + 1; b <= 9; b++)
+                            for (int b = a + 1; b <= SterPos.Length; b++)
                             {
                                 num++;
                                 if ((a == catchster && b == catchster2) || (b == catchster && a == catchster2))
@@ -189,7 +189,6 @@ public class PadController2 : MonoBehaviour
                                         UILineRenderer data2 = obj.GetComponent<UILineRenderer>();
                                         data2.points[0] = new Vector2((SterPos[catchster - 1].transform.position.x - Screen.width / 2) / Screen.width * CanvasRect.sizeDelta.x, (SterPos[catchster - 1].transform.position.y - Screen.height / 2) / Screen.height * CanvasRect.sizeDelta.y);
                                         data2.points[1] = new Vector2((SterPos[catchster2 - 1].transform.position.x - Screen.width / 2) / Screen.width * CanvasRect.sizeDelta.x, (SterPos[catchster2 - 1].transform.position.y - Screen.height / 2) / Screen.height * CanvasRect.sizeDelta.y);
-                                        //obj.GetComponent<RectTransform>().anchoredPosition = new Vector2(0,0);
                                     }
                                     else
                                     {
@@ -214,7 +213,6 @@ public class PadController2 : MonoBehaviour
                                             data2.points[0] = new Vector2((SterPos[catchster - 1].transform.position.x - Screen.width / 2) / Screen.width * CanvasRect.sizeDelta.x, (SterPos[catchster - 1].transform.position.y - Screen.height / 2) / Screen.height * CanvasRect.sizeDelta.y);
                                             data2.points[1] = new Vector2((SterPos[catchster2 - 1].transform.position.x - Screen.width / 2) / Screen.width * CanvasRect.sizeDelta.x, (SterPos[catchster2 - 1].transform.position.y - Screen.height / 2) / Screen.height * CanvasRect.sizeDelta.y);
                                             //obj.transform.parent = lineParent.transform;
-                                            //obj.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, -50);
 
                                         }
                                     }
