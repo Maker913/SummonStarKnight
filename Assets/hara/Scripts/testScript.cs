@@ -6,6 +6,6 @@ public class testScript : MonoBehaviour
 {
     public void ButtonAction()
     {
-        SceneChanger.instance.LoadScene("test2");
+        SceneChanger.instance.LoadScene("test2",1.0f);
     }
 }

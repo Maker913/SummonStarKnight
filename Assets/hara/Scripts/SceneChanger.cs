@@ -6,6 +6,7 @@ public class SceneChanger : MonoBehaviour
 {
     public static SceneChanger instance;
 
+    // 画面遷移時のフェードテクスチャ
     private Texture2D blackTexture;
     private float fadeAlpha = 0;
     private bool isFading = false;
@@ -22,29 +23,73 @@ public class SceneChanger : MonoBehaviour
             Destroy(gameObject);
         }
 
-        /*
-        blackTexture = new Texture2D(32, 32, TextureFormat.RGB24, false);
-        blackTexture.ReadPixels(new Rect(0, 0, 32, 32), 0, 0, false);
-        blackTexture.SetPixel(0, 0, Color.white);
-        blackTexture.Apply();
-        */
+        // 黒いテクスチャの作成
+        StartCoroutine(DrawTexture());
+    }
+
+    /// <summary>
+    /// フェード用の黒いテクスチャを作成
+    /// </summary>
+    /// <returns></returns>
+    private IEnumerator DrawTexture()
+    {
+        this.blackTexture = new Texture2D(32, 32, TextureFormat.RGB24, false);
+        yield return new WaitForEndOfFrame();
+        this.blackTexture.ReadPixels(new Rect(0, 0, 32, 32), 0, 0, false);
+        this.blackTexture.SetPixel(0, 0, Color.white);
+        this.blackTexture.Apply();
     }
 
     public void OnGUI()
     {
-        if (!isFading)
-            return;
+        if (!this.isFading) return;
 
-        GUI.color = new Color(0, 0, 0, fadeAlpha);
-        GUI.DrawTexture(new Rect(0, 0, Screen.width, Screen.height), blackTexture);
+        // 黒いテクスチャの描画
+        GUI.color = new Color(0, 0, 0, this.fadeAlpha);
+        GUI.DrawTexture(new Rect(0, 0, Screen.width, Screen.height), this.blackTexture);
     }
 
     /// <summary>
-    /// シーン遷移
+    /// シーン遷移用コルーチン
     /// </summary>
-    /// <param name="str">遷移先のシーン名</param>
-    public void LoadScene(string str)
+    /// <param name="scene">シーン名</param>
+    /// <param name="interval">暗転にかかる時間(秒)</param>
+    /// <returns></returns>
+    private IEnumerator FadeScene(string scene, float interval)
     {
-        UnityEngine.SceneManagement.SceneManager.LoadScene(str);
+        this.isFading = true;
+
+        // 暗くする
+        float time = 0;
+        while(time <= interval)
+        {
+            this.fadeAlpha = Mathf.Lerp(0f, 1f, time / interval);
+            time += Time.deltaTime;
+            yield return 0;
+        }
+
+        // シーン切り替え
+        UnityEngine.SceneManagement.SceneManager.LoadScene(scene);
+
+        // 明るくする
+        time = 0;
+        while(time <= interval)
+        {
+            this.fadeAlpha = Mathf.Lerp(1f, 0f, time / interval);
+            time += Time.deltaTime;
+            yield return 0;
+        }
+
+        this.isFading = false;
+    }
+
+    /// <summary>
+    /// 画面遷移
+    /// </summary>
+    /// <param name="scene">シーン名</param>
+    /// <param name="interval">暗転にかかる時間(秒)</param>
+    public void LoadScene(string scene, float interval)
+    {
+        if(!isFading) StartCoroutine(FadeScene(scene, interval));
     }
 }
