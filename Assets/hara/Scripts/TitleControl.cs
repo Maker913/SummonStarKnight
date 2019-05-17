@@ -31,6 +31,6 @@ public class TitleControl : MonoBehaviour
 
     private void ButtonAction()
     {
-        SceneChanger.instance.LoadScene(sceneName, 1.0f);
+        SceneChanger.instance.LoadScene(sceneName, 0.5f);
     }
 }
