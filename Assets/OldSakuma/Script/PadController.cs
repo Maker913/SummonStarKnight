@@ -84,7 +84,7 @@ public class PadController : MonoBehaviour
     private GameObject sterLineObj;
     private UILineRenderer sterUILine;
 
-    private bool[] glowStar = new bool[9];
+    private bool[] glowStar = new bool[14];
 
     void Start()
     {
