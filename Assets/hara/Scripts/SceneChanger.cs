@@ -24,14 +24,14 @@ public class SceneChanger : MonoBehaviour
         }
 
         // 黒いテクスチャの作成
-        StartCoroutine(DrawTexture());
+        StartCoroutine(MakeTexture());
     }
 
     /// <summary>
     /// フェード用の黒いテクスチャを作成
     /// </summary>
     /// <returns></returns>
-    private IEnumerator DrawTexture()
+    private IEnumerator MakeTexture()
     {
         this.blackTexture = new Texture2D(32, 32, TextureFormat.RGB24, false);
         yield return new WaitForEndOfFrame();
@@ -40,7 +40,7 @@ public class SceneChanger : MonoBehaviour
         this.blackTexture.Apply();
     }
 
-    public void OnGUI()
+    private void OnGUI()
     {
         if (!this.isFading) return;
 
