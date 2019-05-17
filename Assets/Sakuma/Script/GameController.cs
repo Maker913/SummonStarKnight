@@ -23,6 +23,7 @@ public class GameController : MonoBehaviour
     public int gameMode;
     //技
     public Technique[] technique;
+    public Technique[] nomalAttack;
     //選択された技
     public int weapon;
 

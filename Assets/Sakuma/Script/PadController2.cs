@@ -110,7 +110,7 @@ public class PadController2 : MonoBehaviour
 
                 int radius = boardRadius;
 
-                if (Vector2.Distance(new Vector2(touch.position.x, touch.position.y), new Vector2(boardObj.transform.position.x, boardObj.transform.position.y)) < radius)
+                if (Vector2.Distance(new Vector2(touch.position.x, touch.position.y), new Vector2(boardObj.transform.position.x, boardObj.transform.position.y)) < radius+50)
                 {
                     for (int i = 0; i < SterPos.Length; i++)
                     {
