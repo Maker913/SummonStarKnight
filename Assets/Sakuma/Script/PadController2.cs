@@ -68,6 +68,11 @@ public class PadController2 : MonoBehaviour
     private GameObject gameControllerObj;
     private GameController gameController;
 
+    [SerializeField]
+    private GameObject enjObj;
+    private Enj enj;
+
+
     private bool move=false ;
 
     // Start is called before the first frame update
@@ -81,6 +86,7 @@ public class PadController2 : MonoBehaviour
             glowSterImage[i] = SterPos[i].GetComponent<Image>();
             SterEfAnime[i] = SterEf[i].GetComponent<Animator>();
         }
+        enj = enjObj.GetComponent<Enj>();
     }
 
     // Update is called once per frame
@@ -110,7 +116,7 @@ public class PadController2 : MonoBehaviour
 
                 int radius = boardRadius;
 
-                if (Vector2.Distance(new Vector2(touch.position.x, touch.position.y), new Vector2(boardObj.transform.position.x, boardObj.transform.position.y)) < radius)
+                if (Vector2.Distance(new Vector2(touch.position.x, touch.position.y), new Vector2(boardObj.transform.position.x, boardObj.transform.position.y)) < radius+50)
                 {
                     for (int i = 0; i < SterPos.Length; i++)
                     {
@@ -346,6 +352,7 @@ public class PadController2 : MonoBehaviour
 
     private void Summon()
     {
+#if false
         int weapon = -1;
 
         Array.Sort(SterLine);
@@ -388,7 +395,28 @@ public class PadController2 : MonoBehaviour
         {
             Debug.Log("形まちがっとるで");
         }
+#endif
+        
+        Array.Sort(SterLine);
+        Array.Reverse(SterLine);
 
+        int[] bfList = gameController.nomalAttack[enj.summonNum].Code;
+        Array.Resize(ref bfList, bfList.Length + 1);
+
+        int check = 0;
+        for (int j = 0; j < bfList.Length ; j++)
+        {
+            if (bfList[j] == SterLine[j])
+            {
+                check++;
+            }
+        }
+        if (check == bfList.Length)
+        {
+
+            enj.BoardReset();
+            enj.RandSelect();
+        }
 
         BoardReset();
     }
@@ -399,7 +427,7 @@ public class PadController2 : MonoBehaviour
     {
 
         sterLineamount = 0;
-        SterLine = new int[36];
+        SterLine = new int[91];
         for (int i = 0; i < glowSterImage.Length; i++)
         {
 
