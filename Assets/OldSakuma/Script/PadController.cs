@@ -157,7 +157,7 @@ public class PadController : MonoBehaviour
                 else
                 {
                     angleFastPos = new Vector2(touch.position.x, touch.position.y);
-                    angleController = 1;
+                    //angleController = 1;
                 }
 
             }
