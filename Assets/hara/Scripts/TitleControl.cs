@@ -15,7 +15,7 @@ public class TitleControl : MonoBehaviour
     {
         if(startButton != null)
         {
-            startButton.onClick.AddListener(() => ButtonAction());
+            this.startButton.onClick.AddListener(() => ButtonAction());
         }
         else
         {
