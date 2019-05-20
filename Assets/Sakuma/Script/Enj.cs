@@ -20,7 +20,9 @@ public class Enj : MonoBehaviour
     private GameObject lineParent;
 
 
-
+    [SerializeField]
+    private GameObject padControllerObj;
+    private PadController2 padController;
     [SerializeField]
     private GameObject gameControllerObj;
     private GameController gameController;
@@ -28,9 +30,30 @@ public class Enj : MonoBehaviour
 
     public int summonNum;
 
+    [SerializeField]
+    private float attacktime;
+    public float time=5;
+    private void Update()
+    {
+        
+        if (gameController.gameMode ==2)
+        {
+            time -= Time.deltaTime;
+        }
+        if (time < 0)
+        {
+            gameController.ModeChange(4, 0);
+            padController.BoardReset();
+            BoardReset();
+            RandSelect();
+        }
+    }
+
     private void Start()
     {
+        time = attacktime;
         gameController = gameControllerObj.GetComponent<GameController>();
+        padController = padControllerObj.GetComponent<PadController2>();
         RandSelect();
     }
 
@@ -38,6 +61,8 @@ public class Enj : MonoBehaviour
 
     public void RandSelect()
     {
+
+        time = attacktime ;
         summonNum = Random.Range(0, gameController.nomalAttack.Length);
         RectTransform CanvasRect = canvas.GetComponent<RectTransform>();
 

@@ -142,7 +142,7 @@ public class PadController2 : MonoBehaviour
                             angle = angle + 2 * Mathf.PI;
                         }
                     angle = angle * 180 / Mathf.PI;
-                    angleController = true;
+                    //angleController = true;
                 }
 
 
@@ -352,6 +352,8 @@ public class PadController2 : MonoBehaviour
 
     private void Summon()
     {
+        if (gameController.gameMode == 2)
+        {
 #if false
         int weapon = -1;
 
@@ -396,42 +398,48 @@ public class PadController2 : MonoBehaviour
             Debug.Log("形まちがっとるで");
         }
 #endif
-        
-        Array.Sort(SterLine);
-        Array.Reverse(SterLine);
 
-        int[] bfList = gameController.nomalAttack[enj.summonNum].Code;
-        Array.Resize(ref bfList, bfList.Length + 1);
+            Array.Sort(SterLine);
+            Array.Reverse(SterLine);
 
-        int check = 0;
-        for (int j = 0; j < bfList.Length ; j++)
-        {
-            if (bfList[j] == SterLine[j])
+            int[] bfList = gameController.nomalAttack[enj.summonNum].Code;
+            Array.Resize(ref bfList, bfList.Length + 1);
+
+            int check = 0;
+            for (int j = 0; j < bfList.Length; j++)
             {
-                check++;
+                if (bfList[j] == SterLine[j])
+                {
+                    check++;
+                }
             }
-        }
-        if (check == bfList.Length)
-        {
+            if (check == bfList.Length)
+            {
+                gameController.ModeChange(3, 0);
+                enj.BoardReset();
+                enj.RandSelect();
+            }
 
-            enj.BoardReset();
-            enj.RandSelect();
+            BoardReset();
         }
-
-        BoardReset();
     }
 
 
 
-    private void BoardReset()
+    public void BoardReset()
     {
-
+        SterController = 0;
+        sterUILine.points[1] = new Vector2(0, 0);
+        sterUILine.points[0] = new Vector2(0, 0);
         sterLineamount = 0;
         SterLine = new int[91];
         for (int i = 0; i < glowSterImage.Length; i++)
         {
 
             glowStar[i] = false;
+
+            glowSterImage[i].enabled = false;
+
 
         }
         foreach (Transform n in lineParent.transform)

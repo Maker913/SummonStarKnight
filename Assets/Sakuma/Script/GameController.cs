@@ -49,6 +49,10 @@ public class GameController : MonoBehaviour
     private GameObject textObj;
     private Text text;
 
+    //HP
+    public int myHP;
+    public int tekiHP;
+
     void Start()
     {
         gameMode = 1;
@@ -70,7 +74,7 @@ public class GameController : MonoBehaviour
                 Stert();
                 break;
             case 2:
-                WaitInput();
+                Battle();
                 break;
             case 3:
                 MyAtk();
@@ -93,21 +97,43 @@ public class GameController : MonoBehaviour
 
     private void EnemyAtk()
     {
-        text.text = "攻撃されますた\n痛いンゴwwwww";
-        ModeChange(2, 3f);
+        padController2.Pad = false;
+        textPadObj.SetActive(true);
+        text.text = "攻撃されました";
+        myHP -= 10;
+        ModeChange(2, 1f);
+
     }
 
     private void MyAtk()
     {
-        text.text = technique[weapon].Name+"を召喚し、攻撃しますた";
-        ModeChange(4, 3f);
+        padController2.Pad = false;
+        textPadObj.SetActive(true);
+        text.text = "攻撃しました";
+        tekiHP -= 10;
+        ModeChange(2, 1f);
+
     }
 
-    private void WaitInput()
+    private void Battle()
     {
-        text.text = "";
-        padController2.Pad = true;
-        textPadObj.SetActive(false);
+        if (myHP > 0 && tekiHP > 0)
+        {
+            text.text = "";
+            padController2.Pad = true;
+            textPadObj.SetActive(false);
+        }else if(myHP <= 0)
+        {
+            text.text = "負け";
+            padController2.Pad =false ;
+            textPadObj.SetActive(true);
+        }
+        else
+        {
+            text.text = "勝ち";
+            padController2.Pad = false;
+            textPadObj.SetActive(true);
+        }
     }
 
     private void Stert()
