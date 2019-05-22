@@ -53,11 +53,19 @@ public class GameController : MonoBehaviour
     public int myHP;
     public int tekiHP;
 
+    private int startPas;
+
+    [SerializeField]
+    private GameObject EnjObj;
+    private Enj enj;
+
+
     void Start()
     {
         gameMode = 1;
         text = textObj.GetComponent<Text>();
         padController2 = padControllerObj.GetComponent<PadController2>();
+        enj = EnjObj.GetComponent<Enj>();
     }
 
 
@@ -85,6 +93,12 @@ public class GameController : MonoBehaviour
             case 5:
                 Menu();
                 break;
+            case 6:
+                Win();
+                break;
+            case 7:
+                Lose();
+                break;
             default:
                 break;
         }
@@ -92,8 +106,19 @@ public class GameController : MonoBehaviour
 
 
 
+    private void Lose()
+    {
+        text.text = "負け";
+        padController2.Pad = false;
+        textPadObj.SetActive(true);
+    }
 
-
+    private void Win()
+    {
+        text.text = "勝ち";
+        padController2.Pad = false;
+        textPadObj.SetActive(true);
+    }
 
     private void EnemyAtk()
     {
@@ -101,7 +126,14 @@ public class GameController : MonoBehaviour
         textPadObj.SetActive(true);
         text.text = "攻撃されました";
         myHP -= 10;
-        ModeChange(2, 1f);
+        if (myHP <= 0)
+        {
+            ModeChange(7, 2f);
+        }
+        else
+        {
+            ModeChange(2, 2f);
+        }
 
     }
 
@@ -111,29 +143,27 @@ public class GameController : MonoBehaviour
         textPadObj.SetActive(true);
         text.text = "攻撃しました";
         tekiHP -= 10;
-        ModeChange(2, 1f);
+        if (tekiHP <= 0)
+        {
+            ModeChange(6, 2f);
+        }
+        else
+        {
+            ModeChange(2, 2f);
+        }
 
     }
 
     private void Battle()
     {
-        if (myHP > 0 && tekiHP > 0)
+        if(startPas == 0)
         {
-            text.text = "";
-            padController2.Pad = true;
-            textPadObj.SetActive(false);
-        }else if(myHP <= 0)
-        {
-            text.text = "負け";
-            padController2.Pad =false ;
-            textPadObj.SetActive(true);
+            enj.NextGame();
+            startPas = 1;
         }
-        else
-        {
-            text.text = "勝ち";
-            padController2.Pad = false;
-            textPadObj.SetActive(true);
-        }
+        text.text = "";
+        padController2.Pad = true;
+        textPadObj.SetActive(false);
     }
 
     private void Stert()
@@ -153,6 +183,7 @@ public class GameController : MonoBehaviour
 
     public void ModeChange(int nextGameMode2,float delayTime2)
     {
+        startPas = 0;
         elapsedTime = 0;
         nextGameMode = nextGameMode2;
         delayTime = delayTime2;

@@ -27,6 +27,9 @@ public class Enj : MonoBehaviour
     private GameObject gameControllerObj;
     private GameController gameController;
 
+    [SerializeField]
+    private GameObject gageObj;
+    public  Image image;
 
     public int summonNum;
 
@@ -35,26 +38,37 @@ public class Enj : MonoBehaviour
     public float time=5;
     private void Update()
     {
-        
+
         if (gameController.gameMode ==2)
         {
             time -= Time.deltaTime;
+            image.fillAmount =1- time / attacktime;
         }
         if (time < 0)
         {
+            time = attacktime;
+            image.fillAmount = 0;
             gameController.ModeChange(4, 0);
+            Debug.Log(123);
             padController.BoardReset();
-            BoardReset();
-            RandSelect();
         }
+
     }
+
+
+    public void NextGame()
+    {
+        BoardReset();
+        RandSelect();
+    }
+
 
     private void Start()
     {
         time = attacktime;
         gameController = gameControllerObj.GetComponent<GameController>();
         padController = padControllerObj.GetComponent<PadController2>();
-        RandSelect();
+        image = gageObj.GetComponent<Image>();
     }
 
 
@@ -62,7 +76,7 @@ public class Enj : MonoBehaviour
     public void RandSelect()
     {
 
-        time = attacktime ;
+        time = attacktime;
         summonNum = Random.Range(0, gameController.nomalAttack.Length);
         RectTransform CanvasRect = canvas.GetComponent<RectTransform>();
 

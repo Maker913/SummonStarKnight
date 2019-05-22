@@ -416,8 +416,9 @@ public class PadController2 : MonoBehaviour
             if (check == bfList.Length)
             {
                 gameController.ModeChange(3, 0);
-                enj.BoardReset();
-                enj.RandSelect();
+                enj.image.fillAmount = 0;
+                //enj.BoardReset();
+                //enj.RandSelect();
             }
 
             BoardReset();
