@@ -53,11 +53,21 @@ public class GameController : MonoBehaviour
     public int myHP;
     public int tekiHP;
 
+    //2のみ開始時処理使用
     private int startPas;
 
+
+    //敵星座板の奴
     [SerializeField]
     private GameObject EnjObj;
     private Enj enj;
+
+    [Space(10)]
+    [Header("ここからエフェクト")]
+
+    //ここからエフェクト用
+    [SerializeField]
+    private GameObject teki;
 
 
     void Start()
@@ -122,6 +132,8 @@ public class GameController : MonoBehaviour
 
     private void EnemyAtk()
     {
+        enj.GetComponent<Animator>().SetBool("Open", true);
+        teki.GetComponent<Animator>().SetTrigger ("Attack");
         padController2.Pad = false;
         textPadObj.SetActive(true);
         text.text = "攻撃されました";
@@ -139,6 +151,7 @@ public class GameController : MonoBehaviour
 
     private void MyAtk()
     {
+        enj.GetComponent<Animator>().SetBool("Open", true);
         padController2.Pad = false;
         textPadObj.SetActive(true);
         text.text = "攻撃しました";
@@ -158,6 +171,8 @@ public class GameController : MonoBehaviour
     {
         if(startPas == 0)
         {
+            enj.GetComponent<Animator>().SetBool("Start", true);
+            enj.GetComponent<Animator>().SetBool("Open", false);
             enj.NextGame();
             startPas = 1;
         }

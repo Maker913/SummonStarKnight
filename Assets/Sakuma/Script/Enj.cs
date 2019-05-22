@@ -34,7 +34,7 @@ public class Enj : MonoBehaviour
     public int summonNum;
 
     [SerializeField]
-    private float attacktime;
+    public float attacktime;
     public float time=5;
     private void Update()
     {

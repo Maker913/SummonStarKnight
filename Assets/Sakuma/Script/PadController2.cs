@@ -417,6 +417,7 @@ public class PadController2 : MonoBehaviour
             {
                 gameController.ModeChange(3, 0);
                 enj.image.fillAmount = 0;
+                enj.time = enj.attacktime;
                 //enj.BoardReset();
                 //enj.RandSelect();
             }
