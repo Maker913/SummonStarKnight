@@ -112,7 +112,7 @@ public class SceneControl : MonoBehaviour
     /// 画面遷移（シーン番号参照）
     /// </summary>
     /// <param name="sceneNum">シーン番号</param>
-    /// <param name="interval"></param>
+    /// <param name="interval">暗転にかかる時間(秒)</param>
     public void LoadScene(int sceneNum, float interval)
     {
         if (isFading) return;
