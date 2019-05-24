@@ -11,6 +11,10 @@ public class SceneControl : MonoBehaviour
     private float fadeAlpha = 0;
     private bool isFading = false;
 
+    // 遷移先のシーン情報
+    private string sceneName;
+    private int sceneNumber;
+
     private void Awake()
     {
         if(Instance == null)
@@ -55,9 +59,10 @@ public class SceneControl : MonoBehaviour
     /// <param name="scene">シーン名</param>
     /// <param name="interval">暗転にかかる時間(秒)</param>
     /// <returns></returns>
-    private IEnumerator FadeScene(string scene, float interval)
+    private IEnumerator FadeScene(bool sceneChangeMode, float interval)
     {
         isFading = true;
+        Debug.Log("画面遷移を開始しました");
 
         // 暗くする
         float time = 0;
@@ -69,7 +74,14 @@ public class SceneControl : MonoBehaviour
         }
 
         // シーン切り替え
-        UnityEngine.SceneManagement.SceneManager.LoadScene(scene);
+        if (sceneChangeMode)
+        {
+            UnityEngine.SceneManagement.SceneManager.LoadScene(sceneName);
+        }
+        else
+        {
+            UnityEngine.SceneManagement.SceneManager.LoadScene(sceneNumber);
+        }
 
         // 明るくする
         time = 0;
@@ -81,23 +93,30 @@ public class SceneControl : MonoBehaviour
         }
 
         isFading = false;
+        Debug.Log("画面遷移を終了しました");
     }
 
     /// <summary>
-    /// 画面遷移
+    /// 画面遷移（シーン名参照）
     /// </summary>
     /// <param name="scene">シーン名</param>
     /// <param name="interval">暗転にかかる時間(秒)</param>
     public void LoadScene(string scene, float interval)
     {
-        if(!isFading) StartCoroutine(FadeScene(scene, interval));
+        if (isFading) return;
+        sceneName = scene;
+        StartCoroutine(FadeScene(true, interval));
     }
 
+    /// <summary>
+    /// 画面遷移（シーン番号参照）
+    /// </summary>
+    /// <param name="sceneNum">シーン番号</param>
+    /// <param name="interval"></param>
     public void LoadScene(int sceneNum, float interval)
     {
-        if (!isFading)
-        {
-            Debug.Log(UnityEngine.SceneManagement.SceneManager.sceneCountInBuildSettings);
-        }
+        if (isFading) return;
+        sceneNumber = sceneNum;
+        StartCoroutine(FadeScene(false, interval));
     }
 }

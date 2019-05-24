@@ -21,7 +21,6 @@ public class TitleControl : MonoBehaviour
         {
             Debug.LogError("スタートボタンオブジェクトを割り当ててください");
         }
-        SceneControl.Instance.LoadScene(1, 0.5f);
     }
 
     // Update is called once per frame
