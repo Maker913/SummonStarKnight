@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SceneChanger : MonoBehaviour
+public class SceneControl : MonoBehaviour
 {
-    public static SceneChanger instance;
+    public static SceneControl Instance;
 
     // 画面遷移時のフェードテクスチャ
     private Texture2D blackTexture;
@@ -13,9 +13,9 @@ public class SceneChanger : MonoBehaviour
 
     private void Awake()
     {
-        if(instance == null)
+        if(Instance == null)
         {
-            instance = this;
+            Instance = this;
             DontDestroyOnLoad(gameObject);
         }
         else
@@ -33,20 +33,20 @@ public class SceneChanger : MonoBehaviour
     /// <returns></returns>
     private IEnumerator MakeTexture()
     {
-        this.blackTexture = new Texture2D(32, 32, TextureFormat.RGB24, false);
+        blackTexture = new Texture2D(32, 32, TextureFormat.RGB24, false);
         yield return new WaitForEndOfFrame();
-        this.blackTexture.ReadPixels(new Rect(0, 0, 32, 32), 0, 0, false);
-        this.blackTexture.SetPixel(0, 0, Color.white);
-        this.blackTexture.Apply();
+        blackTexture.ReadPixels(new Rect(0, 0, 32, 32), 0, 0, false);
+        blackTexture.SetPixel(0, 0, Color.white);
+        blackTexture.Apply();
     }
 
     private void OnGUI()
     {
-        if (!this.isFading) return;
+        if (!isFading) return;
 
         // 黒いテクスチャの描画
-        GUI.color = new Color(0, 0, 0, this.fadeAlpha);
-        GUI.DrawTexture(new Rect(0, 0, Screen.width, Screen.height), this.blackTexture);
+        GUI.color = new Color(0, 0, 0, fadeAlpha);
+        GUI.DrawTexture(new Rect(0, 0, Screen.width, Screen.height), blackTexture);
     }
 
     /// <summary>
@@ -57,13 +57,13 @@ public class SceneChanger : MonoBehaviour
     /// <returns></returns>
     private IEnumerator FadeScene(string scene, float interval)
     {
-        this.isFading = true;
+        isFading = true;
 
         // 暗くする
         float time = 0;
         while(time <= interval)
         {
-            this.fadeAlpha = Mathf.Lerp(0f, 1f, time / interval);
+            fadeAlpha = Mathf.Lerp(0f, 1f, time / interval);
             time += Time.deltaTime;
             yield return 0;
         }
@@ -75,12 +75,12 @@ public class SceneChanger : MonoBehaviour
         time = 0;
         while(time <= interval)
         {
-            this.fadeAlpha = Mathf.Lerp(1f, 0f, time / interval);
+            fadeAlpha = Mathf.Lerp(1f, 0f, time / interval);
             time += Time.deltaTime;
             yield return 0;
         }
 
-        this.isFading = false;
+        isFading = false;
     }
 
     /// <summary>
@@ -91,5 +91,13 @@ public class SceneChanger : MonoBehaviour
     public void LoadScene(string scene, float interval)
     {
         if(!isFading) StartCoroutine(FadeScene(scene, interval));
+    }
+
+    public void LoadScene(int sceneNum, float interval)
+    {
+        if (!isFading)
+        {
+            Debug.Log(UnityEngine.SceneManagement.SceneManager.sceneCountInBuildSettings);
+        }
     }
 }

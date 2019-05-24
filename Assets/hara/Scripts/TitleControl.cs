@@ -15,12 +15,13 @@ public class TitleControl : MonoBehaviour
     {
         if(startButton != null)
         {
-            this.startButton.onClick.AddListener(() => ButtonAction());
+            startButton.onClick.AddListener(() => ButtonAction());
         }
         else
         {
             Debug.LogError("スタートボタンオブジェクトを割り当ててください");
         }
+        SceneControl.Instance.LoadScene(1, 0.5f);
     }
 
     // Update is called once per frame
@@ -31,6 +32,6 @@ public class TitleControl : MonoBehaviour
 
     private void ButtonAction()
     {
-        SceneChanger.instance.LoadScene(sceneName, 0.5f);
+        SceneControl.Instance.LoadScene(sceneName, 0.5f);
     }
 }
