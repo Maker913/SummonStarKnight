@@ -10,7 +10,9 @@ public class TextController : MonoBehaviour
     [SerializeField]
     private Text uiText;
 
+    [SerializeField]
     private float time;
+    [SerializeField]
     private float tmpTime;
     [SerializeField][Range(0.001f, 0.3f)]
     private float DisplayTextIntarval = 0.05f;
@@ -21,7 +23,16 @@ public class TextController : MonoBehaviour
     private int tIndex = 0;
     private int tDataIndex = 0;
     private int charCount = 0;
-    private bool nextText = true;
+
+    private enum NextText
+    {
+        next,
+        end,
+        standby,
+        print
+    }
+
+    private NextText nextText = 0;
 
 
     void Start()
@@ -38,6 +49,7 @@ public class TextController : MonoBehaviour
     {
         time += Time.deltaTime;
         PrintText();
+        Debug.Log(nextText);
     }
     
     private void PrintText()
@@ -47,7 +59,7 @@ public class TextController : MonoBehaviour
             AllSetText();
         }
 
-        if (tIndex != tDataIndex)
+        if (tIndex < tDataIndex)
         {
             StoreText();
 
@@ -58,45 +70,70 @@ public class TextController : MonoBehaviour
     //textsに文章を一文字ずつに分けて格納
     private void StoreText()
     {
-        if (nextText)
+        if (nextText == NextText.next)
         {
             texts = new string[oringtext[tIndex].Length];
-            for (int i = 0; i < texts.Length; i++)
+            if (oringtext[tIndex].Substring(0, 1) != "{")
             {
-                texts[i] = oringtext[tIndex].Substring(i, 1);
+                for (int i = 0; i < texts.Length; i++)
+                {
+                    texts[i] = oringtext[tIndex].Substring(i, 1);
+                }
+                nextText = NextText.print;
+                tmpTime = time + DisplayTextIntarval;
             }
-            nextText = false;
-            tmpTime = time + DisplayTextIntarval;
+            else
+            {
+                string command = oringtext[tIndex].Substring(oringtext[tIndex].IndexOf('{') + 1, oringtext[tIndex].IndexOf('}') - 1);
+                switch (command)
+                {
+                    case "next":
+                        nextText = NextText.standby;
+                        break;
+                    case "end":
+                        break;
+                }
+
+            }
         }
     }
 
     //textを表示する処理
     private void DisplayText()
     {
-        if (nextText == false && time >= tmpTime && charCount != oringtext[tIndex].Length)
+        if (nextText == NextText.print && time >= tmpTime && charCount != oringtext[tIndex].Length)
         {
             uiText.text += texts[charCount];
             charCount++;
             tmpTime = time + DisplayTextIntarval;
         }
-        else if (uiText.text.Length == oringtext[tIndex].Length)
+        else if (charCount == oringtext[tIndex].Length)
         {
             uiText.text += "\n";
             tIndex++;
             charCount = 0;
-            nextText = true;
+            nextText = NextText.next;
         }
     }
 
     private void AllSetText()
     {
-        tIndex = tDataIndex;
-        uiText.text = oringtext[0] + "\n";
-        if (oringtext.Count - 1 >= 0)
+        if (nextText == NextText.standby)
         {
-            for (int i = 1; i < oringtext.Count; i++)
+            uiText.text = "";
+            tIndex++;
+            nextText = NextText.next;
+        }
+        else
+        {
+            tIndex = tDataIndex;
+            uiText.text = oringtext[0] + "\n";
+            if (oringtext.Count - 1 >= 0)
             {
-                uiText.text += oringtext[i] + "\n";
+                for (int i = 1; i < oringtext.Count; i++)
+                {
+                    uiText.text += oringtext[i] + "\n";
+                }
             }
         }
     }
