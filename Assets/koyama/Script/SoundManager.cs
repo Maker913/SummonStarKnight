@@ -2,30 +2,32 @@
 using System.Collections.Generic;
 using UnityEngine;
 public class SoundManager : MonoBehaviour {
+    [SerializeField]
+    private List<AudioSource> SeSoundList; 
     public class Sound
     {
         //SE数
-        const int SE_CHANNEL = 2;
+        private const int SE_CHANNEL = 2;
         enum Type
         {
             Bgm,
             Se,
         }
-        static Sound _singlton = null;
+        static Sound singltonInstance = null;
         public static Sound GetInstance()
         {
-            return _singlton ?? (_singlton = new Sound());
+            return singltonInstance ?? (singltonInstance = new Sound());
         }
-        GameObject _object = null;
-        AudioSource _sourceBgm = null;
-        AudioSource _sourceSeDefault = null;
-        AudioSource[] _sourceSeArray;
+        private GameObject _object = null;
+        private AudioSource _sourceBgm = null;
+        private AudioSource _sourceSeDefault = null;
+        private AudioSource[] _sourceSeArray;
         //BGMアクセステーブル
-        Dictionary<string, _Data> _poolBgm = new Dictionary<string, _Data>();
+        private Dictionary<string, _Data> _poolBgm = new Dictionary<string, _Data>();
         //SEアクセステーブル
-        Dictionary<string, _Data> _poolSe = new Dictionary<string, _Data>();
+        private Dictionary<string, _Data> _poolSe = new Dictionary<string, _Data>();
 
-        class _Data
+        private class _Data
         {
             public string Key;
             public string NumberName;
@@ -43,7 +45,7 @@ public class SoundManager : MonoBehaviour {
             _sourceSeArray = new AudioSource[SE_CHANNEL];
         }
 
-        AudioSource _GetAudioSource(Type type, int channel = 1)
+        private AudioSource _GetAudioSource(Type type, int channel = 1)
         {
             if (_object == null)
             {
@@ -85,7 +87,7 @@ public class SoundManager : MonoBehaviour {
         {
             GetInstance()._LoadSe(key, NumberName);
         }
-        void _LoadBgm(string key, string NumberName)
+        private void _LoadBgm(string key, string NumberName)
         {
             if (_poolBgm.ContainsKey(key))
             {
@@ -93,7 +95,7 @@ public class SoundManager : MonoBehaviour {
             }
             _poolBgm.Add(key, new _Data(key, NumberName));
         }
-        void _LoadSe(string key, string NumberName)
+        private void _LoadSe(string key, string NumberName)
         {
             if (_poolBgm.ContainsKey(key))
             {
