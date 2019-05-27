@@ -36,6 +36,7 @@ public class PadController2 : MonoBehaviour
     private float angle;
 
     public int[] SterLine = new int[91];
+    [SerializeField]
     private int sterLineamount = 0;
     private bool moveFlg=false;
 

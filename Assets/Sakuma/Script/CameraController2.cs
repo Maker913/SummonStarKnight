@@ -7,29 +7,28 @@ public class CameraController2 : MonoBehaviour
     //現在のカメラモード
     public int cameraMode=0;
 
-
-    //座標取得のアレ
-    [SerializeField]
-    private GameObject pleyerObj;
-    [SerializeField]
-    private GameObject enemyObj;
-    private Vector3 midpoint;
-
-
     private int time = 0;
 
-    public float angle = 0;
-    private float distance;
+    private Vector3 nowPos;
+
+
+    // FirstCamera用
+    [Space(10)]
     [SerializeField]
-    private float distanceLete;
+    private GameObject firstPos;
     [SerializeField]
-    private float height;
-    [SerializeField]
-    private float PadDown;
+    private float rate;
+    private float progressTime;
+    private float progressTime2;
+
+    private Vector3 firstAngle;
+    private Vector3 nowAngle;
+
+
 
     void Start()
     {
-        
+        cameraMode = 0;
     }
 
     void Update()
@@ -37,10 +36,10 @@ public class CameraController2 : MonoBehaviour
         switch (cameraMode)
         {
             case 0:
-                Rot();
+                FirstCamera();
                 break;
             case 1:
-                Fix();
+
                 break;
             default:
                 break;
@@ -55,34 +54,61 @@ public class CameraController2 : MonoBehaviour
 
 
 
-
-    private void Rot()
+    private void FirstCamera()
     {
         if (time == 0)
         {
-            midpoint = (pleyerObj.transform.position +enemyObj.transform.position)/2;
-            time++;
+            nowPos = transform.position;
+            time = 1;
+            progressTime = rate;
+            progressTime2 = 0;
+            nowAngle = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y, transform.eulerAngles.z) ;
+            firstAngle = new Vector3(firstPos.transform.localRotation.x, firstPos.transform.localRotation.y, firstPos.transform.localRotation.z);
+            Debug.Log(firstAngle);
         }
 
-        distance = Vector3.Distance(pleyerObj.transform.position, enemyObj.transform.position)*distanceLete;
-        angle += 0.1f;
 
-        transform.position = new Vector3(
-        Mathf.Cos(angle / 180 * Mathf.PI) * distance + midpoint.x,
-        midpoint.y + height + PadDown,
-        Mathf.Sin(angle / 180 * Mathf.PI) * distance + midpoint.z);
 
-        this.transform.rotation = Quaternion.Euler(Mathf.Atan(height / distance) * 180 / Mathf.PI, -1 * (angle + 90), transform.rotation.z);
+
+        float anglex = Mathf.LerpAngle(nowAngle.x, firstPos.transform.eulerAngles.x, 1 - ((progressTime) * (progressTime)) / (rate * rate));
+        float angley = Mathf.LerpAngle(nowAngle.y, firstPos.transform.eulerAngles.y, 1 - ((progressTime) * (progressTime)) / (rate * rate));
+        float anglez = Mathf.LerpAngle(nowAngle.z, firstPos.transform.eulerAngles.z, 1 - ((progressTime) * (progressTime)) / (rate * rate));
+        
+
+
+
+
+
+        progressTime -= Time.deltaTime;
+        progressTime2 += Time.deltaTime;
+        if (progressTime2 < rate)
+        {
+            transform.position = Vector3.Lerp(nowPos, firstPos.transform.position, 1 - ((progressTime) * (progressTime)) / (rate * rate));
+            transform.eulerAngles = new Vector3(anglex, angley, anglez);
+        }
+
+
+
+
+
+
 
 
     }
 
 
 
-    private void Fix()
+    private void Change(int data)
     {
-
-
-
+        time = 0;
+        cameraMode = data;
     }
+
+
+
+
+
+
+
+
 }
