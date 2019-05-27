@@ -12,9 +12,6 @@ EditorBuildSettings:
     path: Assets/OldSakuma/Scene/maintest.unity
     guid: bba7f2026cb6e7847b4ee3b8504a1e61
   - enabled: 1
-    path: Assets/hara/Scenes/Title.unity
-    guid: e7112498859a98043b2eb4226dc2a4b9
-  - enabled: 1
     path: Assets/Sakuma/Scenes/NewMain.unity
     guid: 0f0861c6e507a044e992d3cd2ecb69d6
   m_configObjects: {}
