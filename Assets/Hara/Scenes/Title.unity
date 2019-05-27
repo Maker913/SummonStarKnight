@@ -313,10 +313,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 981498051}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9c2ae99861fac3f4f98c442beb16e8db, type: 3}
+  m_Script: {fileID: 11500000, guid: 330ace7d09f0c624797d100511aeae18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneName: NewMain
+  sceneName: "\u30B7\u30FC\u30F3\u540D\u3092\u8A2D\u5B9A\u3057\u3066\u304F\u3060\u3055\u3044"
   startButton: {fileID: 1467735577}
 --- !u!1 &1319037746
 GameObject:

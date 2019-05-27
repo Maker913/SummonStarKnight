@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class SceneControl : MonoBehaviour
 {
@@ -76,11 +77,11 @@ public class SceneControl : MonoBehaviour
         // シーン切り替え
         if (sceneChangeMode)
         {
-            UnityEngine.SceneManagement.SceneManager.LoadScene(sceneName);
+            SceneManager.LoadScene(sceneName);
         }
         else
         {
-            UnityEngine.SceneManagement.SceneManager.LoadScene(sceneNumber);
+            SceneManager.LoadScene(sceneNumber);
         }
 
         // 明るくする
