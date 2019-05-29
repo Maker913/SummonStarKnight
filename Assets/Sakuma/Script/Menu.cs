@@ -26,7 +26,7 @@ public class Menu : MonoBehaviour
 
     public void MenuOn()
     {
-        if (Game.gameMode ==2) {
+        if (Game.gameMode ==2&&Pad .sumonbd ==false ) {
             Pad.Pad = false;
             Game.ModeChange(5, 0);
             menu.SetActive(true);
@@ -37,8 +37,10 @@ public class Menu : MonoBehaviour
 
     public void MenuOff()
     {
+        
         Pad.Pad = true;
         Game.ModeChange(2, 0);
+        Game.startPas = 1;
         menu.SetActive(false);
         menuanime.SetBool("Change",false );
     }

@@ -15,6 +15,9 @@ public class CameraController2 : MonoBehaviour
     // FirstCamera用
     [Space(10)]
     [SerializeField]
+    private GameObject stratPos;
+    [SerializeField]
+    private GameObject[] Pos;
     private GameObject firstPos;
     [SerializeField]
     private float rate;
@@ -28,6 +31,9 @@ public class CameraController2 : MonoBehaviour
 
     void Start()
     {
+        transform.position = stratPos.transform.position;
+        transform.localEulerAngles = stratPos.transform.localEulerAngles;
+        SetCamera(0, 2);
         cameraMode = 0;
     }
 
@@ -56,19 +62,6 @@ public class CameraController2 : MonoBehaviour
 
     private void FirstCamera()
     {
-        if (time == 0)
-        {
-            nowPos = transform.position;
-            time = 1;
-            progressTime = rate;
-            progressTime2 = 0;
-            nowAngle = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y, transform.eulerAngles.z) ;
-            firstAngle = new Vector3(firstPos.transform.localRotation.x, firstPos.transform.localRotation.y, firstPos.transform.localRotation.z);
-            Debug.Log(firstAngle);
-        }
-
-
-
 
         float anglex = Mathf.LerpAngle(nowAngle.x, firstPos.transform.eulerAngles.x, 1 - ((progressTime) * (progressTime)) / (rate * rate));
         float angley = Mathf.LerpAngle(nowAngle.y, firstPos.transform.eulerAngles.y, 1 - ((progressTime) * (progressTime)) / (rate * rate));
@@ -96,7 +89,18 @@ public class CameraController2 : MonoBehaviour
 
     }
 
-
+    public void SetCamera(int num, float data)
+    {
+        firstPos = Pos[num];
+        rate = data;
+        nowPos = transform.position;
+        time = 1;
+        progressTime = rate;
+        progressTime2 = 0;
+        nowAngle = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y, transform.eulerAngles.z);
+        firstAngle = new Vector3(firstPos.transform.localRotation.x, firstPos.transform.localRotation.y, firstPos.transform.localRotation.z);
+        //Debug.Log(firstAngle);
+    }
 
     private void Change(int data)
     {

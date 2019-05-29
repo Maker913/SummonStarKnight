@@ -36,16 +36,22 @@ public class Enj : MonoBehaviour
     [SerializeField]
     public float attacktime;
     public float time=5;
+
+    [SerializeField]
+    private GameObject sumonbdobj;
+
     private void Update()
     {
 
-        if (gameController.gameMode ==2)
+        if (gameController.gameMode ==2&&padController.sumonMode ==false)
         {
             time -= Time.deltaTime;
             image.fillAmount =1- time / attacktime;
         }
         if (time < 0)
         {
+            sumonbdobj.SetActive(false);
+            padController.sumonbd = false;
             time = attacktime;
             image.fillAmount = 0;
             gameController.ModeChange(4, 0);

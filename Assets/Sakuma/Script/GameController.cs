@@ -52,15 +52,22 @@ public class GameController : MonoBehaviour
     //HP
     public int myHP;
     public int tekiHP;
-
+    public int gage;
     //2のみ開始時処理使用
-    private int startPas;
+   public  int startPas;
 
 
     //敵星座板の奴
     [SerializeField]
     private GameObject EnjObj;
     private Enj enj;
+
+    [SerializeField]
+    private GameObject camera;
+    [SerializeField]
+    private GameObject gageobj;
+    private Image gaged;
+
 
     [Space(10)]
     [Header("ここからエフェクト")]
@@ -72,6 +79,7 @@ public class GameController : MonoBehaviour
 
     void Start()
     {
+        gaged = gageobj.GetComponent<Image>();
         gameMode = 1;
         text = textObj.GetComponent<Text>();
         padController2 = padControllerObj.GetComponent<PadController2>();
@@ -82,7 +90,8 @@ public class GameController : MonoBehaviour
 
     void Update()
     {
-        Debug.Log(gameMode);
+        //Debug.Log(gameMode);
+        gaged.fillAmount = (float)gage / 100f;
         switch (gameMode)
         {
             case 0:
@@ -109,12 +118,37 @@ public class GameController : MonoBehaviour
             case 7:
                 Lose();
                 break;
+            case 8:
+                Sumon();
+                break;
+            case 9:
+                Stop();
+                break;
             default:
                 break;
         }
     }
 
 
+
+    private void Sumon()
+    {
+        enj.GetComponent<Animator>().SetBool("Open", true);
+        text.text = technique[weapon ].Name +"を召喚しました";
+        padController2.Pad = false;
+        textPadObj.SetActive(true);
+
+
+        ModeChange(9, 2);
+    }
+
+
+    private void Stop()
+    {
+        ModeChange(2, 1);
+        textPadObj.SetActive(false );
+        camera.GetComponent<CameraController2>().SetCamera(0, 1);
+    }
 
     private void Lose()
     {
@@ -132,6 +166,7 @@ public class GameController : MonoBehaviour
 
     private void EnemyAtk()
     {
+
         enj.GetComponent<Animator>().SetBool("Open", true);
         teki.GetComponent<Animator>().SetTrigger ("Attack");
         padController2.Pad = false;
@@ -151,6 +186,12 @@ public class GameController : MonoBehaviour
 
     private void MyAtk()
     {
+        gage += 40;
+        if (gage > 100)
+        {
+            gage = 100;
+        }
+
         enj.GetComponent<Animator>().SetBool("Open", true);
         padController2.Pad = false;
         textPadObj.SetActive(true);
@@ -183,6 +224,7 @@ public class GameController : MonoBehaviour
 
     private void Stert()
     {
+        textPadObj.SetActive(true);
         text.text = "ゲーム開始";
         ModeChange(2, 3f);
     }
