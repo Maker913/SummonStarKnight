@@ -52,19 +52,46 @@ public class GameController : MonoBehaviour
     //HP
     public int myHP;
     public int tekiHP;
+    public int gage;
+    //2のみ開始時処理使用
+   public  int startPas;
+
+
+    //敵星座板の奴
+    [SerializeField]
+    private GameObject EnjObj;
+    private Enj enj;
+
+    [SerializeField]
+    private GameObject camera;
+    [SerializeField]
+    private GameObject gageobj;
+    private Image gaged;
+
+
+    [Space(10)]
+    [Header("ここからエフェクト")]
+
+    //ここからエフェクト用
+    [SerializeField]
+    private GameObject teki;
+
 
     void Start()
     {
+        gaged = gageobj.GetComponent<Image>();
         gameMode = 1;
         text = textObj.GetComponent<Text>();
         padController2 = padControllerObj.GetComponent<PadController2>();
+        enj = EnjObj.GetComponent<Enj>();
     }
 
 
 
     void Update()
     {
-        Debug.Log(gameMode);
+        //Debug.Log(gameMode);
+        gaged.fillAmount = (float)gage / 100f;
         switch (gameMode)
         {
             case 0:
@@ -85,6 +112,18 @@ public class GameController : MonoBehaviour
             case 5:
                 Menu();
                 break;
+            case 6:
+                Win();
+                break;
+            case 7:
+                Lose();
+                break;
+            case 8:
+                Sumon();
+                break;
+            case 9:
+                Stop();
+                break;
             default:
                 break;
         }
@@ -92,52 +131,100 @@ public class GameController : MonoBehaviour
 
 
 
+    private void Sumon()
+    {
+        enj.GetComponent<Animator>().SetBool("Open", true);
+        text.text = technique[weapon ].Name +"を召喚しました";
+        padController2.Pad = false;
+        textPadObj.SetActive(true);
 
 
+        ModeChange(9, 2);
+    }
+
+
+    private void Stop()
+    {
+        ModeChange(2, 1);
+        textPadObj.SetActive(false );
+        camera.GetComponent<CameraController2>().SetCamera(0, 1);
+    }
+
+    private void Lose()
+    {
+        text.text = "負け";
+        padController2.Pad = false;
+        textPadObj.SetActive(true);
+    }
+
+    private void Win()
+    {
+        text.text = "勝ち";
+        padController2.Pad = false;
+        textPadObj.SetActive(true);
+    }
 
     private void EnemyAtk()
     {
+
+        enj.GetComponent<Animator>().SetBool("Open", true);
+        teki.GetComponent<Animator>().SetTrigger ("Attack");
         padController2.Pad = false;
         textPadObj.SetActive(true);
         text.text = "攻撃されました";
         myHP -= 10;
-        ModeChange(2, 1f);
+        if (myHP <= 0)
+        {
+            ModeChange(7, 2f);
+        }
+        else
+        {
+            ModeChange(2, 2f);
+        }
 
     }
 
     private void MyAtk()
     {
+        gage += 40;
+        if (gage > 100)
+        {
+            gage = 100;
+        }
+
+        enj.GetComponent<Animator>().SetBool("Open", true);
         padController2.Pad = false;
         textPadObj.SetActive(true);
         text.text = "攻撃しました";
         tekiHP -= 10;
-        ModeChange(2, 1f);
+        if (tekiHP <= 0)
+        {
+            ModeChange(6, 2f);
+        }
+        else
+        {
+            ModeChange(2, 2f);
+        }
 
     }
 
     private void Battle()
     {
-        if (myHP > 0 && tekiHP > 0)
+        if(startPas == 0)
         {
-            text.text = "";
-            padController2.Pad = true;
-            textPadObj.SetActive(false);
-        }else if(myHP <= 0)
-        {
-            text.text = "負け";
-            padController2.Pad =false ;
-            textPadObj.SetActive(true);
+            enj.GetComponent<Animator>().SetBool("Start", true);
+            enj.GetComponent<Animator>().SetBool("Open", false);
+            enj.NextGame();
+            startPas = 1;
         }
-        else
-        {
-            text.text = "勝ち";
-            padController2.Pad = false;
-            textPadObj.SetActive(true);
-        }
+        text.text = "";
+        padController2.Pad = true;
+        textPadObj.SetActive(false);
     }
 
     private void Stert()
     {
+        textPadObj.SetActive(true);
         text.text = "ゲーム開始";
         ModeChange(2, 3f);
     }
@@ -153,6 +240,7 @@ public class GameController : MonoBehaviour
 
     public void ModeChange(int nextGameMode2,float delayTime2)
     {
+        startPas = 0;
         elapsedTime = 0;
         nextGameMode = nextGameMode2;
         delayTime = delayTime2;

@@ -36,6 +36,7 @@ public class PadController2 : MonoBehaviour
     private float angle;
 
     public int[] SterLine = new int[91];
+    [SerializeField]
     private int sterLineamount = 0;
     private bool moveFlg=false;
 
@@ -75,9 +76,25 @@ public class PadController2 : MonoBehaviour
 
     private bool move=false ;
 
+
+    public bool sumonMode = false;
+    public bool sumonbd = false;
+    public int sumonNum;
+
+    [SerializeField]
+    private GameObject sumonbdobj;
+
+    [SerializeField ]
+    private GameObject lineParent2;
+    [SerializeField]
+    private GameObject sumontext;
+    private Text text;
+
     // Start is called before the first frame update
     void Start()
     {
+        text = sumontext.GetComponent<Text>();
+        transform.position = new Vector3(Screen.width / 2, Screen.height / 2, 0);
         Pad = false;
         gameController = gameControllerObj.GetComponent<GameController>();
         sterUILine = sterLineObj.GetComponent<UILineRenderer>();
@@ -96,7 +113,7 @@ public class PadController2 : MonoBehaviour
         //Debug.Log(SterLine[0] + " " + SterLine[1] + " " + SterLine[2] + " " + SterLine[3] + " " + SterLine[4] + " " + SterLine[5] + " " + SterLine[6]);
 
 
-        if (Input.touchCount > 0 && Pad)
+        if (Input.touchCount > 0 && Pad&&sumonbd ==false )
         {
 
 
@@ -110,8 +127,17 @@ public class PadController2 : MonoBehaviour
                 //召喚buttonの処理
                 if (Vector2.Distance(new Vector2(touch.position.x, touch.position.y), summonButton.transform.position) < summonButtonRadius)
                 {
-                    summon = true;
-                    Summon();
+                    if (sterLineamount == 0)
+                    {
+                        sumonbd = true;
+                        sumonbdobj.SetActive(true);
+                        sumonbdobj.GetComponent<Animator>().SetTrigger("star");
+                    }
+                    else
+                    {
+                        summon = true;
+                        Summon();
+                    }
                 }
 
                 int radius = boardRadius;
@@ -304,7 +330,14 @@ public class PadController2 : MonoBehaviour
             }
 
 
-
+            if(sterLineamount != 0&&sumonMode==false )
+            {
+                text.text  = "攻撃";
+            }
+            else
+            {
+                text.text = "召喚";
+            }
 
 #if false
             //デュアルタップのタップ処理
@@ -398,28 +431,62 @@ public class PadController2 : MonoBehaviour
             Debug.Log("形まちがっとるで");
         }
 #endif
-
-            Array.Sort(SterLine);
-            Array.Reverse(SterLine);
-
-            int[] bfList = gameController.nomalAttack[enj.summonNum].Code;
-            Array.Resize(ref bfList, bfList.Length + 1);
-
-            int check = 0;
-            for (int j = 0; j < bfList.Length; j++)
+            if (sumonMode == false)
             {
-                if (bfList[j] == SterLine[j])
+
+                Array.Sort(SterLine);
+                Array.Reverse(SterLine);
+
+                int[] bfList = gameController.nomalAttack[enj.summonNum].Code;
+                Array.Resize(ref bfList, bfList.Length + 1);
+
+                int check = 0;
+                for (int j = 0; j < bfList.Length; j++)
                 {
-                    check++;
+                    if (bfList[j] == SterLine[j])
+                    {
+                        check++;
+                    }
+                }
+                if (check == bfList.Length)
+                {
+                    gameController.ModeChange(3, 0);
+                    enj.image.fillAmount = 0;
+                    enj.time = enj.attacktime;
+                    //enj.BoardReset();
+                    //enj.RandSelect();
                 }
             }
-            if (check == bfList.Length)
+            else
             {
-                gameController.ModeChange(3, 0);
-                enj.BoardReset();
-                enj.RandSelect();
-            }
 
+                Array.Sort(SterLine);
+                Array.Reverse(SterLine);
+
+                int[] bfList = gameController.technique[sumonNum ].Code;
+                Array.Resize(ref bfList, bfList.Length + 1);
+
+                int check = 0;
+                for (int j = 0; j < bfList.Length; j++)
+                {
+                    if (bfList[j] == SterLine[j])
+                    {
+                        check++;
+                    }
+                }
+                if (check == bfList.Length)
+                {
+                    gameController.weapon = sumonNum;
+                    gameController.ModeChange(8, 0);
+                    enj.image.fillAmount = 0;
+                    enj.time = enj.attacktime;
+                    sumonMode = false;
+                    foreach (Transform n in lineParent2.transform)
+                    {
+                        GameObject.Destroy(n.gameObject);
+                    }
+                }
+            }
             BoardReset();
         }
     }
@@ -450,7 +517,39 @@ public class PadController2 : MonoBehaviour
 
 
 
+    public void BlackLine()
+    {
+        RectTransform CanvasRect = canvas.GetComponent<RectTransform>();
 
+
+        for (int i = 0; i < gameController.technique [sumonNum].Code.Length; i++)
+        {
+            int num = 0;
+            for (int a = 1; a <= 14; a++)
+            {
+                for (int b = a + 1; b <= 14; b++)
+                {
+                    num++;
+                    if (gameController.technique[sumonNum].Code[i] == num)
+                    {
+                        SterPos[a - 1].GetComponent<Image>().enabled = true;
+                        SterPos[b - 1].GetComponent<Image>().enabled = true;
+
+                        GameObject obj = (GameObject)Instantiate(linePr, transform.position, Quaternion.identity, lineParent2.transform);
+                        UILineRenderer data2 = obj.GetComponent<UILineRenderer>();
+                        data2.color = new Color(0.2f,0.2f,0.2f,0.8f);
+                        data2.points[0] = new Vector2((SterPos[a - 1].transform.position.x - Screen.width / 2) / Screen.width * CanvasRect.sizeDelta.x, (SterPos[a - 1].transform.position.y - Screen.height / 2) / Screen.height * CanvasRect.sizeDelta.y);
+                        data2.points[1] = new Vector2((SterPos[b - 1].transform.position.x - Screen.width / 2) / Screen.width * CanvasRect.sizeDelta.x, (SterPos[b - 1].transform.position.y - Screen.height / 2) / Screen.height * CanvasRect.sizeDelta.y);
+
+
+                    }
+
+                }
+            }
+
+
+        }
+    }
 
 
 
