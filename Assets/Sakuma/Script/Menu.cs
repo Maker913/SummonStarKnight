@@ -24,6 +24,14 @@ public class Menu : MonoBehaviour
         menuanime = menu.GetComponent<Animator>();
     }
 
+
+
+    public void TitleBack()
+    {
+        SceneChanger.instance.LoadScene("Titlekari", 1);
+    }
+
+
     public void MenuOn()
     {
         if (Game.gameMode ==2&&Pad .sumonbd ==false ) {

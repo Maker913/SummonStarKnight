@@ -55,7 +55,7 @@ public class Enj : MonoBehaviour
             time = attacktime;
             image.fillAmount = 0;
             gameController.ModeChange(4, 0);
-            Debug.Log(123);
+            //Debug.Log(123);
             padController.BoardReset();
         }
 

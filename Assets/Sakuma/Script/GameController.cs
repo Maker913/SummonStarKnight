@@ -68,7 +68,7 @@ public class GameController : MonoBehaviour
     private GameObject gageobj;
     private Image gaged;
 
-
+    static public string result = "NULL";
     [Space(10)]
     [Header("ここからエフェクト")]
 
@@ -124,12 +124,19 @@ public class GameController : MonoBehaviour
             case 9:
                 Stop();
                 break;
+            case 10:
+                ChaneSceen();
+                break;
             default:
                 break;
         }
     }
 
 
+    private void ChaneSceen()
+    {
+        SceneChanger.instance.LoadScene("resultkari", 1);
+    }
 
     private void Sumon()
     {
@@ -152,16 +159,22 @@ public class GameController : MonoBehaviour
 
     private void Lose()
     {
+        result = "敗北";
         text.text = "負け";
         padController2.Pad = false;
         textPadObj.SetActive(true);
+
+        ModeChange(10, 1);
     }
 
     private void Win()
     {
+        result = "勝利";
         text.text = "勝ち";
         padController2.Pad = false;
         textPadObj.SetActive(true);
+
+        ModeChange(10, 1);
     }
 
     private void EnemyAtk()
