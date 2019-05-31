@@ -37,7 +37,7 @@ public class CameraController2 : MonoBehaviour
         cameraMode = 0;
     }
 
-    void Update()
+    private void FixedUpdate()
     {
         switch (cameraMode)
         {
@@ -51,11 +51,6 @@ public class CameraController2 : MonoBehaviour
                 break;
         }
 
-
-
-
-
-
     }
 
 
@@ -63,9 +58,9 @@ public class CameraController2 : MonoBehaviour
     private void FirstCamera()
     {
 
-        float anglex = Mathf.LerpAngle(nowAngle.x, firstPos.transform.eulerAngles.x, 1 - ((progressTime) * (progressTime)) / (rate * rate));
-        float angley = Mathf.LerpAngle(nowAngle.y, firstPos.transform.eulerAngles.y, 1 - ((progressTime) * (progressTime)) / (rate * rate));
-        float anglez = Mathf.LerpAngle(nowAngle.z, firstPos.transform.eulerAngles.z, 1 - ((progressTime) * (progressTime)) / (rate * rate));
+        float anglex = Mathf.LerpAngle(nowAngle.x, firstPos.transform.eulerAngles.x, 1f - ((progressTime) * (progressTime)) / (rate * rate));
+        float angley = Mathf.LerpAngle(nowAngle.y, firstPos.transform.eulerAngles.y, 1f - ((progressTime) * (progressTime)) / (rate * rate));
+        float anglez = Mathf.LerpAngle(nowAngle.z, firstPos.transform.eulerAngles.z, 1f - ((progressTime) * (progressTime)) / (rate * rate));
         
 
 
@@ -76,7 +71,7 @@ public class CameraController2 : MonoBehaviour
         progressTime2 += Time.deltaTime;
         if (progressTime2 < rate)
         {
-            transform.position = Vector3.Lerp(nowPos, firstPos.transform.position, 1 - ((progressTime) * (progressTime)) / (rate * rate));
+            transform.position = Vector3.Lerp(nowPos, firstPos.transform.position, 1f - ((progressTime) * (progressTime)) / (rate * rate));
             transform.eulerAngles = new Vector3(anglex, angley, anglez);
         }
 
