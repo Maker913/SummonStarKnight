@@ -13,8 +13,8 @@ public class SceneControl : MonoBehaviour
     private bool isFading = false;
 
     // 遷移先のシーン情報
-    private string sceneName;
-    private int sceneNumber;
+    private string sceneNameData;
+    private int sceneNumberData;
 
     private void Awake()
     {
@@ -63,7 +63,6 @@ public class SceneControl : MonoBehaviour
     private IEnumerator FadeScene(bool sceneChangeMode, float interval)
     {
         isFading = true;
-        Debug.Log("画面遷移を開始しました");
 
         // 暗くする
         float time = 0;
@@ -75,14 +74,7 @@ public class SceneControl : MonoBehaviour
         }
 
         // シーン切り替え
-        if (sceneChangeMode)
-        {
-            SceneManager.LoadScene(sceneName);
-        }
-        else
-        {
-            SceneManager.LoadScene(sceneNumber);
-        }
+        LoadScene(sceneChangeMode);
 
         // 明るくする
         time = 0;
@@ -94,30 +86,65 @@ public class SceneControl : MonoBehaviour
         }
 
         isFading = false;
-        Debug.Log("画面遷移を終了しました");
     }
 
     /// <summary>
-    /// 画面遷移（シーン名参照）
+    /// シーン切り替え
+    /// </summary>
+    /// <param name="sceneChangeMode">true=シーン名参照、false=シーン番号参照</param>
+    private void LoadScene(bool sceneChangeMode)
+    {
+        if (sceneChangeMode)
+        {
+            SceneManager.LoadScene(sceneNameData);
+        }
+        else
+        {
+            SceneManager.LoadScene(sceneNumberData);
+        }
+    }
+
+    /// <summary>
+    /// シーン遷移（シーン名参照）
     /// </summary>
     /// <param name="scene">シーン名</param>
     /// <param name="interval">暗転にかかる時間(秒)</param>
-    public void LoadScene(string scene, float interval)
+    public void LoadScene(string sceneName, float interval)
     {
         if (isFading) return;
-        sceneName = scene;
+        sceneNameData = sceneName;
         StartCoroutine(FadeScene(true, interval));
     }
 
     /// <summary>
-    /// 画面遷移（シーン番号参照）
+    /// シーン遷移（シーン番号参照）
     /// </summary>
     /// <param name="sceneNum">シーン番号</param>
     /// <param name="interval">暗転にかかる時間(秒)</param>
     public void LoadScene(int sceneNum, float interval)
     {
         if (isFading) return;
-        sceneNumber = sceneNum;
+        sceneNumberData = sceneNum;
         StartCoroutine(FadeScene(false, interval));
+    }
+
+    /// <summary>
+    /// シーン遷移（シーン名参照、フェードなし）
+    /// </summary>
+    /// <param name="sceneName">シーン名</param>
+    public void LoadScene(string sceneName)
+    {
+        sceneNameData = sceneName;
+        LoadScene(true);
+    }
+
+    /// <summary>
+    /// シーン遷移（シーン番号参照、フェードなし）
+    /// </summary>
+    /// <param name="sceneName">シーン番号</param>
+    public void LoadScene(int sceneNum)
+    {
+        sceneNumberData = sceneNum;
+        LoadScene(false);
     }
 }
