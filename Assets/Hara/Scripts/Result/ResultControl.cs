@@ -32,6 +32,6 @@ public class ResultControl : MonoBehaviour
 
     private void ButtonAction()
     {
-        SceneControl.Instance.LoadScene(sceneName, 1.0f);
+        SceneControl.Instance.LoadScene(sceneName, 0.75f);
     }
 }
