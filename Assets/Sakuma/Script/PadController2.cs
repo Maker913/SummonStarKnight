@@ -129,9 +129,12 @@ public class PadController2 : MonoBehaviour
                 {
                     if (sterLineamount == 0)
                     {
-                        sumonbd = true;
-                        sumonbdobj.SetActive(true);
-                        sumonbdobj.GetComponent<Animator>().SetTrigger("star");
+                        if (sumonMode == false)
+                        {
+                            sumonbd = true;
+                            sumonbdobj.SetActive(true);
+                            sumonbdobj.GetComponent<Animator>().SetTrigger("star");
+                        }
                     }
                     else
                     {
