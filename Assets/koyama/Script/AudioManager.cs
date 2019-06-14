@@ -2,136 +2,72 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
-
 public class AudioManager : MonoBehaviour
 {
-
     /// <summary>
-    /// SE再生。AUDIO.SE_BUTTONがSEのファイル名
-    ///AudioManager.Instance.PlaySE(AUDIO.SE_BUTTON);
-    ///BGM再生。AUDIO.BGM_BATTLEがBGMのファイル名
-    ///AudioManager.Instance.PlayBGM(AUDIO.BGM_BATTLE, AudioManager.BGM_FADE_SPEED_RATE_HIGH);
-    ///BGMフェードアウト
-    ///AudioManager.Instance.FadeOutBGM();
+    /// SE再生。
+    ///AudioManager.Instance.PlaySE("番号");
+    ///BGM再生。
+    ///AudioManager.Instance.PlayBGM("番号");
     /// </summary>
     public static AudioManager Instance;
-    //音量保存
-    private const string BGM_VOLUME_KEY = "BGM_VOLUME_KEY";
-    private const string SE_VOLUME_KEY = "SE_VOLUME_KEY";
-    private const float BGM_VOLUME_DEFULT = 1.0f;
-    private const float SE_VOLUME_DEFULT = 1.0f;
-    //
-    public const float BGM_FADE_SPEED_HIGH = 0.9f;
-    public const float BGM_FADE_SPEED_LOW = 0.3f;
-    private float _BgmFadeSpeedRate = BGM_FADE_SPEED_HIGH;
-    //次に流すやつ
-    private string _nextBGMName;
-    private string _nextSEName;
-    //フェードアウト判定
-    private bool _isfadeOut = false;
+    private AudioSource audioSource;
     //SEとBGMの区別
-    public AudioSource BGMSource, SESource;
-    //Audio保持
-    private Dictionary<string, AudioClip> _bgmDic, _seDic;
-    //
+    [SerializeField]
+    private AudioClip[] BGM;
+    private AudioSource BGMsource; 
+    [SerializeField]
+    private AudioClip[] SE;
+    private AudioSource SEsource;
     private void Awake()
     {
         if(Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(this.gameObject);
+            DontDestroyOnLoad(gameObject);
         }
         else
         {
-            Destroy(this.gameObject);
+            Destroy(gameObject);
         }
-        _bgmDic = new Dictionary<string, AudioClip>();
-        _seDic = new Dictionary<string, AudioClip>();
-        object[] bgmList = Resources.LoadAll("Audio/BGM");
-        object[] seList = Resources.LoadAll("Audio/SE");
-
-        foreach(AudioClip bgm in bgmList)
-        {
-            _bgmDic[bgm.name] = bgm;
-        }
-        foreach(AudioClip se in seList)
-        {
-            _seDic[se.name] = se;
-        }
-    }
-    private void Start()
-    {
-        BGMSource.volume = PlayerPrefs.GetFloat(BGM_VOLUME_KEY, BGM_VOLUME_DEFULT);
-        SESource.volume = PlayerPrefs.GetFloat(SE_VOLUME_KEY, SE_VOLUME_DEFULT);
+        audioSource = gameObject.GetComponent<AudioSource>();
+        BGMsource.loop = true;
     }
     //SE
-    public void PlaySE(string seName,float delay = 0.0f)
+    public void PlaySE(int number)
     {
-        if (!_seDic.ContainsKey(seName))
-        {
-            Debug.Log(seName + "という名前はSEがありません");
-            return;
-        }
-        _nextSEName = seName;
-        Invoke("DelayPlaySE", delay);
-    }
-    private void DelayPlaySE()
-    {
-        SESource.PlayOneShot(_seDic[_nextSEName] as AudioClip);
-    }
-    //BGM
-    public void PlayBGM(string bgmname,float fadeSpeedRate = BGM_FADE_SPEED_HIGH)
-    {
-        if (!_bgmDic.ContainsKey(bgmname))
-        {
-            Debug.Log(bgmname + "という名前のBGMはありません");
-            return;
-        }
-        if (!BGMSource.isPlaying)
-        {
-            _nextBGMName = "";
-            BGMSource.clip = _bgmDic[bgmname] as AudioClip;
-            BGMSource.Play();
-        }
-        else if(BGMSource.clip.name != bgmname)
-        {
-            _nextBGMName = bgmname;
-            FadeOutBGM(fadeSpeedRate);
-        }
-    }
-    //現在の曲をフェードアウト
-    public void FadeOutBGM(float fadeSpeedRate = BGM_FADE_SPEED_LOW)
-    {
-        _BgmFadeSpeedRate = fadeSpeedRate;
-        _isfadeOut = true;
-    }
-
-    private void Update()
-    {
-        if (!_isfadeOut)
+        if(0 > number || SE.Length <= number)
         {
             return;
         }
-        BGMSource.volume -= Time.deltaTime * _BgmFadeSpeedRate;
-        if(BGMSource.volume <= 0)
+        foreach(AudioClip audio in SE)
         {
-            BGMSource.Stop();
-            BGMSource.volume = PlayerPrefs.GetFloat(BGM_VOLUME_KEY, BGM_VOLUME_DEFULT);
-            _isfadeOut = false;
-
-            if (!string.IsNullOrEmpty(_nextBGMName))
+            if(audioSource.clip == SE[number])
             {
-                PlayBGM(_nextBGMName);
+                audioSource.clip = audio;
+                audioSource.Play();
+                break;
             }
         }
     }
-    //音量調整
-    public void ChangeVolume(float BGMVolume, float SEVolume)
+    //BGM
+    public void PlayBGM(int number)
     {
-        BGMSource.volume = BGMVolume;
-        SESource.volume = SEVolume;
-
-        PlayerPrefs.SetFloat(BGM_VOLUME_KEY, BGMVolume);
-        PlayerPrefs.SetFloat(SE_VOLUME_KEY, SEVolume);
+        if(0 > number || BGM.Length <= number)
+        {
+            return;
+        }
+        if (BGMsource.clip == BGM[number])
+        {
+            return;
+        }
+        BGMsource.Stop();
+        BGMsource.clip = BGM[number];
+        BGMsource.Play();
+    }
+    public void StopBGM()
+    {
+        BGMsource.Stop();
+        BGMsource.clip = null;
     }
 }

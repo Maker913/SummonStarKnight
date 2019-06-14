@@ -13,4 +13,12 @@ public class s : MonoBehaviour
         //BGMフェードアウト
         //AudioManager.Instance.FadeOutBGM();
     }
+    void Update()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            AudioManager.Instance.PlayBGM(0);
+            Debug.Log("鳴った");
+        }
+    }
 }
