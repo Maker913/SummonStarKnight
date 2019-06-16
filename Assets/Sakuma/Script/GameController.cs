@@ -68,6 +68,10 @@ public class GameController : MonoBehaviour
     private GameObject gageobj;
     private Image gaged;
 
+    private int dcont = 0;
+    private float cameradTime = 0;
+
+
     static public string result = "NULL";
     [Space(10)]
     [Header("ここからエフェクト")]
@@ -127,11 +131,19 @@ public class GameController : MonoBehaviour
             case 10:
                 ChaneSceen();
                 break;
+            case 11:
+                Battlesoon();
+                break;
             default:
                 break;
         }
     }
 
+    private void Battlesoon()
+    {
+        ModeChange(2, 1f);
+        camera.GetComponent<CameraController2>().SetCamera(2, 1);
+    }
 
     private void ChaneSceen()
     {
@@ -152,9 +164,9 @@ public class GameController : MonoBehaviour
 
     private void Stop()
     {
-        ModeChange(2, 1);
+        ModeChange(11, 0);
         textPadObj.SetActive(false );
-        camera.GetComponent<CameraController2>().SetCamera(0, 1);
+        //camera.GetComponent<CameraController2>().SetCamera(0, 1);
     }
 
     private void Lose()
@@ -179,44 +191,86 @@ public class GameController : MonoBehaviour
 
     private void EnemyAtk()
     {
-
-        enj.GetComponent<Animator>().SetBool("Open", true);
-        teki.GetComponent<Animator>().SetTrigger ("Attack");
-        padController2.Pad = false;
-        textPadObj.SetActive(true);
-        text.text = "攻撃されました";
-        myHP -= 10;
-        if (myHP <= 0)
+        if(cameradTime == 0 || cameradTime > 1)
         {
-            ModeChange(7, 2f);
+            if (dcont == 0)
+            {
+                camera.GetComponent<CameraController2>().SetCamera(0, 1);
+                dcont++;
+                cameradTime += Time.deltaTime;
+                enj.GetComponent<Animator>().SetBool("Open", true);
+            }
+            else
+            {
+                dcont = 0;
+                cameradTime = 0;
+
+
+                teki.GetComponent<Animator>().SetTrigger("Attack");
+                padController2.Pad = false;
+                textPadObj.SetActive(true);
+                text.text = "攻撃されました";
+                myHP -= 10;
+                if (myHP <= 0)
+                {
+                    ModeChange(7, 2f);
+                }
+                else
+                {
+                    ModeChange(11, 2f);
+                }
+            }
+
         }
         else
         {
-            ModeChange(2, 2f);
+            cameradTime += Time.deltaTime;
         }
+
 
     }
 
     private void MyAtk()
     {
-        gage += 40;
-        if (gage > 100)
+        if (cameradTime == 0 || cameradTime > 1)
         {
-            gage = 100;
-        }
+            if (dcont == 0)
+            {
+                camera.GetComponent<CameraController2>().SetCamera(3, 1);
+                dcont++;
+                cameradTime += Time.deltaTime;
+                enj.GetComponent<Animator>().SetBool("Open", true);
+            }
+            else
+            {
+                dcont = 0;
+                cameradTime = 0;
 
-        enj.GetComponent<Animator>().SetBool("Open", true);
-        padController2.Pad = false;
-        textPadObj.SetActive(true);
-        text.text = "攻撃しました";
-        tekiHP -= 10;
-        if (tekiHP <= 0)
-        {
-            ModeChange(6, 2f);
+                gage += 40;
+                if (gage > 100)
+                {
+                    gage = 100;
+                }
+
+                
+                padController2.Pad = false;
+                textPadObj.SetActive(true);
+                text.text = "攻撃しました";
+                tekiHP -= 10;
+                if (tekiHP <= 0)
+                {
+                    ModeChange(6, 2f);
+                }
+                else
+                {
+                    ModeChange(11, 2f);
+                }
+            }
+
         }
         else
         {
-            ModeChange(2, 2f);
+            cameradTime += Time.deltaTime;
         }
 
     }
@@ -229,17 +283,19 @@ public class GameController : MonoBehaviour
             enj.GetComponent<Animator>().SetBool("Open", false);
             enj.NextGame();
             startPas = 1;
+            
         }
         text.text = "";
         padController2.Pad = true;
         textPadObj.SetActive(false);
+        
     }
 
     private void Stert()
     {
         textPadObj.SetActive(true);
         text.text = "ゲーム開始";
-        ModeChange(2, 3f);
+        ModeChange(11, 3f);
     }
 
     private void Menu()
