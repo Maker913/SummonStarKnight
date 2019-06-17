@@ -12,11 +12,12 @@ public class AudioManager : MonoBehaviour
     public static AudioManager Instance;
     //SEとBGMの区別
     [SerializeField]
-    private AudioClip[] BGM;
-    private AudioSource BGMsource; 
+    private AudioClip[] bgmList;
+    public AudioClip[] BgmList { set { bgmList = value; } get { return bgmList; } }
+    
     [SerializeField]
-    private AudioClip[] SE;
-    private AudioSource SEsources;
+    private AudioClip[] seList;
+    public AudioClip[] SeList { set { seList = value; } get { return seList; } }
     private void Awake()
     {
         if(Instance == null)
@@ -28,60 +29,21 @@ public class AudioManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
-        SEsources = gameObject.GetComponent<AudioSource>();
-        BGMsource = gameObject.AddComponent<AudioSource>();
-        //BGMループ
-        BGMsource.loop = true;
     }
+
     //BGM再生
     public void PlayBGM(int number)
     {
-        if(0 > number || BGM.Length <= number)
-        {
-            return;
-        }
-        //同じBGMの時は何もしない
-        if (BGMsource.clip == BGM[number])
-        {
-            Debug.Log("何もしない");
-            return;
-        }
-        BGMsource.Stop();
-        BGMsource.clip = BGM[number];
-        BGMsource.Play();
-        Debug.Log("鳴った");
+        BgmManager.Instance.PlayBGM(number);
     }
     //BGM停止
     public void StopBGM()
     {
-        BGMsource.Stop();
-        BGMsource.clip = null;
-        Debug.Log("止めた");
+        BgmManager.Instance.StopBGM();
     }
     //SE再生
     public void PlaySE(int number)
     {
-        if (0 > number || SE.Length <= number)
-        {
-            return;
-        }
-        foreach (AudioClip source in SE)
-        {
-            SEsources.clip = SE[number];
-            SEsources.Play();
-            Debug.Log("鳴った");
-            break;
-        }
-    }
-    //SE停止
-    public void StopSE()
-    {
-        //すべてのSEの停止
-        foreach (AudioClip source in SE)
-        {
-            SEsources.Stop();
-            SEsources.clip = null;
-            Debug.Log("止めた");
-        }
+        SeManager.Instance.PlaySE(number);
     }
 }
