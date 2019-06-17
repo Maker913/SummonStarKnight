@@ -16,23 +16,27 @@ public class HPbar : MonoBehaviour
 
     int HP;
 
+
+
+
+
     // Start is called before the first frame update
     void Start()
     {
         if (Flag == 0)
         {
-            HP = gameController.GetComponent<GameController>().myHP;
+            HP = gameController.GetComponent<StatusManager>().playerHP ;
             bar.maxValue = HP;
         }else if(Flag == 1){
-            HP = gameController.GetComponent<GameController>().tekiHP;
+            HP = gameController.GetComponent<StatusManager>().enemyHP ;
             bar.maxValue = HP;
         }else if(Flag == 3){
-            HP = gameController.GetComponent<GameController>().myHP;
+            HP = gameController.GetComponent<StatusManager>().playerHP;
             bar.maxValue = HP;
             bar.value = HP;
             
         }else if (Flag == 4){
-            HP = gameController.GetComponent<GameController>().tekiHP;
+            HP = gameController.GetComponent<StatusManager>().enemyHP;
             bar.maxValue = HP;
             bar.value = HP;
         }
@@ -43,17 +47,17 @@ public class HPbar : MonoBehaviour
     {
         if (Flag == 0)
         {
-            HP = gameController.GetComponent<GameController>().myHP;
+            HP = gameController.GetComponent<StatusManager>().playerHP;
             bar.value = HP;
         }
         else if (Flag == 1)
         {
-            HP = gameController.GetComponent<GameController>().tekiHP;
+            HP = gameController.GetComponent<StatusManager>().enemyHP;
             bar.value = HP;
         }
         else if (Flag == 3)
         {
-            HP = gameController.GetComponent<GameController>().myHP;
+            HP = gameController.GetComponent<StatusManager>().playerHP;
             if (bar.value > HP)
             {
                 bar.value -= 10f * Time.deltaTime;
@@ -61,7 +65,7 @@ public class HPbar : MonoBehaviour
         }
         else if (Flag == 4)
         {
-            HP = gameController.GetComponent<GameController>().tekiHP;
+            HP = gameController.GetComponent<StatusManager>().enemyHP;
             if (bar.value > HP)
             {
                 bar.value -= 10f * Time.deltaTime;

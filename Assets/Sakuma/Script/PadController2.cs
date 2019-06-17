@@ -90,9 +90,15 @@ public class PadController2 : MonoBehaviour
     private GameObject sumontext;
     private Text text;
 
+
+    [SerializeField]
+    private GameObject StatusManagerObj;
+    private StatusManager statusManager;
+
     // Start is called before the first frame update
     void Start()
     {
+        statusManager = StatusManagerObj.GetComponent<StatusManager>();
         text = sumontext.GetComponent<Text>();
         transform.position = new Vector3(Screen.width / 2, Screen.height / 2, 0);
         Pad = false;
@@ -132,6 +138,7 @@ public class PadController2 : MonoBehaviour
                         if (sumonMode == false)
                         {
                             sumonbd = true;
+                            //sumonbdobj.transform.localScale = new Vector3(1, 1, 1);
                             sumonbdobj.SetActive(true);
                             sumonbdobj.GetComponent<Animator>().SetTrigger("star");
                         }
@@ -455,7 +462,7 @@ public class PadController2 : MonoBehaviour
                 {
                     gameController.ModeChange(3, 0);
                     enj.image.fillAmount = 0;
-                    enj.time = enj.attacktime;
+                    enj.time = statusManager .gageSpeed ;
                     //enj.BoardReset();
                     //enj.RandSelect();
                 }
@@ -482,7 +489,7 @@ public class PadController2 : MonoBehaviour
                     gameController.weapon = sumonNum;
                     gameController.ModeChange(8, 0);
                     enj.image.fillAmount = 0;
-                    enj.time = enj.attacktime;
+                    enj.time = statusManager.gageSpeed;
                     sumonMode = false;
                     foreach (Transform n in lineParent2.transform)
                     {

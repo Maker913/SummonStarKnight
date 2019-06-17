@@ -50,9 +50,11 @@ public class GameController : MonoBehaviour
     private Text text;
 
     //HP
-    public int myHP;
-    public int tekiHP;
-    public int gage;
+    //public int myHP;
+    //public int tekiHP;
+    //public int gage;
+
+
     //2のみ開始時処理使用
    public  int startPas;
 
@@ -72,6 +74,17 @@ public class GameController : MonoBehaviour
     private float cameradTime = 0;
 
 
+    [SerializeField]
+    private GameObject StatusManagerObj;
+    private StatusManager statusManager;
+
+    private int enemyTurn;
+
+
+
+
+
+
     static public string result = "NULL";
     [Space(10)]
     [Header("ここからエフェクト")]
@@ -83,11 +96,13 @@ public class GameController : MonoBehaviour
 
     void Start()
     {
+        enemyTurn = Random.Range(2, 5);
         gaged = gageobj.GetComponent<Image>();
         gameMode = 1;
         text = textObj.GetComponent<Text>();
         padController2 = padControllerObj.GetComponent<PadController2>();
         enj = EnjObj.GetComponent<Enj>();
+        statusManager = StatusManagerObj.GetComponent<StatusManager>();
     }
 
 
@@ -95,7 +110,7 @@ public class GameController : MonoBehaviour
     void Update()
     {
         //Debug.Log(gameMode);
-        gaged.fillAmount = (float)gage / 100f;
+        gaged.fillAmount = (float)statusManager .summonGage  / 100f;
         switch (gameMode)
         {
             case 0:
@@ -132,6 +147,9 @@ public class GameController : MonoBehaviour
                 ChaneSceen();
                 break;
             case 11:
+                EnemyMove();
+                break;
+            case 12:
                 Battlesoon();
                 break;
             default:
@@ -139,8 +157,32 @@ public class GameController : MonoBehaviour
         }
     }
 
+
+
+    private void EnemyMove()
+    {
+        
+        if (enemyTurn <=0)
+        {
+            text.text = "2ターンの間制限時間減少";
+            statusManager.EnemyAction(Random.Range(1, statusManager .EnemyActionrange +1));
+            textPadObj.SetActive(true);
+            ModeChange(12, 2);
+            enemyTurn = Random.Range(2, 5);
+        }
+        else
+        {
+            ModeChange(12, 0);
+            enemyTurn--;
+        }
+        
+    }
+
+
     private void Battlesoon()
     {
+        statusManager.EnemyTurnCheck();
+        statusManager.TurnCheck();
         ModeChange(2, 1f);
         camera.GetComponent<CameraController2>().SetCamera(2, 1);
     }
@@ -153,6 +195,7 @@ public class GameController : MonoBehaviour
     private void Sumon()
     {
         enj.GetComponent<Animator>().SetBool("Open", true);
+        statusManager.SummonCheck(weapon);
         text.text = technique[weapon ].Name +"を召喚しました";
         padController2.Pad = false;
         textPadObj.SetActive(true);
@@ -164,7 +207,7 @@ public class GameController : MonoBehaviour
 
     private void Stop()
     {
-        ModeChange(11, 0);
+        ModeChange(12, 0);
         textPadObj.SetActive(false );
         //camera.GetComponent<CameraController2>().SetCamera(0, 1);
     }
@@ -210,8 +253,9 @@ public class GameController : MonoBehaviour
                 padController2.Pad = false;
                 textPadObj.SetActive(true);
                 text.text = "攻撃されました";
-                myHP -= 10;
-                if (myHP <= 0)
+                statusManager.playerHP  -= statusManager.enemyAtk ;
+                statusManager.BarrierCheck();
+                if (statusManager.playerHP <= 0)
                 {
                     ModeChange(7, 2f);
                 }
@@ -246,18 +290,18 @@ public class GameController : MonoBehaviour
                 dcont = 0;
                 cameradTime = 0;
 
-                gage += 40;
-                if (gage > 100)
+                statusManager.summonGage += 40;
+                if (statusManager.summonGage > 100)
                 {
-                    gage = 100;
+                    statusManager.summonGage = 100;
                 }
 
                 
                 padController2.Pad = false;
                 textPadObj.SetActive(true);
                 text.text = "攻撃しました";
-                tekiHP -= 10;
-                if (tekiHP <= 0)
+                statusManager.enemyHP  -= statusManager.playerAtk;
+                if (statusManager.enemyHP <= 0)
                 {
                     ModeChange(6, 2f);
                 }
@@ -295,7 +339,7 @@ public class GameController : MonoBehaviour
     {
         textPadObj.SetActive(true);
         text.text = "ゲーム開始";
-        ModeChange(11, 3f);
+        ModeChange(12, 3f);
     }
 
     private void Menu()
