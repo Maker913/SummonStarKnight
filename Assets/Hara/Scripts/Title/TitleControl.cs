@@ -21,7 +21,7 @@ public class TitleControl : MonoBehaviour
         {
             Debug.LogError("スタートボタンオブジェクトを割り当ててください");
         }
-        AudioManager.Instance.PlayBGM(0);
+        //AudioManager.Instance.PlayBGM(0);
     }
 
     // Update is called once per frame
@@ -32,7 +32,7 @@ public class TitleControl : MonoBehaviour
 
     private void ButtonAction()
     {
-        AudioManager.Instance.StopBGM();
-        SceneControl.Instance.LoadScene(sceneName, 0.5f);
+        //AudioManager.Instance.StopBGM();
+        SceneControl.Instance.LoadScene(sceneName, true);
     }
 }

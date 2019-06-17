@@ -12,10 +12,6 @@ public class SceneControl : MonoBehaviour
     private float fadeAlpha = 0;
     private bool isFading = false;
 
-    // 遷移先のシーン情報
-    private string sceneNameData;
-    private int sceneNumberData;
-
     private void Awake()
     {
         if(Instance == null)
@@ -54,31 +50,41 @@ public class SceneControl : MonoBehaviour
         GUI.DrawTexture(new Rect(0, 0, Screen.width, Screen.height), blackTexture);
     }
 
-    /// <summary>
-    /// シーン遷移用コルーチン
-    /// </summary>
-    /// <param name="scene">シーン名</param>
-    /// <param name="interval">暗転にかかる時間(秒)</param>
-    /// <returns></returns>
-    private IEnumerator FadeScene(bool sceneChangeMode, float interval)
+   /// <summary>
+   /// シーン遷移用のコルーチン処理
+   /// </summary>
+   /// <param name="sceneName">遷移先のシーン名</param>
+   /// <param name="isFade">true=フェードを実行</param>
+   /// <param name="interval">フェードにかかる時間</param>
+   /// <param name="unityAction">フェード中に実行したい処理</param>
+   /// <returns></returns>
+    private IEnumerator SceneChange(string sceneName, bool isFade, float interval, UnityEngine.Events.UnityAction unityAction)
     {
+        if(!isFade)
+        {
+            SceneManager.LoadScene(sceneName);
+            yield break;
+        }
+
         isFading = true;
 
-        // 暗くする
+        // 画面を暗くする
         float time = 0;
-        while(time <= interval)
+        while (time <= interval)
         {
             fadeAlpha = Mathf.Lerp(0f, 1f, time / interval);
             time += Time.deltaTime;
             yield return 0;
         }
 
-        // シーン切り替え
-        LoadScene(sceneChangeMode);
+        // 画面暗転中に実行したい処理を実行する
+        unityAction?.Invoke();
+        // シーンを遷移させる
+        SceneManager.LoadScene(sceneName);
 
-        // 明るくする
+        // 画面を明るくする
         time = 0;
-        while(time <= interval)
+        while (time <= interval)
         {
             fadeAlpha = Mathf.Lerp(1f, 0f, time / interval);
             time += Time.deltaTime;
@@ -89,62 +95,14 @@ public class SceneControl : MonoBehaviour
     }
 
     /// <summary>
-    /// シーン切り替え
+    /// シーン遷移
     /// </summary>
-    /// <param name="sceneChangeMode">true=シーン名参照、false=シーン番号参照</param>
-    private void LoadScene(bool sceneChangeMode)
+    /// <param name="sceneName">遷移先のシーン名</param>
+    /// <param name="isFade">フェードを実行する場合はtrue</param>
+    /// <param name="interval">フェードにかかる時間(秒)</param>
+    /// <param name="unityAction">フェード中に実行したい処理のメソッド名</param>
+    public void LoadScene(string sceneName, bool isFade = false, float interval = 1.0f, UnityEngine.Events.UnityAction unityAction = null)
     {
-        if (sceneChangeMode)
-        {
-            SceneManager.LoadScene(sceneNameData);
-        }
-        else
-        {
-            SceneManager.LoadScene(sceneNumberData);
-        }
-    }
-
-    /// <summary>
-    /// シーン遷移（シーン名参照）
-    /// </summary>
-    /// <param name="scene">シーン名</param>
-    /// <param name="interval">暗転にかかる時間(秒)</param>
-    public void LoadScene(string sceneName, float interval)
-    {
-        if (isFading) return;
-        sceneNameData = sceneName;
-        StartCoroutine(FadeScene(true, interval));
-    }
-
-    /// <summary>
-    /// シーン遷移（シーン番号参照）
-    /// </summary>
-    /// <param name="sceneNum">シーン番号</param>
-    /// <param name="interval">暗転にかかる時間(秒)</param>
-    public void LoadScene(int sceneNum, float interval)
-    {
-        if (isFading) return;
-        sceneNumberData = sceneNum;
-        StartCoroutine(FadeScene(false, interval));
-    }
-
-    /// <summary>
-    /// シーン遷移（シーン名参照、フェードなし）
-    /// </summary>
-    /// <param name="sceneName">シーン名</param>
-    public void LoadScene(string sceneName)
-    {
-        sceneNameData = sceneName;
-        LoadScene(true);
-    }
-
-    /// <summary>
-    /// シーン遷移（シーン番号参照、フェードなし）
-    /// </summary>
-    /// <param name="sceneName">シーン番号</param>
-    public void LoadScene(int sceneNum)
-    {
-        sceneNumberData = sceneNum;
-        LoadScene(false);
+        StartCoroutine(SceneChange(sceneName, isFade, interval, unityAction));
     }
 }

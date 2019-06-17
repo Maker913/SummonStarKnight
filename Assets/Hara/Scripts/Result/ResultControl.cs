@@ -20,7 +20,7 @@ public class ResultControl : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        AudioManager.Instance.PlayBGM(0);
+        //AudioManager.Instance.PlayBGM(0);
     }
 
     // Update is called once per frame
@@ -32,6 +32,6 @@ public class ResultControl : MonoBehaviour
 
     private void ButtonAction()
     {
-        SceneControl.Instance.LoadScene(sceneName, 0.75f);
+        SceneControl.Instance.LoadScene(sceneName, true);
     }
 }
