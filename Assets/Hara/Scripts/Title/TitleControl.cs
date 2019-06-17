@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class TitleControl : MonoBehaviour
 {
-    [SerializeField]
+    [SerializeField,Tooltip("遷移先のシーン名")]
     private string sceneName;
     [SerializeField]
     private Button startButton;
@@ -21,6 +21,7 @@ public class TitleControl : MonoBehaviour
         {
             Debug.LogError("スタートボタンオブジェクトを割り当ててください");
         }
+        AudioManager.Instance.PlayBGM(0);
     }
 
     // Update is called once per frame
@@ -31,6 +32,7 @@ public class TitleControl : MonoBehaviour
 
     private void ButtonAction()
     {
+        AudioManager.Instance.StopBGM();
         SceneControl.Instance.LoadScene(sceneName, 0.5f);
     }
 }
