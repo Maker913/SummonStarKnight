@@ -2,41 +2,29 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BgmManager : MonoBehaviour
+public class BgmManager : SoundModel
 {
-    AudioManager audioManager;
-    public static BgmManager Instance;
-    [SerializeField]
     private AudioSource audioSource;
 
     private void Awake()
     {
-        if(Instance == null)
-        {
-            Instance = this;
-        }
-        audioManager = AudioManager.Instance;
-    }
-
-    private void Start()
-    {
-        
+        audioSource = GetComponent<AudioSource>();
     }
     //BGM再生
     public void PlayBGM(int number)
     {
-        if (0 > number || audioManager.BgmList.Length <= number)
+        if (0 > number || audioClips.Count <= number)
         {
             return;
         }
         //同じBGMの時は何もしない
-        if (audioSource.clip == audioManager.BgmList[number])
+        if (audioSource.clip == audioClips[number])
         {
             Debug.Log("何もしない");
             return;
         }
         audioSource.Stop();
-        audioSource.clip = audioManager.BgmList[number];
+        audioSource.clip = audioClips[number];
         audioSource.Play();
         Debug.Log("鳴った");
     }
