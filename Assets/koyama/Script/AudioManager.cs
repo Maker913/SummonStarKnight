@@ -10,14 +10,8 @@ public class AudioManager : MonoBehaviour
     ///AudioManager.Instance.PlayBGM("番号");
     /// </summary>
     public static AudioManager Instance;
-    //SEとBGMの区別
-    [SerializeField]
-    private AudioClip[] bgmList;
-    public AudioClip[] BgmList { set { bgmList = value; } get { return bgmList; } }
-    
-    [SerializeField]
-    private AudioClip[] seList;
-    public AudioClip[] SeList { set { seList = value; } get { return seList; } }
+    private BgmManager bgmManager;
+    private SeManager seManager;
     private void Awake()
     {
         if(Instance == null)
@@ -29,21 +23,31 @@ public class AudioManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+        bgmManager = GetComponentInChildren<BgmManager>();
+        seManager = GetComponentInChildren<SeManager>();
     }
 
     //BGM再生
     public void PlayBGM(int number)
     {
-        BgmManager.Instance.PlayBGM(number);
+        //BgmManager.Instance.PlayBGM(number);
+        bgmManager.PlayBGM(number);
     }
     //BGM停止
     public void StopBGM()
     {
-        BgmManager.Instance.StopBGM();
+        //BgmManager.Instance.StopBGM();
+        bgmManager.StopBGM();
     }
     //SE再生
     public void PlaySE(int number)
     {
-        SeManager.Instance.PlaySE(number);
+        //SeManager.Instance.PlaySE(number);
+        seManager.PlaySE(number);
+    }
+    //SE停止
+    public void StopSE()
+    {
+        seManager.StopSE();
     }
 }
