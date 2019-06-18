@@ -100,7 +100,7 @@ public class SceneControl : MonoBehaviour
     /// <param name="sceneName">遷移先のシーン名</param>
     /// <param name="isFade">フェードを実行する場合はtrue</param>
     /// <param name="interval">フェードにかかる時間(秒)</param>
-    /// <param name="unityAction">フェード中に実行したい処理のメソッド名</param>
+    /// <param name="unityAction">フェード中に実行したい処理のメソッド</param>
     public void LoadScene(string sceneName, bool isFade = false, float interval = 1.0f, UnityEngine.Events.UnityAction unityAction = null)
     {
         StartCoroutine(SceneChange(sceneName, isFade, interval, unityAction));
