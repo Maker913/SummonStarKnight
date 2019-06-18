@@ -138,7 +138,8 @@ public class PadController2 : MonoBehaviour
                         if (sumonMode == false)
                         {
                             sumonbd = true;
-                            //sumonbdobj.transform.localScale = new Vector3(1, 1, 1);
+                            sumonbdobj.transform.localPosition = new Vector3(275, 275,0);
+                            sumonbdobj.transform.localScale = new Vector3(1, 1, 1);
                             sumonbdobj.SetActive(true);
                             sumonbdobj.GetComponent<Animator>().SetTrigger("star");
                         }
