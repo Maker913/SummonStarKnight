@@ -19,20 +19,26 @@ public class TitleControl : MonoBehaviour
         }
         else
         {
-            Debug.LogError("スタートボタンオブジェクトを割り当ててください");
+            Debug.LogError("ボタンオブジェクトを割り当ててください");
         }
         //AudioManager.Instance.PlayBGM(0);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
+    /// <summary>
+    /// スタートボタンで呼び出される処理
+    /// </summary>
     private void ButtonAction()
     {
-        //AudioManager.Instance.StopBGM();
-        SceneControl.Instance.LoadScene(sceneName, true);
+        // シーン遷移
+        SceneControl.Instance.LoadScene(sceneName, true, 0.75f, () => SoundStop());
+    }
+
+    /// <summary>
+    /// シーン内で鳴っているBGMとSEを停止
+    /// </summary>
+    private void SoundStop()
+    {
+        AudioManager.Instance.StopBGM();
+        AudioManager.Instance.StopSE();
     }
 }

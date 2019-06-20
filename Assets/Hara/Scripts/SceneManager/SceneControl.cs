@@ -103,6 +103,7 @@ public class SceneControl : MonoBehaviour
     /// <param name="unityAction">フェード中に実行したい処理のメソッド</param>
     public void LoadScene(string sceneName, bool isFade = false, float interval = 1.0f, UnityEngine.Events.UnityAction unityAction = null)
     {
+        if (isFading) return;
         StartCoroutine(SceneChange(sceneName, isFade, interval, unityAction));
     }
 }
