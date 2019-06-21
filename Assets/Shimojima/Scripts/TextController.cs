@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class TextController : MonoBehaviour
 {
+    //シナリオデータの格納
     [SerializeField]
     private GameObject tData;
     [SerializeField]
@@ -43,32 +44,35 @@ public class TextController : MonoBehaviour
 
     void Start()
     {
-        tDataIndex = tData.GetComponent<TextData>().textData.Length;
-
-        for (int i = 0; i < tDataIndex; i++)
-        {
-            oringtext.Add(tData.GetComponent<TextData>().textData[i]);
-        }
-
-        for (int i = 0; i < tDataIndex; i++)
-        {
-            if (oringtext[i].Substring(0, 1) == "{")
-            {
-                if (oringtext[i].Substring(oringtext[i].IndexOf('{') + 1, oringtext[i].IndexOf('}') - 1) == "next")
-                {
-                    lineCount.Add(i);
-                }
-            }
-        }
+        
     }
-
-    // Update is called once per frame
+    
     void Update()
     {
+        if (tData.GetComponent<TextData>().loadFinish)
+        {
+            tDataIndex = tData.GetComponent<TextData>().textData.Count;
+
+            for (int i = 0; i < tDataIndex; i++)
+            {
+                oringtext.Add(tData.GetComponent<TextData>().textData[i]);
+            }
+
+            for (int i = 0; i < tDataIndex; i++)
+            {
+                if (oringtext[i].Substring(0, 1) == "{")
+                {
+                    if (oringtext[i].Substring(oringtext[i].IndexOf('{') + 1, oringtext[i].IndexOf('}') - 1) == "next")
+                    {
+                        lineCount.Add(i);
+                    }
+                }
+            }
+            tData.GetComponent<TextData>().loadFinish = false;
+        }
         time += Time.deltaTime;
         PrintText();
         Debug.Log(nextText);
-        Debug.Log(auto);
     }
     
     private void PrintText()
