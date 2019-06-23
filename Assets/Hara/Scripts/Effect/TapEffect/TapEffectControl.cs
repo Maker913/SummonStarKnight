@@ -47,7 +47,7 @@ public class TapEffectControl : MonoBehaviour
 
     private void Update()
     {
-        if (isEffect) TapEffect();
+        TapEffect();
     }
 
     /// <summary>
@@ -55,7 +55,22 @@ public class TapEffectControl : MonoBehaviour
     /// </summary>
     private void TapEffect()
     {
+        if (!isEffect)
+        {
+            if (tapParticle.isPlaying)
+            {
+                tapParticle.Stop();
+            }
+            if (swipeParticle.isPlaying)
+            {
+                swipeParticle.Stop();
+            }
+            return;
+        }
+
+        // なぞっている位置を検知してエフェクトオブジェクトを移動
         var pos = Camera.main.ScreenToWorldPoint(Input.mousePosition + Camera.main.transform.forward * 10);
+        if (pos.x > Screen.width || pos.y > Screen.height) return;
         swipeParticle.transform.position = pos;
 
         // タッチの検知
@@ -64,7 +79,11 @@ public class TapEffectControl : MonoBehaviour
             Touch touch = Input.GetTouch(0);
             if(touch.phase == TouchPhase.Began)
             {
-                tapParticle.Stop();
+                // タッチした位置を検知してエフェクトオブジェクトを移動し、エフェクトを再生
+                if (tapParticle.isPlaying)
+                {
+                    tapParticle.Stop();
+                }
                 tapParticle.transform.position = pos;
                 tapParticle.Play();
                 swipeParticle.Play();
