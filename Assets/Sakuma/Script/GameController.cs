@@ -234,7 +234,8 @@ public class GameController : MonoBehaviour
 
     private void EnemyAtk()
     {
-        if(cameradTime == 0 || cameradTime > 1)
+        padController2.Pad = false;
+        if (cameradTime == 0 || cameradTime > 1)
         {
             if (dcont == 0)
             {
@@ -250,7 +251,7 @@ public class GameController : MonoBehaviour
 
 
                 //teki.GetComponent<Animator>().SetTrigger("Attack");
-                padController2.Pad = false;
+                
                 textPadObj.SetActive(true);
                 text.text = "攻撃されました";
                 statusManager.playerHP  -= statusManager.enemyAtk ;
@@ -276,6 +277,7 @@ public class GameController : MonoBehaviour
 
     private void MyAtk()
     {
+        padController2.Pad = false;
         if (cameradTime == 0 || cameradTime > 1)
         {
             if (dcont == 0)
@@ -297,7 +299,7 @@ public class GameController : MonoBehaviour
                 }
 
                 
-                padController2.Pad = false;
+                
                 textPadObj.SetActive(true);
                 text.text = "攻撃しました";
                 statusManager.enemyHP  -= statusManager.playerAtk;

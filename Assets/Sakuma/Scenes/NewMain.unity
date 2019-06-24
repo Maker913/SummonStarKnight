@@ -162,7 +162,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.12758097, g: 0.23482327, b: 0.4433962, a: 1}
+  m_Color: {r: 0.014017452, g: 0.26664752, b: 0.4245283, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -6410,6 +6410,7 @@ MonoBehaviour:
   sumonbdobj: {fileID: 1109904529}
   lineParent2: {fileID: 871947313}
   sumontext: {fileID: 1246276710}
+  BLine: {fileID: 2954089025541730951, guid: 2867be486f7e113419fd9e97ef485bca, type: 3}
   StatusManagerObj: {fileID: 1682406965}
 --- !u!4 &1471064782
 Transform:
@@ -9582,26 +9583,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 2954089025541730952, guid: fbd6df8d02ff9c14d867329bdfdce0fd,
-        type: 3}
-      propertyPath: points.Array.size
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 2954089025541730952, guid: fbd6df8d02ff9c14d867329bdfdce0fd,
-        type: 3}
-      propertyPath: points.Array.data[0].x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2954089025541730952, guid: fbd6df8d02ff9c14d867329bdfdce0fd,
-        type: 3}
-      propertyPath: points.Array.data[2].x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2954089025541730952, guid: fbd6df8d02ff9c14d867329bdfdce0fd,
-        type: 3}
-      propertyPath: points.Array.data[2].y
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fbd6df8d02ff9c14d867329bdfdce0fd, type: 3}
