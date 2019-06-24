@@ -91,7 +91,7 @@ public class GameController : MonoBehaviour
 
     //ここからエフェクト用
     [SerializeField]
-    private GameObject teki;
+    public GameObject teki;
 
 
     void Start()
@@ -249,7 +249,7 @@ public class GameController : MonoBehaviour
                 cameradTime = 0;
 
 
-                teki.GetComponent<Animator>().SetTrigger("Attack");
+                //teki.GetComponent<Animator>().SetTrigger("Attack");
                 padController2.Pad = false;
                 textPadObj.SetActive(true);
                 text.text = "攻撃されました";
