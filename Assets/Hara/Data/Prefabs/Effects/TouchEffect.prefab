@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 7018032390450329653}
   - component: {fileID: 5449703261449718939}
   - component: {fileID: 6677059637745094253}
-  m_Layer: 0
-  m_Name: NewTapEffect
+  m_Layer: 9
+  m_Name: TouchEffect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

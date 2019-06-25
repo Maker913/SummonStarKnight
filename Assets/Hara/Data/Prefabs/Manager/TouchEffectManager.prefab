@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5980522892963230110}
   - component: {fileID: 5980522892963230105}
   m_Layer: 0
-  m_Name: TapEffectManager
+  m_Name: TouchEffectManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -43,8 +43,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ce942511a701f643905efbd3fcd1fbe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tapEffectObject: {fileID: 6954040452849854968, guid: 95470ecd53570f642b1dcf932d0bdcab,
-    type: 3}
-  swipeEffectObject: {fileID: 7764468613276334873, guid: 9787283a52040034abeb572a62d74379,
+  touchEffectPrefab: {fileID: 9202385098399558552, guid: 1155e5778ee4c6a418845ee958bfdad5,
     type: 3}
   isEffect: 1
+  canvasRct: {fileID: 0}

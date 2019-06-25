@@ -6,17 +6,23 @@ public class TapEffectControl : MonoBehaviour
 {
     public static TapEffectControl Instance;
 
-    [SerializeField, Tooltip("タップした時のエフェクト")]
-    private GameObject tapEffectObject;
-    [SerializeField, Tooltip("なぞった時のエフェクト")]
-    private GameObject swipeEffectObject;
+    [SerializeField, Tooltip("インスタンス元のオブジェクト")]
+    private GameObject touchEffectPrefab;
+    private RectTransform touchEffect;
+    [SerializeField, Tooltip("タッチしたときのParticle")]
+    private ParticleSystem touchPartticleSystem;
+    [SerializeField, Tooltip("なぞるときのParticle")]
+    private ParticleSystem swipeParticleSystem;
     [SerializeField, Tooltip("エフェクトを使用したくない時はfalse")]
     private bool isEffect = true;
     public bool IsEffect { set { isEffect = value; } }
 
     // エフェクトを生成するための変数
-    private ParticleSystem tapParticle;
+    
+    private ParticleSystem touchParticle;
     private ParticleSystem swipeParticle;
+    [SerializeField]
+    private RectTransform canvasRct;
 
     private void Awake()
     {
@@ -24,25 +30,24 @@ public class TapEffectControl : MonoBehaviour
         {
             Instance = this;
             DontDestroyOnLoad(gameObject);
-            if(tapParticle == null)
+            if(touchParticle == null)
             {
-                // タップした時のエフェクトが生成されていないなら生成する
-                tapParticle = Instantiate(tapEffectObject).GetComponent<ParticleSystem>();
-                DontDestroyOnLoad(tapParticle.gameObject);
-                tapParticle.Stop();
+                touchParticle = Instantiate(touchPartticleSystem);
+                touchParticle.transform.SetParent(gameObject.transform);
+                touchParticle.Stop();
             }
-            if(swipeParticle == null)
+            if (swipeParticle == null)
             {
-                // スワイプした時のエフェクトが生成されていないなら生成する
-                swipeParticle = Instantiate(swipeEffectObject).GetComponent<ParticleSystem>();
-                DontDestroyOnLoad(swipeParticle.gameObject);
-                swipeParticle.Stop();
+                swipeParticle = Instantiate(swipeParticleSystem);
+                swipeParticle.transform.SetParent(gameObject.transform);
+                touchParticle.Stop();
             }
         }
         else
         {
             Destroy(gameObject);
         }
+        //UnityEngine.SceneManagement.SceneManager.sceneLoaded += FindCanvas;
     }
 
     private void Update()
@@ -57,9 +62,9 @@ public class TapEffectControl : MonoBehaviour
     {
         if (!isEffect)
         {
-            if (tapParticle.isPlaying)
+            if (touchParticle.isPlaying)
             {
-                tapParticle.Stop();
+                touchParticle.Stop();
             }
             if (swipeParticle.isPlaying)
             {
@@ -70,9 +75,32 @@ public class TapEffectControl : MonoBehaviour
 
         // なぞっている位置を検知してエフェクトオブジェクトを移動
         var pos = Camera.main.ScreenToWorldPoint(Input.mousePosition + Camera.main.transform.forward * 10);
-        if (pos.x > Screen.width || pos.y > Screen.height) return;
         swipeParticle.transform.position = pos;
+        /*
+        var mousepos = Input.mousePosition;
+        mousepos.z = 0f;
+        var scrPos = Camera.main.ScreenToViewportPoint(mousepos);
+        var objPos = new Vector2((scrPos.x * canvasRct.sizeDelta.x) - (canvasRct.sizeDelta.x * 0.5f), (scrPos.y * canvasRct.sizeDelta.y) - (canvasRct.sizeDelta.y * 0.5f));
+        swipeParticle.transform.localPosition = objPos;
+        */
 
+        if (Input.GetMouseButtonDown(0))
+        {
+            if (touchParticle.isPlaying)
+            {
+                touchParticle.Stop();
+            }
+            //tapParticle.transform.localPosition = objPos;
+            touchParticle.transform.position = pos;
+            touchParticle.Play();
+            swipeParticle.Play();
+        }
+        else if (Input.GetMouseButtonUp(0))
+        {
+            touchParticle.Stop();
+            swipeParticle.Stop();
+        }
+        /*
         // タッチの検知
         if(Input.touchCount > 0)
         {
@@ -84,7 +112,7 @@ public class TapEffectControl : MonoBehaviour
                 {
                     tapParticle.Stop();
                 }
-                tapParticle.transform.position = pos;
+                tapParticle.transform.localPosition = objPos;
                 tapParticle.Play();
                 swipeParticle.Play();
             }
@@ -94,5 +122,45 @@ public class TapEffectControl : MonoBehaviour
                 swipeParticle.Stop();
             }
         }
+        */
+    }
+
+    /// <summary>
+    /// シーンが切り替わったらCanvasがあるかを確認する
+    /// </summary>
+    /// <param name="nextScene"></param>
+    /// <param name="mode"></param>
+    private void FindCanvas(UnityEngine.SceneManagement.Scene nextScene, UnityEngine.SceneManagement.LoadSceneMode mode)
+    {
+        /*
+        if(FindObjectOfType<Canvas>() != null)
+        {
+            canvasRct = FindObjectOfType<Canvas>().GetComponent<RectTransform>();
+            if(touchEffect == null)
+            {
+                touchEffect = Instantiate(touchEffectPrefab).GetComponent<RectTransform>();
+                if (touchEffect == null)
+                {
+                    // タップした時のエフェクトが生成されていないなら生成する
+                    touchEffect = touchEffect.transform.GetChild(0).GetComponent<ParticleSystem>();
+                    touchEffect.Stop();
+                }
+                if (swipeParticle == null)
+                {
+                    // スワイプした時のエフェクトが生成されていないなら生成する
+                    swipeParticle = touchEffect.transform.GetChild(1).GetComponent<ParticleSystem>();
+                    swipeParticle.Stop();
+                }
+            }
+            touchEffect.transform.SetParent(canvasRct.transform);
+            touchEffect.transform.localPosition = new Vector3(0, 0, 0);
+            touchEffect.transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
+            touchEffect.sizeDelta = new Vector2(Screen.width, Screen.height);
+        }
+        else
+        {
+            Debug.LogError("タッチエフェクトを表示する為に、Canvasを生成してください!!!");
+        }
+        */
     }
 }
