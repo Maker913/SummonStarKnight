@@ -6,12 +6,18 @@ public class LineUPdate : MonoBehaviour
 {
     private Material material;
     private UILineRenderer UIline;
+
+    [SerializeField]
+    private Shader shader;
+
     // Start is called before the first frame update
     void Start()
     {
-        
         UIline = GetComponent<UILineRenderer>();
+        UIline.material = new Material (shader );
+        
         material = UIline.material;
+        material.SetColor ("_Color", UIline .color );
     }
 
     // Update is called once per frame

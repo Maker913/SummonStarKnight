@@ -78,3 +78,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff8c30efc77b3534ab55bdcd538ccff8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  shader: {fileID: 4800000, guid: 66afdf350cede1b44bb78047895786b7, type: 3}
