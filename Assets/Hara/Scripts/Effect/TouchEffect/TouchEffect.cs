@@ -133,7 +133,14 @@ public class TouchEffect : MonoBehaviour
         }
 
         // なぞっている位置を検知してParticleオブジェクトを移動
-        var pos = particleCamera.ScreenToWorldPoint(Input.mousePosition + particleCamera.transform.forward * 10);
+        var mousePos = Input.mousePosition;
+
+        if (mousePos.x < 0 || mousePos.x > Screen.width || mousePos.y < 0 || mousePos.y > Screen.height)
+        {
+            return;
+        }
+
+        var pos = particleCamera.ScreenToWorldPoint(mousePos + particleCamera.transform.forward * 10);
         swipeParticle.transform.position = pos;
 
         // タッチの検知
@@ -146,6 +153,11 @@ public class TouchEffect : MonoBehaviour
                 if (touchParticle.isPlaying)
                 {
                     touchParticle.Stop();
+                }
+
+                if (swipeParticle.isPlaying)
+                {
+                    swipeParticle.Stop();
                 }
 
                 touchParticle.transform.position = pos;
