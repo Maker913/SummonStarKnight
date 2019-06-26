@@ -502,6 +502,10 @@ public class PadController2 : MonoBehaviour
             }
             BoardReset();
         }
+        else
+        {
+            BoardReset();
+        }
     }
 
 

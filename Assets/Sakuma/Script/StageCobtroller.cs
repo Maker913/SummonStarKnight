@@ -8,12 +8,13 @@ public class StageCobtroller : MonoBehaviour
 
     static public int stageNum = 1;
 
+    static public bool Shooting = false;
+
     [SerializeField ]
     private GameObject [] stageObj;
     [SerializeField]
     private GameObject stageParent;
-    [SerializeField]
-    private GameObject game;
+
     void Start()
     {
         Instantiate(stageObj[stageNum-1], stageParent.transform.position, Quaternion.identity, stageParent.transform);

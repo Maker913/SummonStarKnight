@@ -31,10 +31,18 @@ public class CameraController2 : MonoBehaviour
 
     void Start()
     {
-        transform.position = stratPos.transform.position;
-        transform.localEulerAngles = stratPos.transform.localEulerAngles;
-        SetCamera(0, 2);
-        cameraMode = 0;
+        if (StageCobtroller.Shooting == false)
+        {
+            transform.position = stratPos.transform.position;
+            transform.localEulerAngles = stratPos.transform.localEulerAngles;
+            SetCamera(0, 2);
+            cameraMode = 0;
+        }
+        else
+        {
+            cameraMode = 1;
+        }
+        
     }
 
     private void FixedUpdate()

@@ -98,11 +98,24 @@ public class GameController : MonoBehaviour
     {
         enemyTurn = Random.Range(2, 5);
         gaged = gageobj.GetComponent<Image>();
-        gameMode = 1;
+        
         text = textObj.GetComponent<Text>();
         padController2 = padControllerObj.GetComponent<PadController2>();
         enj = EnjObj.GetComponent<Enj>();
         statusManager = StatusManagerObj.GetComponent<StatusManager>();
+
+
+
+        if(StageCobtroller.Shooting ==false)
+        {
+            gameMode = 1;
+        }
+        else
+        {
+            gameMode = 13;
+        }
+
+
     }
 
 
@@ -152,12 +165,49 @@ public class GameController : MonoBehaviour
             case 12:
                 Battlesoon();
                 break;
+            case 13:
+                ShootingStart();
+                break;
+            case 14:
+                Shooting();
+                break;
+            case 15:
+                Shootingbefore();
+                break;
+            case 16:
+                ShootingbeEnd();
+                break;
+
+
+
             default:
                 break;
         }
     }
 
+    private void ShootingbeEnd()
+    {
+        StageCobtroller.Shooting = false;
 
+    }
+
+    private void Shootingbefore()
+    {
+        padController2.Pad = true;
+        textPadObj.SetActive(false);
+        ModeChange(14, 0);
+    }
+    private void Shooting()
+    {
+
+    }
+
+    private void ShootingStart()
+    {
+        ModeChange(15, 3);
+        text.text = "流れ星開始";
+        textPadObj.SetActive(true);
+    }
 
     private void EnemyMove()
     {
@@ -229,7 +279,12 @@ public class GameController : MonoBehaviour
         padController2.Pad = false;
         textPadObj.SetActive(true);
 
-        ModeChange(10, 1);
+
+        StageCobtroller.Shooting = true;
+
+        SceneChanger.instance.LoadScene("NewMain", 1);
+
+        //ModeChange(10, 1);
     }
 
     private void EnemyAtk()
