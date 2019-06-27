@@ -97,6 +97,12 @@ public class PadController2 : MonoBehaviour
     private GameObject StatusManagerObj;
     private StatusManager statusManager;
 
+
+    [SerializeField]
+    private GameObject ShootingObj;
+    private ShootingEnj  shooting;
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -112,6 +118,7 @@ public class PadController2 : MonoBehaviour
             SterEfAnime[i] = SterEf[i].GetComponent<Animator>();
         }
         enj = enjObj.GetComponent<Enj>();
+        shooting = ShootingObj.GetComponent<ShootingEnj>(); 
     }
 
     // Update is called once per frame
@@ -208,6 +215,7 @@ public class PadController2 : MonoBehaviour
                             catchster2 = i + 1;
                             radius = (int)Vector2.Distance(new Vector2(touch.position.x, touch.position.y), SterPos[i].transform.position);
                             moveFlg = true;
+                            
                         }
                     }
                     if (moveFlg)
@@ -269,7 +277,7 @@ public class PadController2 : MonoBehaviour
 
 
 
-
+                        ShootingChack();
                         catchster = catchster2;
                     }
                     if (SterController != 0)
@@ -508,6 +516,39 @@ public class PadController2 : MonoBehaviour
         }
     }
 
+
+
+
+    private void ShootingChack()
+    {
+
+
+        Array.Sort(SterLine);
+        Array.Reverse(SterLine);
+
+        int[] bfList = shooting.lineCode;
+        Array.Sort(bfList);
+        Array.Reverse(bfList);
+        Array.Resize(ref bfList, bfList.Length + 1);
+
+        int check = 0;
+        for (int j = 0; j < bfList.Length; j++)
+        {
+            if (bfList[j] == SterLine[j])
+            {
+                check++;
+            }
+        }
+        if (check == bfList.Length)
+        {
+            shooting.lineNum++;
+            shooting.BoardReset();
+            shooting.RandSelect();
+            BoardReset();
+        }
+
+
+    }
 
 
     public void BoardReset()

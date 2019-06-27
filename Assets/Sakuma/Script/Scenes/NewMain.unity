@@ -1206,7 +1206,6 @@ MonoBehaviour:
   canvas: {fileID: 971312862}
   lineParent: {fileID: 695057585}
   padControllerObj: {fileID: 1471064780}
-  lineNum: 0
   lineCode: 0000000000000000
   ster: 000000000000000000000000
 --- !u!114 &311957048
@@ -5515,14 +5514,14 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 971312862}
-  m_LocalRotation: {x: -0.3756339, y: 0, z: 0, w: 0.9267682}
+  m_LocalRotation: {x: 0, y: 0.3756339, z: 0.9267682, w: 0}
   m_LocalPosition: {x: 0, y: 0, z: 1.408}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 311957045}
   m_Father: {fileID: 969466189}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: -44.127, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -44.127, y: 0, z: 180}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 1.466}
@@ -7810,7 +7809,6 @@ MonoBehaviour:
   sumontext: {fileID: 1246276710}
   BLine: {fileID: 2954089025541730951, guid: 2867be486f7e113419fd9e97ef485bca, type: 3}
   StatusManagerObj: {fileID: 1682406965}
-  ShootingObj: {fileID: 311957044}
 --- !u!4 &1471064782
 Transform:
   m_ObjectHideFlags: 0
