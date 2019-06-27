@@ -35,7 +35,7 @@ public class SceneControl : MonoBehaviour
 
     private void OnGUI()
     {
-        if (!isFading && blackTexture != null) return;
+        if (!isFading || blackTexture == null) return;
 
         // フェード用の黒いテクスチャを描画する
         GUI.color = new Color(0, 0, 0, fadeAlpha);
