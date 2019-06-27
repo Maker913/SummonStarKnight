@@ -30,7 +30,7 @@ public class TitleControl : MonoBehaviour
     private void ButtonAction()
     {
         // シーン遷移
-        SceneControl.Instance.LoadScene(sceneName, true, 0.75f, () => SoundStop());
+        SceneControl.Instance.LoadScene(sceneName, true, unityAction: () => SoundStop());
     }
 
     /// <summary>
