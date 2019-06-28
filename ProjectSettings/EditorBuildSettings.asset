@@ -11,16 +11,13 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/OldSakuma/Scene/maintest.unity
     guid: bba7f2026cb6e7847b4ee3b8504a1e61
-  - enabled: 0
+  - enabled: 1
     path: Assets/Hara/Scenes/Title.unity
     guid: e7112498859a98043b2eb4226dc2a4b9
   - enabled: 1
-    path: Assets/Sakuma/Script/Scenes/Titlekari.unity
-    guid: 04ff74198e415a84882f0c26b43eb5f2
-  - enabled: 1
-    path: Assets/Sakuma/Script/Scenes/NewMain.unity
+    path: Assets/Sakuma/Scenes/NewMain.unity
     guid: 0f0861c6e507a044e992d3cd2ecb69d6
   - enabled: 1
-    path: Assets/Sakuma/Script/Scenes/resultkari.unity
-    guid: 284f952057ac0dd4a883e04eeb2c03ba
+    path: Assets/Hara/Scenes/Result.unity
+    guid: 80be5af43329f0147af2bfa03e19fb74
   m_configObjects: {}
