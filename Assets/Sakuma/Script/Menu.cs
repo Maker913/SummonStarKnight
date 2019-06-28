@@ -28,7 +28,7 @@ public class Menu : MonoBehaviour
 
     public void TitleBack()
     {
-        SceneChanger.instance.LoadScene("Titlekari", 1);
+        SceneControl.Instance.LoadScene(SceneControl.SceneName.Title, true);
     }
 
 

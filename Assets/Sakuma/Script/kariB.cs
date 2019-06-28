@@ -6,12 +6,13 @@ public class kariB : MonoBehaviour
 {
     public void gamestart()
     {
-        SceneChanger.instance.LoadScene("Newmain", 1);
+        SceneControl.Instance.LoadScene(SceneControl.SceneName.Stage1, true);
     }
 
     public void TitleBack()
     {
-        SceneChanger.instance.LoadScene("Titlekari", 1);
+        SceneControl.Instance.LoadScene(SceneControl.SceneName.Title
+            , true);
     }
 
 }

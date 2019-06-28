@@ -239,7 +239,8 @@ public class GameController : MonoBehaviour
 
     private void ChaneSceen()
     {
-        SceneChanger.instance.LoadScene("resultkari", 1);
+        SceneControl .Instance .LoadScene(SceneControl.SceneName.Result ,true);
+        //SceneChanger.instance.LoadScene("resultkari", 1);
     }
 
     private void Sumon()
@@ -282,7 +283,7 @@ public class GameController : MonoBehaviour
 
         StageCobtroller.Shooting = true;
 
-        SceneChanger.instance.LoadScene("NewMain", 1);
+        SceneControl.Instance.LoadScene(SceneControl.SceneName.Stage1, true);
 
         //ModeChange(10, 1);
     }
