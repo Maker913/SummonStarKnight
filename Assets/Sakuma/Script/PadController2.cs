@@ -125,7 +125,7 @@ public class PadController2 : MonoBehaviour
     void Update()
     {
 
-        //Debug.Log(SterLine[0] + " " + SterLine[1] + " " + SterLine[2] + " " + SterLine[3] + " " + SterLine[4] + " " + SterLine[5] + " " + SterLine[6]);
+        Debug.Log(SterLine[0] + " " + SterLine[1] + " " + SterLine[2] + " " + SterLine[3] + " " + SterLine[4] + " " + SterLine[5] + " " + SterLine[6]);
 
 
         if (Input.touchCount > 0 && Pad&&sumonbd ==false )
@@ -201,8 +201,10 @@ public class PadController2 : MonoBehaviour
 
                 if (SterController == 1)
                 {
+                    
                     moveFlg = false;
                     int radius = chainRadius;
+
                     for (int i = 0; i < SterPos.Length; i++)
                     {
                         if (Vector2.Distance(new Vector2(touch.position.x, touch.position.y), SterPos[i].transform.position) < radius)
@@ -276,9 +278,10 @@ public class PadController2 : MonoBehaviour
 
 
 
-
-                        ShootingChack();
+                        
+                        //
                         catchster = catchster2;
+                        ShootingChack();
                     }
                     if (SterController != 0)
                     {
@@ -521,7 +524,8 @@ public class PadController2 : MonoBehaviour
 
     private void ShootingChack()
     {
-
+        
+        int[] sterLineBf = SterLine;
 
         Array.Sort(SterLine);
         Array.Reverse(SterLine);
@@ -546,8 +550,12 @@ public class PadController2 : MonoBehaviour
             shooting.RandSelect();
             BoardReset();
         }
+        else
+        {
+            SterLine = sterLineBf;
+        }
 
-
+        
     }
 
 
