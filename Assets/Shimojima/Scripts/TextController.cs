@@ -5,29 +5,39 @@ using UnityEngine.UI;
 
 public class TextController : MonoBehaviour
 {
-    //シナリオデータの格納
+    //シナリオの元データ
     [SerializeField]
     private GameObject tData;
     [SerializeField]
     private Text uiText;
     
+    //時間
     [SerializeField]
     private float time;
+    //保存時間
     [SerializeField]
     private float tmpTime;
+
     [SerializeField]
     private float autoOnlyTime;
+    //文字の表示される速度
     [SerializeField][Range(0.001f, 0.3f)]
     private float DisplayTextIntarval = 0.05f;
     
+    //テキストの格納場所
+    [SerializeField]
     private List<string> oringtext = new List<string>();
+
     [SerializeField]
     private string[] texts;
+    //現在の行数
     private int tIndex = 0;
-    private int page = 0;
-    [SerializeField]
-    private List<int> lineCount = new List<int>();
+    //最後の行数
     private int tDataIndex = 0;
+    //現在のページ
+    [SerializeField]
+    private int page = 0;
+    private List<int> lineCount = new List<int>();
     private int charCount = 0;
     private bool auto = false;
 
@@ -39,6 +49,7 @@ public class TextController : MonoBehaviour
         print
     }
 
+    [SerializeField]
     private NextText nextText = 0;
 
 
@@ -49,30 +60,12 @@ public class TextController : MonoBehaviour
     
     void Update()
     {
-        if (tData.GetComponent<TextData>().loadFinish)
-        {
-            tDataIndex = tData.GetComponent<TextData>().textData.Count;
-
-            for (int i = 0; i < tDataIndex; i++)
-            {
-                oringtext.Add(tData.GetComponent<TextData>().textData[i]);
-            }
-
-            for (int i = 0; i < tDataIndex; i++)
-            {
-                if (oringtext[i].Substring(0, 1) == "{")
-                {
-                    if (oringtext[i].Substring(oringtext[i].IndexOf('{') + 1, oringtext[i].IndexOf('}') - 1) == "next")
-                    {
-                        lineCount.Add(i);
-                    }
-                }
-            }
-            tData.GetComponent<TextData>().loadFinish = false;
-        }
+        ScenarioStore();
         time += Time.deltaTime;
+
+        if(nextText == NextText.end) { return; }
         PrintText();
-        Debug.Log(nextText);
+        //Debug.Log(nextText);
     }
     
     private void PrintText()
@@ -94,6 +87,33 @@ public class TextController : MonoBehaviour
             DisplayText();
         }
         Debug.Log("page:" + page);
+    }
+
+    //テキストデータのロードが終わり次第テキストデータの格納
+    private void ScenarioStore()
+    {
+        if (tData.GetComponent<TextData>().loadFinish)
+        {
+            tDataIndex = tData.GetComponent<TextData>().textData.Count;
+
+            for (int i = 0; i < tDataIndex; i++)
+            {
+                oringtext.Add(tData.GetComponent<TextData>().textData[i]);
+            }
+
+            for (int i = 0; i < tDataIndex; i++)
+            {
+                if (oringtext[i].Substring(0, 1) == "{")
+                {
+                    if (oringtext[i].Substring(oringtext[i].IndexOf('{') + 1, oringtext[i].IndexOf('}') - 1) == "next")
+                    {
+                        lineCount.Add(i);
+                    }
+
+                }
+            }
+            tData.GetComponent<TextData>().loadFinish = false;
+        }
     }
 
     //textsに文章を一文字ずつに分けて格納
@@ -121,6 +141,7 @@ public class TextController : MonoBehaviour
                         if (auto) { autoOnlyTime = time; }
                         break;
                     case "end":
+                        nextText = NextText.end;
                         break;
                 }
 
@@ -133,6 +154,12 @@ public class TextController : MonoBehaviour
     {
         if (nextText == NextText.print && time >= tmpTime && charCount != oringtext[tIndex].Length)
         {
+            if (charCount == 0)
+            {
+                //表示スペースの調整
+                uiText.text += " ";
+            }
+
             uiText.text += texts[charCount];
             charCount++;
             tmpTime = time + DisplayTextIntarval;
@@ -164,12 +191,13 @@ public class TextController : MonoBehaviour
 
     private void PageSet()
     {
+        charCount = 0;
         nextText = NextText.standby;
 
         //最後のページかどうか
         if (page > lineCount.Count - 1)
         {
-            tIndex = tDataIndex;
+            tIndex = tDataIndex - 1;
             nextText = NextText.end;
         }
         else
@@ -186,14 +214,14 @@ public class TextController : MonoBehaviour
             {
                 for (int i = lineCount[page - 1] + 1; i < tIndex; i++)
                 {
-                    uiText.text += oringtext[i] + "\n";
+                    uiText.text += " " + oringtext[i] + "\n";
                 }
             }
             else
             {
                 for (int i = 0; i < tIndex; i++)
                 {
-                    uiText.text += oringtext[i] + "\n";
+                    uiText.text += " " + oringtext[i] + "\n";
                 }
             }
         }

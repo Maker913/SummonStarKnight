@@ -10,6 +10,7 @@ public class TextData : MonoBehaviour
 
     void Start()
     {
+        
         TextAsset ta = Resources.Load<TextAsset>("Scenario/Scenario");
         string s = ta.text;
         string[] ss = s.Split('\n');

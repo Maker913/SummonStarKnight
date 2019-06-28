@@ -25,11 +25,11 @@ public class GetAspect : MonoBehaviour
         {
             case "5:8":
                 texts[0].fontSize = 35;
-                texts[1].fontSize = 50;
+                texts[1].fontSize = 60;
                 break;
             case "9:16":
                 texts[0].fontSize = 35;
-                texts[1].fontSize = 45;
+                texts[1].fontSize = 55;
                 break;
         }
 
