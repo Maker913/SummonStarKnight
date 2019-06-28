@@ -8,7 +8,7 @@ public class StageCobtroller : MonoBehaviour
 
     static public int stageNum = 1;
 
-    static public bool Shooting = true;
+    static public bool Shooting = false;
 
     [SerializeField ]
     private GameObject [] stageObj;

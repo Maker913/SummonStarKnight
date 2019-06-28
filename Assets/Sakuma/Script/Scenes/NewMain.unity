@@ -372,7 +372,7 @@ RectTransform:
   m_GameObject: {fileID: 45868851}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0.092999935}
-  m_LocalScale: {x: 2.5, y: 2.5, z: 1.125}
+  m_LocalScale: {x: 2.55, y: 2.55, z: 1.125}
   m_Children: []
   m_Father: {fileID: 793614237}
   m_RootOrder: 0
@@ -395,14 +395,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.4627451}
+  m_Color: {r: 1, g: 0, b: 0, a: 0.4627451}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 762ff11d7c9eb834e96af53901e8cdfa, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 67bb0b106989b8b4cafe1bf0d6419555, type: 3}
   m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1147,6 +1147,7 @@ GameObject:
   - component: {fileID: 311957049}
   - component: {fileID: 311957048}
   - component: {fileID: 311957046}
+  - component: {fileID: 311957047}
   m_Layer: 5
   m_Name: Board
   m_TagString: Untagged
@@ -1209,6 +1210,25 @@ MonoBehaviour:
   lineNum: 0
   lineCode: 0000000000000000
   ster: 000000000000000000000000
+--- !u!95 &311957047
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 311957044}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 72e6f05f2e2a5fd4fb56e623e4906aa8, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!114 &311957048
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2675,13 +2695,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 485409461}
-  m_LocalRotation: {x: 0.953717, y: 0, z: 0, w: 0.30070582}
+  m_LocalRotation: {x: 0.92387956, y: 0, z: 0, w: 0.38268343}
   m_LocalPosition: {x: 20.811, y: 2.366, z: -0.971}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1244422568}
   m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 145, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 135, y: 0, z: 0}
 --- !u!108 &485409463
 Light:
   m_ObjectHideFlags: 0
@@ -8013,7 +8033,7 @@ Light:
   serializedVersion: 8
   m_Type: 1
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 0.76
+  m_Intensity: 0.75
   m_Range: 10
   m_SpotAngle: 30
   m_CookieSize: 10
@@ -10533,7 +10553,7 @@ MonoBehaviour:
   m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 2100000, guid: 00740653826899f44bea39c6d8413222, type: 2}
+  m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 0.45490196}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
@@ -10568,7 +10588,7 @@ Animator:
   m_GameObject: {fileID: 2694562540993447379}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 9ff35d25f5dab63468a41df188715951, type: 2}
+  m_Controller: {fileID: 9100000, guid: 72e6f05f2e2a5fd4fb56e623e4906aa8, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
