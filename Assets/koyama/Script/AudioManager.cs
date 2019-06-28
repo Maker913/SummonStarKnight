@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿//using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 public class AudioManager : MonoBehaviour
@@ -12,6 +13,18 @@ public class AudioManager : MonoBehaviour
     public static AudioManager Instance;
     private BgmManager bgmManager;
     private SeManager seManager;
+
+    readonly List<string> seNameList = new List<string>
+    {
+        "button",
+        "enemy_Deathblow",
+        "failed",
+        "player_attack",
+        "result",
+        "Follow",
+        "success",
+        "gauge",
+    };
     private void Awake()
     {
         if(Instance == null)
@@ -26,25 +39,29 @@ public class AudioManager : MonoBehaviour
         bgmManager = GetComponentInChildren<BgmManager>();
         seManager = GetComponentInChildren<SeManager>();
     }
-
     //BGM再生
     public void PlayBGM(int number)
     {
-        //BgmManager.Instance.PlayBGM(number);
         bgmManager.PlayBGM(number);
     }
     //BGM停止
     public void StopBGM()
     {
-        //BgmManager.Instance.StopBGM();
         bgmManager.StopBGM();
     }
     //SE再生
+    /*
     public void PlaySE(int number)
     {
-        //SeManager.Instance.PlaySE(number);
         seManager.PlaySE(number);
     }
+    */
+    public void PlaySE(SEName name)
+    {
+        //var se = (SEName)Enum.Parse(typeof(SEName), " ");
+        seManager.PlaySE(seNameList[(int)name]);
+    }
+
     //SE停止
     public void StopSE()
     {
