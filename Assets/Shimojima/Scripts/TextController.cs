@@ -10,6 +10,8 @@ public class TextController : MonoBehaviour
     private GameObject tData;
     [SerializeField]
     private Text uiText;
+    [SerializeField]
+    private Text autoText;
     
     //時間
     [SerializeField]
@@ -246,10 +248,15 @@ public class TextController : MonoBehaviour
         if (auto == false)
         {
             auto = true;
+            Animator animator = autoText.GetComponent<Animator>();
+            animator.SetBool("On", true);
+
         }
         else if (auto == true)
         {
             auto = false;
+            Animator animator = autoText.GetComponent<Animator>();
+            animator.SetBool("On", false);
         }
     }
 }
