@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class TitleControl : MonoBehaviour
 {
     [SerializeField,Tooltip("遷移先のシーン名")]
-    private string sceneName;
+    private SceneControl.SceneName scene;
     [SerializeField]
     private Button startButton;
 
@@ -30,7 +30,7 @@ public class TitleControl : MonoBehaviour
     private void ButtonAction()
     {
         // シーン遷移
-        SceneControl.Instance.LoadScene(sceneName, true, unityAction: () => SoundStop());
+        SceneControl.Instance.LoadScene(scene, true, unityAction: () => SoundStop());
     }
 
     /// <summary>

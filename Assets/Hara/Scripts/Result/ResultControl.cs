@@ -10,7 +10,7 @@ public class ResultControl : MonoBehaviour
     [SerializeField]
     private GameObject characterModel = null;
     [SerializeField, Tooltip("シーン遷移先")]
-    private string sceneName = null;
+    private SceneControl.SceneName scene;
 
     // Start is called before the first frame update
     void Start()
@@ -38,7 +38,7 @@ public class ResultControl : MonoBehaviour
     private void ButtonAction()
     {
         // シーン遷移
-        SceneControl.Instance.LoadScene(sceneName, true, unityAction: () => SoundStop());
+        SceneControl.Instance.LoadScene(scene, true, unityAction: () => SoundStop());
     }
 
     /// <summary>

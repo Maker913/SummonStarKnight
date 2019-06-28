@@ -45,12 +45,12 @@ public class SceneControl : MonoBehaviour
    /// <summary>
    /// シーン遷移用のコルーチン処理
    /// </summary>
-    private IEnumerator SceneChange(string sceneName, bool isFade, float interval, UnityEngine.Events.UnityAction unityAction)
+    private IEnumerator SceneChange(SceneName scene, bool isFade, float interval, UnityEngine.Events.UnityAction unityAction)
     {
         #region フェードしないを宣言、又はフェード時間が0秒以下の場合
         if (!isFade || interval <= 0)
         {
-            SceneManager.LoadScene(sceneName);
+            SceneManager.LoadScene((int)scene);
             yield break;
         }
         #endregion
@@ -73,7 +73,7 @@ public class SceneControl : MonoBehaviour
         unityAction?.Invoke();
 
         // シーンを遷移させる
-        SceneManager.LoadScene(sceneName);
+        SceneManager.LoadScene((int)scene);
 
         // 画面を明るくする
         time = 0;
@@ -90,17 +90,33 @@ public class SceneControl : MonoBehaviour
 
     /// <summary>
     /// <para>シーン遷移</para>
-    /// <para>フェードなし: LoadScene(遷移先のシーン名); </para>
-    /// <para>1秒間のフェードあり: LoadScene(遷移先のシーン名, true); </para>
-    /// <para>2秒間のフェードあり: LoadScene(遷移先のシーン名, true, 2.0f); </para>
+    /// <para>フェードなし: LoadScene(SceneControl.SceneName.シーン名); </para>
+    /// <para>1秒間のフェードあり: LoadScene(SceneControl.SceneName.シーン名, true); </para>
+    /// <para>2秒間のフェードあり: LoadScene(SceneControl.SceneName.シーン名, true, 2.0f); </para>
     /// </summary>
-    /// <param name="sceneName">遷移先のシーン名(string型)</param>
+    /// <param name="scene">遷移先のシーン</param>
     /// <param name="isFade">フェードを実行する場合はtrue</param>
     /// <param name="interval">フェード開始から終了までの時間(秒)<para>0秒以下ならフェードなしとして実行</para></param>
     /// <param name="unityAction">画面が完全に暗くなったタイミングで実行したい処理<para>フェードを実行した場合のみ有効</para></param>
-    public void LoadScene(string sceneName, bool isFade = false, float interval = 1.0f, UnityEngine.Events.UnityAction unityAction = null)
+    public void LoadScene(SceneName scene, bool isFade = false, float interval = 1.0f, UnityEngine.Events.UnityAction unityAction = null)
     {
         if (isFading) return;
-        StartCoroutine(SceneChange(sceneName, isFade, interval, unityAction));
+        StartCoroutine(SceneChange(scene, isFade, interval, unityAction));
+    }
+
+    public enum SceneName
+    {
+        // Titleシーン
+        Title = 0,
+
+        // Storyシーン
+
+
+        // Stageシーン
+        Stage1,
+
+        // Rsultシーン
+        Result
+
     }
 }
