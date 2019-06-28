@@ -12,6 +12,8 @@ public class TextController : MonoBehaviour
     private Text uiText;
     [SerializeField]
     private Text autoText;
+    [SerializeField]
+    private Text nameText;
     
     //時間
     [SerializeField]
@@ -27,14 +29,20 @@ public class TextController : MonoBehaviour
     private float DisplayTextIntarval = 0.05f;
     
     //テキストの格納場所
-    [SerializeField]
-    private List<string> oringtext = new List<string>();
+    [System.Serializable]
+    private struct ScenarioData
+    {
+        public List<string> oringText;
+        public string[] characterName;
+    }
+    ScenarioData sData;
 
     [SerializeField]
     private string[] texts;
     //現在の行数
     private int tIndex = 0;
     //最後の行数
+    [SerializeField]
     private int tDataIndex = 0;
     //現在のページ
     [SerializeField]
@@ -57,7 +65,6 @@ public class TextController : MonoBehaviour
 
     void Start()
     {
-        
     }
     
     void Update()
@@ -98,20 +105,30 @@ public class TextController : MonoBehaviour
         {
             tDataIndex = tData.GetComponent<TextData>().textData.Count;
 
-            for (int i = 0; i < tDataIndex; i++)
-            {
-                oringtext.Add(tData.GetComponent<TextData>().textData[i]);
-            }
+            sData.oringText = new List<string>();
 
             for (int i = 0; i < tDataIndex; i++)
             {
-                if (oringtext[i].Substring(0, 1) == "{")
+                sData.oringText.Add(tData.GetComponent<TextData>().textData[i]);
+            }
+
+            sData.characterName = new string[sData.oringText.Count];
+
+            for (int i = 0; i < tDataIndex; i++)
+            {
+                if (sData.oringText[i].Substring(0, 1) == "{")
                 {
-                    if (oringtext[i].Substring(oringtext[i].IndexOf('{') + 1, oringtext[i].IndexOf('}') - 1) == "next")
+                    if (sData.oringText[i].Substring(sData.oringText[i].IndexOf('{') + 1, sData.oringText[i].IndexOf('}') - 1) == "next")
                     {
                         lineCount.Add(i);
                     }
-
+                }
+                else if (sData.oringText[i].Substring(0, 1) == "~")
+                {
+                    Debug.Log(1);
+                    string[] text = sData.oringText[i].Split('~');
+                    sData.characterName[i] = text[1];
+                    sData.oringText[i] = text[0];
                 }
             }
             tData.GetComponent<TextData>().loadFinish = false;
@@ -123,19 +140,19 @@ public class TextController : MonoBehaviour
     {
         if (nextText == NextText.next)
         {
-            texts = new string[oringtext[tIndex].Length];
-            if (oringtext[tIndex].Substring(0, 1) != "{")
+            texts = new string[sData.oringText[tIndex].Length];
+            if (sData.oringText[tIndex].Substring(0, 1) != "{")
             {
                 for (int i = 0; i < texts.Length; i++)
                 {
-                    texts[i] = oringtext[tIndex].Substring(i, 1);
+                    texts[i] = sData.oringText[tIndex].Substring(i, 1);
                 }
                 nextText = NextText.print;
                 tmpTime = time + DisplayTextIntarval;
             }
             else
             {
-                string command = oringtext[tIndex].Substring(oringtext[tIndex].IndexOf('{') + 1, oringtext[tIndex].IndexOf('}') - 1);
+                string command = sData.oringText[tIndex].Substring(sData.oringText[tIndex].IndexOf('{') + 1, sData.oringText[tIndex].IndexOf('}') - 1);
                 switch (command)
                 {
                     case "next":
@@ -154,10 +171,14 @@ public class TextController : MonoBehaviour
     //textを表示する処理
     private void DisplayText()
     {
-        if (nextText == NextText.print && time >= tmpTime && charCount != oringtext[tIndex].Length)
+        if (nextText == NextText.print && time >= tmpTime && charCount != sData.oringText[tIndex].Length)
         {
             if (charCount == 0)
             {
+                if (sData.characterName[tIndex] != "")
+                {
+                    nameText.text = sData.characterName[tIndex];
+                }
                 //表示スペースの調整
                 uiText.text += " ";
             }
@@ -166,7 +187,7 @@ public class TextController : MonoBehaviour
             charCount++;
             tmpTime = time + DisplayTextIntarval;
         }
-        else if (charCount == oringtext[tIndex].Length)
+        else if (charCount == sData.oringText[tIndex].Length)
         {
             uiText.text += "\n";
             tIndex++;
@@ -207,7 +228,7 @@ public class TextController : MonoBehaviour
             tIndex = lineCount[page];
         }
 
-        if (oringtext.Count - 1 >= 0)
+        if (sData.oringText.Count - 1 >= 0)
         {
             //テキストの削除
             uiText.text = "";
@@ -216,14 +237,14 @@ public class TextController : MonoBehaviour
             {
                 for (int i = lineCount[page - 1] + 1; i < tIndex; i++)
                 {
-                    uiText.text += " " + oringtext[i] + "\n";
+                    uiText.text += " " + sData.oringText[i] + "\n";
                 }
             }
             else
             {
                 for (int i = 0; i < tIndex; i++)
                 {
-                    uiText.text += " " + oringtext[i] + "\n";
+                    uiText.text += " " + sData.oringText[i] + "\n";
                 }
             }
         }
