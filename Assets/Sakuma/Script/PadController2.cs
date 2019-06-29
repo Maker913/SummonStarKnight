@@ -172,9 +172,11 @@ public class PadController2 : MonoBehaviour
                             catchster = i + 1;
                             if(glowStar[catchster - 1] == true) {
                                 move = true;
+                                
                             } else {
                                 glowStar[catchster - 1] = true;
                                 move = false;
+                                AudioManager.Instance.PlaySE(1);
                             }
                             SterEfAnime[catchster - 1].SetBool("Change", true);
                             radius = (int)Vector2.Distance(new Vector2(touch.position.x, touch.position.y), SterPos[i].transform.position);

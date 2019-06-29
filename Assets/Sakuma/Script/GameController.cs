@@ -81,9 +81,19 @@ public class GameController : MonoBehaviour
     private int enemyTurn;
 
 
+    [SerializeField]
+    private GameObject shootingObj;
+    private ShootingEnj shooting;
 
+    private float ShootingTime;
+    private int countNum = 0;
 
-
+    [SerializeField]
+    private GameObject countObj;
+    [SerializeField]
+    private GameObject resultObj;
+    [SerializeField]
+    private GameObject resultObjtext;
 
     static public string result = "NULL";
     [Space(10)]
@@ -103,7 +113,7 @@ public class GameController : MonoBehaviour
         padController2 = padControllerObj.GetComponent<PadController2>();
         enj = EnjObj.GetComponent<Enj>();
         statusManager = StatusManagerObj.GetComponent<StatusManager>();
-
+        shooting = shootingObj.GetComponent<ShootingEnj>();
 
 
         if(StageCobtroller.Shooting ==false)
@@ -177,36 +187,106 @@ public class GameController : MonoBehaviour
             case 16:
                 ShootingbeEnd();
                 break;
-
-
-
+            case 17:
+                ShootingbeResult();
+                break;
+            case 18:
+                Shootingcountdown();
+                break;
+            case 19:
+                ShootingEndCount();
+                break;
             default:
                 break;
         }
     }
 
+
+
+    private void ShootingEndCount()
+    {
+        padController2.Pad = false;
+        countObj.SetActive(true);
+        countObj.GetComponent<Text>().text = "終了";
+        ShootingTime += Time.deltaTime;
+        if (ShootingTime > 1)
+        {
+            countObj.SetActive(false);
+            ModeChange(17, 0);
+        }
+    }
+
+    private void Shootingcountdown()
+    {
+        textPadObj.SetActive(false);
+        countObj.SetActive(true);
+        ShootingTime += Time.deltaTime;
+        countObj.GetComponent<Text>().text = (3 - countNum).ToString();
+        if (ShootingTime>1)
+        {
+            countNum++;
+            ShootingTime = 0;
+            if(countNum >= 3)
+            {
+                ModeChange(15, 0);
+                countObj.SetActive(false );
+            }
+            else
+            {
+                
+            }
+        }
+    }
+
+    private void ShootingbeResult()
+    {
+
+        resultObj.SetActive(true);
+        resultObjtext.GetComponent<Text>().text = "結果\n\n\n" + shooting.lineNum + "\n\n\nなんかを召喚できるようになりました";
+
+        if (Input.touchCount != 0)
+        {
+            ModeChange(16, 0);
+        }
+
+    }
+
     private void ShootingbeEnd()
     {
+        StageCobtroller.stageNum++;
         StageCobtroller.Shooting = false;
-
+        SceneControl.Instance.LoadScene(SceneControl.SceneName.Stage1, true);
     }
 
     private void Shootingbefore()
     {
         padController2.Pad = true;
         textPadObj.SetActive(false);
+        ShootingTime = 0;
         ModeChange(14, 0);
+        shooting.RandSelect();
     }
     private void Shooting()
     {
+        ShootingTime += Time.deltaTime;
+
+        if (ShootingTime > 10)
+        {
+            ModeChange(19, 0);
+            padController2.Pad = false ;
+            ShootingTime = 0;
+        }
+
 
     }
 
     private void ShootingStart()
     {
-        ModeChange(15, 3);
-        text.text = "流れ星開始";
+        ModeChange(18, 2);
+        text.text = "ボーナスゲーム開始";
         textPadObj.SetActive(true);
+        ShootingTime = 0;
+        countNum = 0;
     }
 
     private void EnemyMove()
