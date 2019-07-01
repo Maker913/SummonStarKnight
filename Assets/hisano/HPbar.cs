@@ -25,10 +25,10 @@ public class HPbar : MonoBehaviour
     {
         if (Flag == 0)
         {
-            HP = gameController.GetComponent<StatusManager>().playerHP ;
+            HP = gameController.GetComponent<StatusManager>().playerHP;
             bar.maxValue = HP;
         }else if(Flag == 1){
-            HP = gameController.GetComponent<StatusManager>().enemyHP ;
+            HP = gameController.GetComponent<StatusManager>().abilities[StageCobtroller.stageNum - 1].enemyHPDef;
             bar.maxValue = HP;
         }else if(Flag == 3){
             HP = gameController.GetComponent<StatusManager>().playerHP;
@@ -36,7 +36,7 @@ public class HPbar : MonoBehaviour
             bar.value = HP;
             
         }else if (Flag == 4){
-            HP = gameController.GetComponent<StatusManager>().enemyHP;
+            HP = gameController.GetComponent<StatusManager>().abilities[StageCobtroller.stageNum - 1].enemyHPDef;
             bar.maxValue = HP;
             bar.value = HP;
         }

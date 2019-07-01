@@ -13,14 +13,30 @@ public class StatusManager : MonoBehaviour
     public float gageSpeed;
     public float summonGage;
 
+    public int playerAtkDef;
+
+    [System.Serializable]
+    public struct Ability
+    {
+        public float gageSpeedDef;
+        public int enemyAtkDef;
+        public int enemyHPDef;
+    }
     [SerializeField]
-    private float gageSpeedDef;
-    [SerializeField]
-    private int enemyAtkDef;
-    [SerializeField]
-    private int playerAtkDef;
+    public  Ability[] abilities = new Ability[3];
+
+
     public int EnemyActionrange=1;
+
+
+
+
+
+
+
     //ここから先久野変数
+
+
     private int reoSlip;
     private int scorSlip;
     public int pisBarrier;
@@ -37,8 +53,9 @@ public class StatusManager : MonoBehaviour
 
     private void Start()
     {
-        gageSpeed = gageSpeedDef;
-        enemyAtk = enemyAtkDef;
+        gageSpeed = abilities[StageCobtroller .stageNum -1].gageSpeedDef ;
+        enemyAtk = abilities[StageCobtroller.stageNum - 1].enemyAtkDef;
+        enemyHP = abilities[StageCobtroller.stageNum - 1].enemyHPDef;
         playerAtk = playerAtkDef;
 
     }
@@ -99,8 +116,8 @@ public class StatusManager : MonoBehaviour
 
     public void TurnCheck()
     {
-        enemyAtk = enemyAtkDef;
-        gageSpeed = gageSpeedDef;
+        enemyAtk = abilities[StageCobtroller.stageNum - 1].enemyAtkDef;
+        gageSpeed = abilities[StageCobtroller.stageNum - 1].gageSpeedDef;
         //獅子
         if (reoSlip > 0)
         {

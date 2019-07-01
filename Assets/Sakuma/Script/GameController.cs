@@ -196,12 +196,26 @@ public class GameController : MonoBehaviour
             case 19:
                 ShootingEndCount();
                 break;
+            case 20:
+                WinNext();
+                break;
+            case 21:
+                ShootingbeEnd2();
+                break;
+            case 99:
+                None();
+                break;
+
+
             default:
                 break;
         }
     }
 
+    private void None()
+    {
 
+    }
 
     private void ShootingEndCount()
     {
@@ -250,12 +264,15 @@ public class GameController : MonoBehaviour
         }
 
     }
-
+    private void ShootingbeEnd2()
+    {
+        SceneControl.Instance.LoadScene(SceneControl.SceneName.Stage1, true);
+    }
     private void ShootingbeEnd()
     {
         StageCobtroller.stageNum++;
         StageCobtroller.Shooting = false;
-        SceneControl.Instance.LoadScene(SceneControl.SceneName.Stage1, true);
+        ModeChange(21, 0);
     }
 
     private void Shootingbefore()
@@ -361,12 +378,31 @@ public class GameController : MonoBehaviour
         textPadObj.SetActive(true);
 
 
-        StageCobtroller.Shooting = true;
+        
 
-        SceneControl.Instance.LoadScene(SceneControl.SceneName.Stage1, true);
+        //SceneControl.Instance.LoadScene(SceneControl.SceneName.Stage1, true);
 
-        //ModeChange(10, 1);
+        ModeChange(20, 1);
     }
+
+
+
+    private void WinNext()
+    {
+        if (StageCobtroller.stageNum == 3)
+        {
+            StageCobtroller.stageNum = 1;
+            SceneControl.Instance.LoadScene(SceneControl.SceneName.Result, true);
+        }
+        else
+        {
+            StageCobtroller.Shooting = true;
+            SceneControl.Instance.LoadScene(SceneControl.SceneName.Stage1, true);
+        }
+        ModeChange(99, 0);
+    }
+
+
 
     private void EnemyAtk()
     {
