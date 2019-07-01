@@ -125,7 +125,7 @@ public class PadController2 : MonoBehaviour
     void Update()
     {
 
-        Debug.Log(SterLine[0] + " " + SterLine[1] + " " + SterLine[2] + " " + SterLine[3] + " " + SterLine[4] + " " + SterLine[5] + " " + SterLine[6]);
+        //Debug.Log(SterLine[0] + " " + SterLine[1] + " " + SterLine[2] + " " + SterLine[3] + " " + SterLine[4] + " " + SterLine[5] + " " + SterLine[6]);
 
 
         if (Input.touchCount > 0 && Pad&&sumonbd ==false )
