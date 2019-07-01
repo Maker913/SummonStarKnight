@@ -21,15 +21,9 @@ public class TitleControl : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if(startButton != null)
-        {
-            startButton.onClick.AddListener(() => ButtonAction());
-        }
-        else
-        {
-            Debug.LogError("ボタンオブジェクトを割り当ててください");
-        }
+        startButton.enabled = true;
 
+        // ステージモデル用のカメラRenderTextureの作成
         renderTextures = new RenderTexture[subCameras.Count];
         for(int i = 0; i < renderTextures.Length; i++)
         {
@@ -38,8 +32,6 @@ public class TitleControl : MonoBehaviour
         }
 
         cameraStartFlag = true;
-
-        //AudioManager.Instance.PlayBGM(0);
     }
 
     private void Update()
@@ -67,18 +59,11 @@ public class TitleControl : MonoBehaviour
     /// <summary>
     /// スタートボタンで呼び出される処理
     /// </summary>
-    private void ButtonAction()
+    public void ButtonAction()
     {
+        startButton.enabled = false;
+        AudioManager.Instance.PlaySE(AudioManager.SeName.button);
         // シーン遷移
-        SceneControl.Instance.LoadScene(scene, true, unityAction: () => SoundStop());
-    }
-
-    /// <summary>
-    /// シーン内で鳴っているBGMとSEを停止
-    /// </summary>
-    private void SoundStop()
-    {
-        AudioManager.Instance.StopBGM();
-        AudioManager.Instance.StopSE();
+        SceneControl.Instance.LoadScene(scene, true);
     }
 }
