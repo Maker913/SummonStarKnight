@@ -95,9 +95,18 @@ public class GameController : MonoBehaviour
     [SerializeField]
     private GameObject resultObjtext;
 
+    [SerializeField]
+    private GameObject textPr;
+
+
+
+
     static public string result = "NULL";
     [Space(10)]
     [Header("ここからエフェクト")]
+
+
+
 
     //ここからエフェクト用
     [SerializeField]
@@ -118,7 +127,14 @@ public class GameController : MonoBehaviour
 
         if(StageCobtroller.Shooting ==false)
         {
-            gameMode = 1;
+            if (StageCobtroller.stageNum == 1)
+            {
+                gameMode = 22;
+            }
+            else
+            {
+                gameMode = 1;
+            }
         }
         else
         {
@@ -202,6 +218,11 @@ public class GameController : MonoBehaviour
             case 21:
                 ShootingbeEnd2();
                 break;
+
+            case 22:
+                Scenario();
+                break;
+
             case 99:
                 None();
                 break;
@@ -209,6 +230,18 @@ public class GameController : MonoBehaviour
 
             default:
                 break;
+        }
+    }
+
+
+    private void Scenario()
+    {
+        padController2.Pad = false;
+        textPadObj.SetActive(false );
+        if (TextController .end)
+        {
+            
+            ModeChange(1, 0);
         }
     }
 
@@ -511,6 +544,8 @@ public class GameController : MonoBehaviour
 
     private void Stert()
     {
+        camera.GetComponent<CameraController2>().SetCamera(0, 2);
+        textPr.SetActive(false);
         textPadObj.SetActive(true);
         text.text = "ゲーム開始";
         ModeChange(12, 3f);

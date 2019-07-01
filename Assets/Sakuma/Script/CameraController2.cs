@@ -35,7 +35,7 @@ public class CameraController2 : MonoBehaviour
         {
             transform.position = stratPos.transform.position;
             transform.localEulerAngles = stratPos.transform.localEulerAngles;
-            SetCamera(0, 2);
+            //SetCamera(0, 2);
             cameraMode = 0;
         }
         else
