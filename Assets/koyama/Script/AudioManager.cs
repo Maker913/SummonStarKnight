@@ -1,30 +1,28 @@
-﻿//using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 public class AudioManager : MonoBehaviour
 {
-    /// <summary>
-    /// SE再生。
-    ///AudioManager.Instance.PlaySE("番号");
-    ///BGM再生。
-    ///AudioManager.Instance.PlayBGM("番号");
-    /// </summary>
     public static AudioManager Instance;
     private BgmManager bgmManager;
     private SeManager seManager;
 
-    readonly List<string> seNameList = new List<string>
+    public enum BgmName
     {
-        "button",
-        "enemy_Deathblow",
-        "failed",
-        "player_attack",
-        "result",
-        "Follow",
-        "success",
-        "gauge",
-    };
+        ThemeBGM = 0
+    }
+    public enum SeName
+    {
+        button = 0,         //ボタン
+        enemy_Deathblow,    //敵の必殺技
+        failed,             //失敗
+        player_attack,      //プレイヤー攻撃
+        result,             //リザルト
+        Follow,             //なぞる
+        success,            //成功
+        gauge               //ゲージ
+    }
+
     private void Awake()
     {
         if(Instance == null)
@@ -39,27 +37,29 @@ public class AudioManager : MonoBehaviour
         bgmManager = GetComponentInChildren<BgmManager>();
         seManager = GetComponentInChildren<SeManager>();
     }
+    /// <summary>
+    /// SE再生
+    /// <para>AudioManager.Instance.PlayBGM("AudioManager.BgmName.名前");</para>
+    /// </summary>
+    /// <param name="name"></param>
     //BGM再生
-    public void PlayBGM(int number)
+    public void PlayBGM(BgmName name)
     {
-        bgmManager.PlayBGM(number);
+        bgmManager.PlayBGM((int)name);
     }
     //BGM停止
     public void StopBGM()
     {
         bgmManager.StopBGM();
     }
-    //SE再生
-    /*
-    public void PlaySE(int number)
+    /// <summary>
+    /// SE再生
+    /// <para>AudioManager.Instance.PlaySE("AudioManager.SeName.名前");</para>
+    /// </summary>
+    /// <param name="name"></param>
+    public void PlaySE(SeName name)
     {
-        seManager.PlaySE(number);
-    }
-    */
-    public void PlaySE(SEName name)
-    {
-        //var se = (SEName)Enum.Parse(typeof(SEName), " ");
-        seManager.PlaySE(seNameList[(int)name]);
+        seManager.PlaySE((int)name);
     }
 
     //SE停止

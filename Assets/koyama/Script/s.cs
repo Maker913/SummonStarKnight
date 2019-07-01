@@ -17,7 +17,7 @@ public class s : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            AudioManager.Instance.PlayBGM(0);
+            AudioManager.Instance.PlaySE(AudioManager.SeName.button);
             Debug.Log("鳴った");
         }
     }
