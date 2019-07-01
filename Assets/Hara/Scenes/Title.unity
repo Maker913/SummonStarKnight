@@ -132,7 +132,7 @@ PrefabInstance:
     - target: {fileID: 3227800951715874206, guid: a0278706e7bc2d64c9a36379d176533b,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -300
+      value: -150
       objectReference: {fileID: 0}
     - target: {fileID: 3227800951715874206, guid: a0278706e7bc2d64c9a36379d176533b,
         type: 3}
@@ -214,7 +214,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400018, guid: da4c971996ce6c14a857e3e38085293b, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -150
+      value: -450
       objectReference: {fileID: 0}
     - target: {fileID: 400018, guid: da4c971996ce6c14a857e3e38085293b, type: 3}
       propertyPath: m_LocalPosition.y
@@ -242,7 +242,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400018, guid: da4c971996ce6c14a857e3e38085293b, type: 3}
       propertyPath: m_RootOrder
-      value: 6
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 400018, guid: da4c971996ce6c14a857e3e38085293b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -422,7 +422,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400028, guid: b2a69a8cf84c3ac4ab2bc6337aae372e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -450
+      value: -300
       objectReference: {fileID: 0}
     - target: {fileID: 400028, guid: b2a69a8cf84c3ac4ab2bc6337aae372e, type: 3}
       propertyPath: m_LocalPosition.y
@@ -450,7 +450,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400028, guid: b2a69a8cf84c3ac4ab2bc6337aae372e, type: 3}
       propertyPath: m_RootOrder
-      value: 7
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 400028, guid: b2a69a8cf84c3ac4ab2bc6337aae372e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -547,7 +547,7 @@ GameObject:
   - component: {fileID: 769514355}
   - component: {fileID: 769514354}
   m_Layer: 0
-  m_Name: StageCamera3
+  m_Name: StageCamera2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -617,11 +617,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 769514353}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -450, y: 5, z: 0}
+  m_LocalPosition: {x: -300, y: 5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &981498051
 GameObject:
@@ -671,8 +671,8 @@ MonoBehaviour:
   rawImage: {fileID: 1604498291}
   subCameras:
   - {fileID: 1480178447}
-  - {fileID: 1354340901}
   - {fileID: 769514354}
+  - {fileID: 1354340901}
 --- !u!1001 &1153755547
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -833,7 +833,7 @@ GameObject:
   - component: {fileID: 1354340902}
   - component: {fileID: 1354340901}
   m_Layer: 0
-  m_Name: StageCamera2
+  m_Name: StageCamera3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -885,7 +885,7 @@ Camera:
     serializedVersion: 2
     m_Bits: 4294967295
   m_RenderingPath: -1
-  m_TargetTexture: {fileID: 0}
+  m_TargetTexture: {fileID: 8400000, guid: ad8caa84e26000e419cdb664ac292dd8, type: 2}
   m_TargetDisplay: 0
   m_TargetEye: 3
   m_HDR: 1
@@ -903,11 +903,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1354340900}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -150, y: 5, z: -1}
+  m_LocalPosition: {x: -450, y: 5, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1358687185
 GameObject:
@@ -1301,7 +1301,7 @@ Camera:
     serializedVersion: 2
     m_Bits: 4294967295
   m_RenderingPath: -1
-  m_TargetTexture: {fileID: 8400000, guid: ad8caa84e26000e419cdb664ac292dd8, type: 2}
+  m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
   m_TargetEye: 3
   m_HDR: 1
@@ -1319,7 +1319,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1480178446}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -300, y: 1, z: -1}
+  m_LocalPosition: {x: -150, y: 1, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}

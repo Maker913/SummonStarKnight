@@ -21,8 +21,6 @@ public class TitleControl : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        startButton.enabled = true;
-
         // ステージモデル用のカメラRenderTextureの作成
         renderTextures = new RenderTexture[subCameras.Count];
         for(int i = 0; i < renderTextures.Length; i++)
@@ -61,7 +59,6 @@ public class TitleControl : MonoBehaviour
     /// </summary>
     public void ButtonAction()
     {
-        startButton.enabled = false;
         AudioManager.Instance.PlaySE(AudioManager.SeName.button);
         // シーン遷移
         SceneControl.Instance.LoadScene(scene, true);
