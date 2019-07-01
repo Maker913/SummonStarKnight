@@ -26,7 +26,7 @@ public class StatusManager : MonoBehaviour
     public  Ability[] abilities = new Ability[3];
 
 
-    public int EnemyActionrange=1;
+    public int EnemyActionrange=2;
 
 
 
@@ -36,6 +36,7 @@ public class StatusManager : MonoBehaviour
 
     //ここから先久野変数
 
+    private int playerAtkBuf;
 
     private int reoSlip;
     private int scorSlip;
@@ -57,7 +58,7 @@ public class StatusManager : MonoBehaviour
         enemyAtk = abilities[StageCobtroller.stageNum - 1].enemyAtkDef;
         enemyHP = abilities[StageCobtroller.stageNum - 1].enemyHPDef;
         playerAtk = playerAtkDef;
-
+        playerAtkBuf = playerAtk;
     }
 
     public void SummonCheck(int num)
@@ -69,15 +70,16 @@ public class StatusManager : MonoBehaviour
                 reoSlip = 3;
                 break;
             case 1:
-                //うお座
+                //うお座　バリア1
                 pisBarrier = 1;
                 break;
             case 2:
-                //蟹
+                //蟹　攻撃1.5
                 playerAtk = (int)(playerAtk * 1.5f);
+                playerAtkBuf = playerAtk;
                 break;
             case 3:
-                //サソリ
+                //サソリ　毒3ターン
                 scorSlip = 3;
                 break;
             case 4:
@@ -87,27 +89,29 @@ public class StatusManager : MonoBehaviour
                 //山羊　Capri　制限ターン2のびる
                 break;
             case 6:
-                //乙女
+                //乙女　バリア3
                 virgoBarrier = 3;
                 break;
             case 7:
-                //天秤
+                //天秤　指3秒+
                 LibraTurn = 1;
                 break;
             case 8:
-                //射手
+                //射手　攻撃3倍
                 playerAtk *= 3;
+                playerAtkBuf = playerAtk;
                 break;
             case 9:
-                //水瓶
+                //水瓶　敵の攻撃半減
                 aquariTurn = 1;
                 break;
             case 10:
                 //牡羊 Aries 制限ターン5のびる
                 break;
             case 11:
-                //牡牛
+                //牡牛　攻撃2倍
                 playerAtk *= 2;
+                playerAtkBuf = playerAtk;
                 break;
             default:
                 break;
@@ -118,6 +122,7 @@ public class StatusManager : MonoBehaviour
     {
         enemyAtk = abilities[StageCobtroller.stageNum - 1].enemyAtkDef;
         gageSpeed = abilities[StageCobtroller.stageNum - 1].gageSpeedDef;
+        playerAtk = playerAtkBuf;
         //獅子
         if (reoSlip > 0)
         {
@@ -152,11 +157,16 @@ public class StatusManager : MonoBehaviour
             aquariTurn--;
         }
 
-        //敵
-        if (data > 0)
+        //敵　魚
+        if (enemyPis > 0)
         {
             gageSpeed -= 2;
-            data--;
+            enemyPis--;
+        }
+        //敵　蟹
+        if(enemyCancer > 0)
+        {
+            playerAtk /= 2;
         }
 
     }
@@ -189,7 +199,8 @@ public class StatusManager : MonoBehaviour
 
 
 
-    private int data=0;
+    private int enemyPis=0;
+    private int enemyCancer = 0;
 
     public void EnemyAction(int num)
     {
@@ -197,7 +208,14 @@ public class StatusManager : MonoBehaviour
         {
             case 1:
                 //操作時間減少　魚
-                data = 2;
+                enemyPis = 2;
+                break;
+            case 2:
+                //プレイヤーの攻撃半減　1ターン？
+                enemyCancer = 1;
+                break;
+            case 3:
+                //制限ターン2減らす 蛇 Ophiuchus
                 break;
             default:
                 break;
