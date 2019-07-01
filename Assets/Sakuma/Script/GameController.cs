@@ -332,6 +332,7 @@ public class GameController : MonoBehaviour
 
     private void ShootingStart()
     {
+        textPr.SetActive(false);
         ModeChange(18, 2);
         text.text = "ボーナスゲーム開始";
         textPadObj.SetActive(true);
