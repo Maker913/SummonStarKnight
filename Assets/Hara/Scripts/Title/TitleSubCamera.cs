@@ -35,7 +35,7 @@ public class TitleSubCamera : MonoBehaviour
             cameraRotateStop = true;
             time = 0;
             // カメラの向きを初期値に戻す
-            transform.rotation = Quaternion.Euler(transform.eulerAngles.x, 0, 0);
+            transform.rotation = Quaternion.Euler(transform.eulerAngles.x, 0, transform.eulerAngles.z);
         }
     }
 }
