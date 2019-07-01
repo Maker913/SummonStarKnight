@@ -35,7 +35,6 @@ public class StatusManager : MonoBehaviour
 
 
     //ここから先久野変数
-
     private int playerAtkBuf;
 
     private int reoSlip;
@@ -66,7 +65,7 @@ public class StatusManager : MonoBehaviour
         switch (num)
         {
             case 0:
-                //獅子座を召還した時の処理
+                //獅子座を召還した時の処理 スリップ3ターン
                 reoSlip = 3;
                 break;
             case 1:
@@ -167,6 +166,7 @@ public class StatusManager : MonoBehaviour
         if(enemyCancer > 0)
         {
             playerAtk /= 2;
+            enemyCancer--;
         }
 
     }
