@@ -100,7 +100,7 @@ public class TextController : MonoBehaviour
 
             DisplayText();
         }
-        Debug.Log("page:" + page);
+        //Debug.Log("page:" + page);
     }
 
     //テキストデータのロードが終わり次第テキストデータの格納

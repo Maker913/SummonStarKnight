@@ -259,6 +259,7 @@ public class GameController : MonoBehaviour
         if (ShootingTime > 1)
         {
             countObj.SetActive(false);
+            StageCobtroller.Technique[StageCobtroller.stageNum] = Random.Range(0, technique.Length + 1);
             ModeChange(17, 0);
         }
     }
@@ -289,7 +290,8 @@ public class GameController : MonoBehaviour
     {
 
         resultObj.SetActive(true);
-        resultObjtext.GetComponent<Text>().text = "結果\n\n\n" + shooting.lineNum + "\n\n\nなんかを召喚できるようになりました";
+        
+        resultObjtext.GetComponent<Text>().text = "結果\n\n\n" + shooting.lineNum + "\n\n\n"+technique [StageCobtroller.Technique[StageCobtroller.stageNum]].Name  +"を召喚できるようになりました";
 
         if (Input.touchCount != 0)
         {
@@ -377,8 +379,8 @@ public class GameController : MonoBehaviour
     private void Sumon()
     {
         enj.GetComponent<Animator>().SetBool("Open", true);
-        statusManager.SummonCheck(weapon);
-        text.text = technique[weapon ].Name +"を召喚しました";
+        string textdata=statusManager.SummonCheck(weapon);
+        text.text = textdata;
         padController2.Pad = false;
         textPadObj.SetActive(true);
 
@@ -412,8 +414,8 @@ public class GameController : MonoBehaviour
         textPadObj.SetActive(true);
 
 
-        
 
+        StageCobtroller.stageNum = 1;
         //SceneControl.Instance.LoadScene(SceneControl.SceneName.Stage1, true);
 
         ModeChange(20, 1);
@@ -426,6 +428,9 @@ public class GameController : MonoBehaviour
         if (StageCobtroller.stageNum == 3)
         {
             StageCobtroller.stageNum = 1;
+            StageCobtroller.Technique[0] = 0;
+            StageCobtroller.Technique[1] = -1;
+            StageCobtroller.Technique[2] = -1;
             SceneControl.Instance.LoadScene(SceneControl.SceneName.Result, true);
         }
         else

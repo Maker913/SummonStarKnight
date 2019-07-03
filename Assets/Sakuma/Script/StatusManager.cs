@@ -60,58 +60,73 @@ public class StatusManager : MonoBehaviour
 
     }
 
-    public void SummonCheck(int num)
+    public string SummonCheck(int num)
     {
+        string text="";
         switch (num)
         {
             case 0:
                 //獅子座を召還した時の処理
+                text = "獅子座の力を借りました\n少しの間敵にダメージを持続的に与えます";
                 reoSlip = 3;
                 break;
             case 1:
                 //うお座
+                text = "魚座の力を借りました\n一度だけ敵の攻撃を受けません";
                 pisBarrier = 1;
                 break;
             case 2:
                 //蟹
+                text = "蟹座の力を借りました\n攻撃力が上昇しました";
                 playerAtk = (int)(playerAtk * 1.5f);
                 break;
             case 3:
                 //サソリ
+                text = "蠍座の力を借りました\n毒により、持続的にダメージを与えます";
                 scorSlip = 3;
                 break;
             case 4:
                 //双子　gemini 攻撃回数が2回に増える しょうま
+                text = "双子座の力を借りました\n攻撃力が2倍になりました";
+                playerAtk = (int)(playerAtk * 2f);
                 break;
             case 5:
                 //山羊　Capri　制限ターン2のびる
+                text = "山羊座の力を借りました\n制限ターンを2ターン伸ばしました";
                 break;
             case 6:
                 //乙女
+                text = "乙女座の力を借りました\n三回の間敵の攻撃を受けません";
                 virgoBarrier = 3;
                 break;
             case 7:
                 //天秤
+                text = "天秤座の力を借りました\n敵のゲージがたまる速度が遅くなりました";
                 LibraTurn = 1;
                 break;
             case 8:
                 //射手
+                text = "射手座の力を借りました\n攻撃力が大幅に上昇しました";
                 playerAtk *= 3;
                 break;
             case 9:
                 //水瓶
+                text = "水瓶座の力を借りました\n敵の攻撃力を減少させました";
                 aquariTurn = 1;
                 break;
             case 10:
                 //牡羊 Aries 制限ターン5のびる
+                text = "牡羊座の力を借りました\n制限ターンが5ターン伸びました";
                 break;
             case 11:
                 //牡牛
+                text = "牡牛座の力を借りました\n攻撃力が上昇しました";
                 playerAtk *= 2;
                 break;
             default:
                 break;
         }
+        return text;
     }
 
     public void TurnCheck()

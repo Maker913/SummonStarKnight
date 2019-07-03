@@ -32,8 +32,11 @@ public class SumonBoard : MonoBehaviour
     }
 
 
-    public void Sumon(int num)
-    {if (game.GetComponent<StatusManager>().summonGage  >= 100)
+    public void Sumon(GameObject Button)
+    {
+        int num = Button.GetComponent<ButtonNum>().Num;
+
+        if (game.GetComponent<StatusManager>().summonGage  >= 100)
         {
             game.GetComponent<StatusManager>().summonGage = 0;
             Pad.GetComponent<PadController2>().sumonMode = true;

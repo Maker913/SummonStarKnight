@@ -358,11 +358,11 @@ public class PadController2 : MonoBehaviour
 
             if(sterLineamount != 0&&sumonMode==false )
             {
-                text.text  = "攻撃";
+                //text.text  = "攻撃";
             }
             else
             {
-                text.text = "召喚";
+                //text.text = "召喚";
             }
 
 #if false

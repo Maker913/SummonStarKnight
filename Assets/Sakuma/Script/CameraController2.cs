@@ -35,7 +35,7 @@ public class CameraController2 : MonoBehaviour
         {
             transform.position = stratPos.transform.position;
             transform.localEulerAngles = stratPos.transform.localEulerAngles;
-            //SetCamera(0, 2);
+            SetCamera(-1, 0);
             cameraMode = 0;
         }
         else
@@ -94,7 +94,14 @@ public class CameraController2 : MonoBehaviour
 
     public void SetCamera(int num, float data)
     {
-        firstPos = Pos[num];
+        if (num == -1)
+        {
+            firstPos = stratPos;
+        }
+        else
+        {
+            firstPos = Pos[num];
+        }
         rate = data;
         nowPos = transform.position;
         time = 1;
