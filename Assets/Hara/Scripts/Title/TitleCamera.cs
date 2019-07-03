@@ -2,15 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TitleSubCamera : MonoBehaviour
+public class TitleCamera : MonoBehaviour
 {
     [SerializeField]
     private bool cameraRotateStop = true;    // カメラの回転を止めるフラグ
     public bool CameraRotateStop { set { cameraRotateStop = value; } get { return cameraRotateStop; } }
-
-    [SerializeField]
-    private Camera stageCamera;
-    public RenderTexture CameraRender { set { stageCamera.targetTexture = value; } }
 
     private float time;
     private float angle = 36;    // 1秒間に回転する角度

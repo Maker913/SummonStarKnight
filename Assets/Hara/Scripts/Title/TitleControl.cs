@@ -7,31 +7,23 @@ public class TitleControl : MonoBehaviour
 {
     [SerializeField,Tooltip("遷移先のシーン")]
     private SceneControl.SceneName scene;
-    [SerializeField]
-    private Button startButton;
+    
+    [SerializeField, Tooltip("ステージモデルの座標")]
+    private List<GameObject> stageModels;
+    [SerializeField, Tooltip("タイトルのMainCamera")]
+    private TitleCamera mainCamera;
 
-    [SerializeField]
-    private RawImage rawImage;
-    [SerializeField]
-    private List<TitleSubCamera> subCameras;
-    private RenderTexture[] renderTextures;
     private bool cameraStartFlag = false;
-    private int cameraNumber = 0;
+    private int stageModelNumber = 0;
 
     // Start is called before the first frame update
     void Start()
     {
-        startButton.enabled = true;
-
-        // ステージモデル用のカメラRenderTextureの作成
-        renderTextures = new RenderTexture[subCameras.Count];
-        for(int i = 0; i < renderTextures.Length; i++)
-        {
-            renderTextures[i] = new RenderTexture(Screen.width, Screen.height, 0, RenderTextureFormat.ARGB32);
-            subCameras[i].CameraRender = renderTextures[i];
-        }
-
         cameraStartFlag = true;
+        foreach(GameObject obj in stageModels)
+        {
+            obj.SetActive(false);
+        }
     }
 
     private void Update()
@@ -40,18 +32,20 @@ public class TitleControl : MonoBehaviour
         {
             // カメラを回転させる
             cameraStartFlag = false;
-            rawImage.texture = renderTextures[cameraNumber];
-            subCameras[cameraNumber].CameraRotateStop = false;
+            stageModels[stageModelNumber].SetActive(true);
+            mainCamera.transform.position = new Vector3(stageModels[stageModelNumber].transform.position.x, mainCamera.transform.position.y, stageModels[stageModelNumber].transform.position.z);
+            mainCamera.CameraRotateStop = false;
         }
 
-        if (subCameras[cameraNumber].CameraRotateStop)
+        if (mainCamera.CameraRotateStop)
         {
             // カメラが一回転したら次のカメラを回転させる
             cameraStartFlag = true;
-            cameraNumber++;
-            if(cameraNumber >= subCameras.Count)
+            stageModels[stageModelNumber].SetActive(false);
+            stageModelNumber++;
+            if(stageModelNumber >= stageModels.Count)
             {
-                cameraNumber = 0;
+                stageModelNumber = 0;
             }
         }
     }
@@ -61,7 +55,6 @@ public class TitleControl : MonoBehaviour
     /// </summary>
     public void ButtonAction()
     {
-        startButton.enabled = false;
         AudioManager.Instance.PlaySE(AudioManager.SeName.button);
         // シーン遷移
         SceneControl.Instance.LoadScene(scene, true);
