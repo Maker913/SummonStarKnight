@@ -141,7 +141,7 @@ public class GameController : MonoBehaviour
             gameMode = 13;
         }
 
-
+        AudioManager.Instance.PlayBGM(AudioManager.BgmName.ThemeBGM);
     }
 
 
@@ -259,7 +259,7 @@ public class GameController : MonoBehaviour
         if (ShootingTime > 1)
         {
             countObj.SetActive(false);
-            StageCobtroller.Technique[StageCobtroller.stageNum] = Random.Range(0, technique.Length + 1);
+            StageCobtroller.Technique[StageCobtroller.stageNum] = Random.Range(0, technique.Length);
             ModeChange(17, 0);
         }
     }
@@ -347,6 +347,7 @@ public class GameController : MonoBehaviour
         
         if (enemyTurn <=0)
         {
+            AudioManager.Instance.PlaySE(AudioManager.SeName.enemy_Deathblow);
             text.text = "2ターンの間制限時間減少";
             statusManager.EnemyAction(Random.Range(1, statusManager .EnemyActionrange +1));
             textPadObj.SetActive(true);
@@ -402,7 +403,7 @@ public class GameController : MonoBehaviour
         text.text = "負け";
         padController2.Pad = false;
         textPadObj.SetActive(true);
-
+        StageCobtroller.stageNum = 1;
         ModeChange(10, 1);
     }
 
@@ -415,7 +416,7 @@ public class GameController : MonoBehaviour
 
 
 
-        StageCobtroller.stageNum = 1;
+        
         //SceneControl.Instance.LoadScene(SceneControl.SceneName.Stage1, true);
 
         ModeChange(20, 1);
@@ -465,6 +466,7 @@ public class GameController : MonoBehaviour
                 
                 textPadObj.SetActive(true);
                 text.text = "攻撃されました";
+                AudioManager.Instance.PlaySE(AudioManager.SeName.player_attack);
                 statusManager.playerHP  -= statusManager.enemyAtk ;
                 statusManager.BarrierCheck();
                 if (statusManager.playerHP <= 0)
@@ -509,8 +511,8 @@ public class GameController : MonoBehaviour
                     statusManager.summonGage = 100;
                 }
 
-                
-                
+
+                AudioManager.Instance.PlaySE(AudioManager.SeName.player_attack);
                 textPadObj.SetActive(true);
                 text.text = "攻撃しました";
                 statusManager.enemyHP  -= statusManager.playerAtk;

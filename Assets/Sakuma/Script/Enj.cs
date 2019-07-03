@@ -63,6 +63,7 @@ public class Enj : MonoBehaviour
             time = statusManager.gageSpeed;
             image.fillAmount = 0;
             gameController.ModeChange(4, 0);
+            AudioManager.Instance.PlaySE(AudioManager.SeName.failed);
             //Debug.Log(123);
             padController.BoardReset();
         }

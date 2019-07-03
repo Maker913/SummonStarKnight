@@ -476,6 +476,7 @@ public class PadController2 : MonoBehaviour
                 }
                 if (check == bfList.Length)
                 {
+                    AudioManager.Instance.PlaySE(AudioManager.SeName.gauge);
                     gameController.ModeChange(3, 0);
                     enj.image.fillAmount = 0;
                     enj.time = statusManager .gageSpeed ;
@@ -502,6 +503,7 @@ public class PadController2 : MonoBehaviour
                 }
                 if (check == bfList.Length)
                 {
+                    AudioManager.Instance.PlaySE(AudioManager.SeName.gauge);
                     gameController.weapon = sumonNum;
                     gameController.ModeChange(8, 0);
                     enj.image.fillAmount = 0;
@@ -547,6 +549,7 @@ public class PadController2 : MonoBehaviour
         }
         if (check == bfList.Length)
         {
+            AudioManager.Instance.PlaySE(AudioManager.SeName.gauge);
             shooting.lineNum++;
             shooting.BoardReset();
             shooting.RandSelect();
