@@ -70,6 +70,7 @@ public class TextController : MonoBehaviour
 
     void Start()
     {
+        end = false;
     }
     
     void Update()

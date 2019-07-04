@@ -29,7 +29,7 @@ public class ResultControl : MonoBehaviour
     void Update()
     {
         // 仮の処理
-        characterModel.transform.Rotate(0, 1, 0);
+        //characterModel.transform.Rotate(0, 1, 0);
     }
 
     /// <summary>

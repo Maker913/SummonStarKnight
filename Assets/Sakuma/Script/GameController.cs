@@ -125,21 +125,8 @@ public class GameController : MonoBehaviour
         shooting = shootingObj.GetComponent<ShootingEnj>();
 
 
-        if(StageCobtroller.Shooting ==false)
-        {
-            if (StageCobtroller.stageNum == 1)
-            {
-                gameMode = 22;
-            }
-            else
-            {
-                gameMode = 1;
-            }
-        }
-        else
-        {
-            gameMode = 13;
-        }
+            gameMode = 22;
+
 
         AudioManager.Instance.PlayBGM(AudioManager.BgmName.ThemeBGM);
     }
@@ -240,8 +227,15 @@ public class GameController : MonoBehaviour
         textPadObj.SetActive(false );
         if (TextController .end)
         {
-            
-            ModeChange(1, 0);
+            if (StageCobtroller.Shooting == false)
+            {
+                ModeChange(1, 0);
+            }
+            else
+            {
+                ModeChange(13, 0);
+            }
+            TextController.end = false;
         }
     }
 
@@ -365,6 +359,7 @@ public class GameController : MonoBehaviour
 
     private void Battlesoon()
     {
+        StageCobtroller.Score += 1;
         statusManager.EnemyTurnCheck();
         statusManager.TurnCheck();
         ModeChange(2, 1f);
@@ -394,6 +389,7 @@ public class GameController : MonoBehaviour
     {
         ModeChange(12, 0);
         textPadObj.SetActive(false );
+        StageCobtroller.Score -= 1;
         //camera.GetComponent<CameraController2>().SetCamera(0, 1);
     }
 
@@ -428,6 +424,7 @@ public class GameController : MonoBehaviour
     {
         if (StageCobtroller.stageNum == 3)
         {
+            StageCobtroller.Win = true;
             StageCobtroller.stageNum = 1;
             StageCobtroller.Technique[0] = 0;
             StageCobtroller.Technique[1] = -1;
@@ -461,11 +458,15 @@ public class GameController : MonoBehaviour
                 dcont = 0;
                 cameradTime = 0;
 
-
+                statusManager.summonGage += Random.Range(10, 20);
+                if (statusManager.summonGage > 100)
+                {
+                    statusManager.summonGage = 100;
+                }
                 //teki.GetComponent<Animator>().SetTrigger("Attack");
-                
+
                 textPadObj.SetActive(true);
-                text.text = "攻撃されました";
+                text.text = "ダメージアニメーション予定地";
                 AudioManager.Instance.PlaySE(AudioManager.SeName.player_attack);
                 statusManager.playerHP  -= statusManager.enemyAtk ;
                 statusManager.BarrierCheck();
@@ -505,7 +506,7 @@ public class GameController : MonoBehaviour
                 dcont = 0;
                 cameradTime = 0;
 
-                statusManager.summonGage += 40;
+                statusManager.summonGage += Random .Range (20,40);
                 if (statusManager.summonGage > 100)
                 {
                     statusManager.summonGage = 100;
@@ -514,7 +515,7 @@ public class GameController : MonoBehaviour
 
                 AudioManager.Instance.PlaySE(AudioManager.SeName.player_attack);
                 textPadObj.SetActive(true);
-                text.text = "攻撃しました";
+                text.text = "攻撃アニメーション予定地";
                 statusManager.enemyHP  -= statusManager.playerAtk;
                 if (statusManager.enemyHP <= 0)
                 {
@@ -555,7 +556,7 @@ public class GameController : MonoBehaviour
         camera.GetComponent<CameraController2>().SetCamera(0, 2);
         textPr.SetActive(false);
         textPadObj.SetActive(true);
-        text.text = "ゲーム開始";
+        text.text = "STAGE "+StageCobtroller .stageNum .ToString ();
         ModeChange(12, 3f);
     }
 

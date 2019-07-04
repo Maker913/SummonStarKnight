@@ -8,9 +8,13 @@ public class StageCobtroller : MonoBehaviour
 
     static public int stageNum = 1;
 
-    static public bool Shooting = false;
+    static public bool Shooting =false ;
 
     static public int[] Technique= { 0,-1,-1};
+
+    static public int Score=0;
+
+    static public bool Win = false;
 
     [SerializeField ]
     private GameObject [] stageObj;
