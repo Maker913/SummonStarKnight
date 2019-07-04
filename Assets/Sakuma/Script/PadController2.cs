@@ -73,6 +73,8 @@ public class PadController2 : MonoBehaviour
     private GameObject enjObj;
     private Enj enj;
 
+    [SerializeField ]
+    private GameObject underPos;
 
     private bool move=false ;
 
@@ -101,6 +103,9 @@ public class PadController2 : MonoBehaviour
     [SerializeField]
     private GameObject ShootingObj;
     private ShootingEnj  shooting;
+
+
+
 
 
     // Start is called before the first frame update
@@ -144,7 +149,7 @@ public class PadController2 : MonoBehaviour
                 {
                     if (sterLineamount == 0)
                     {
-                        if (sumonMode == false)
+                        if (sumonMode == false&&StageCobtroller .Shooting ==false )
                         {
                             sumonbd = true;
                             sumonbdobj.transform.localPosition = new Vector3(275, 275,0);
@@ -170,17 +175,19 @@ public class PadController2 : MonoBehaviour
                         {
                             SterController = 1;
                             catchster = i + 1;
-                            if(glowStar[catchster - 1] == true) {
-                                move = true;
+                            AudioManager.Instance.PlaySE(AudioManager.SeName.Follow);
+
                                 
-                            } else {
-                                glowStar[catchster - 1] = true;
                                 move = false;
-                                AudioManager.Instance.PlaySE(AudioManager.SeName.Follow);
-                            }
+                                
+
                             SterEfAnime[catchster - 1].SetBool("Change", true);
                             radius = (int)Vector2.Distance(new Vector2(touch.position.x, touch.position.y), SterPos[i].transform.position);
                         }
+                    }
+                    if (catchster != 0)
+                    {
+                        glowStar[catchster - 1] = true;
                     }
                 }
                 else
@@ -194,7 +201,11 @@ public class PadController2 : MonoBehaviour
                 }
 
 
-
+                if (underPos.transform.position .y > touch.position.y&&Vector2.Distance(new Vector2(touch.position.x, touch.position.y), new Vector2(boardObj.transform.position.x, boardObj.transform.position.y)) > boardRadius + 100 && Vector2.Distance(new Vector2(touch.position.x, touch.position.y), summonButton.transform.position) > summonButtonRadius)
+                {
+                    BoardReset();
+                    Debug.Log("うぇい");
+                }
 
             }
             //移動時
@@ -621,7 +632,5 @@ public class PadController2 : MonoBehaviour
 
         }
     }
-
-
 
 }

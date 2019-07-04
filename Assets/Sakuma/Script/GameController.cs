@@ -253,7 +253,14 @@ public class GameController : MonoBehaviour
         if (ShootingTime > 1)
         {
             countObj.SetActive(false);
-            StageCobtroller.Technique[StageCobtroller.stageNum] = Random.Range(0, technique.Length);
+
+            int datanum;
+            do
+            {
+                datanum = Random.Range(0, technique.Length);
+            } while (datanum == StageCobtroller.Technique[0]|| datanum == StageCobtroller.Technique[1]|| datanum == StageCobtroller.Technique[2]);
+
+            StageCobtroller.Technique[StageCobtroller.stageNum] = datanum;
             ModeChange(17, 0);
         }
     }
@@ -399,6 +406,7 @@ public class GameController : MonoBehaviour
         text.text = "負け";
         padController2.Pad = false;
         textPadObj.SetActive(true);
+        StageCobtroller.Score = 0;
         StageCobtroller.stageNum = 1;
         ModeChange(10, 1);
     }

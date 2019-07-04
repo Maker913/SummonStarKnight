@@ -28,6 +28,9 @@ public class Menu : MonoBehaviour
 
     public void TitleBack()
     {
+        StageCobtroller.stageNum = 1;
+        StageCobtroller.Shooting = false;
+        StageCobtroller.Score = 0;
         SceneControl.Instance.LoadScene(SceneControl.SceneName.Title, true);
     }
 

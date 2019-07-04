@@ -33,7 +33,12 @@ ModelImporter:
     9500000: //RootNode
     13700000: hebitukai_moderu
     13700002: hebitukai_moderu2
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: hebitukai_moderu1
+    second: {fileID: 2100000, guid: a60c5bcd7fad5db43b87c9db1c9aa98b, type: 2}
   materials:
     importMaterials: 1
     materialName: 0
