@@ -73,6 +73,8 @@ public class PadController2 : MonoBehaviour
     private GameObject enjObj;
     private Enj enj;
 
+    [SerializeField ]
+    private GameObject underPos;
 
     private bool move=false ;
 
@@ -90,9 +92,26 @@ public class PadController2 : MonoBehaviour
     private GameObject sumontext;
     private Text text;
 
+    [SerializeField]
+    private GameObject BLine;
+
+    [SerializeField]
+    private GameObject StatusManagerObj;
+    private StatusManager statusManager;
+
+
+    [SerializeField]
+    private GameObject ShootingObj;
+    private ShootingEnj  shooting;
+
+
+
+
+
     // Start is called before the first frame update
     void Start()
     {
+        statusManager = StatusManagerObj.GetComponent<StatusManager>();
         text = sumontext.GetComponent<Text>();
         transform.position = new Vector3(Screen.width / 2, Screen.height / 2, 0);
         Pad = false;
@@ -104,6 +123,7 @@ public class PadController2 : MonoBehaviour
             SterEfAnime[i] = SterEf[i].GetComponent<Animator>();
         }
         enj = enjObj.GetComponent<Enj>();
+        shooting = ShootingObj.GetComponent<ShootingEnj>(); 
     }
 
     // Update is called once per frame
@@ -129,9 +149,14 @@ public class PadController2 : MonoBehaviour
                 {
                     if (sterLineamount == 0)
                     {
-                        sumonbd = true;
-                        sumonbdobj.SetActive(true);
-                        sumonbdobj.GetComponent<Animator>().SetTrigger("star");
+                        if (sumonMode == false&&StageCobtroller .Shooting ==false )
+                        {
+                            sumonbd = true;
+                            sumonbdobj.transform.localPosition = new Vector3(275, 275,0);
+                            sumonbdobj.transform.localScale = new Vector3(1, 1, 1);
+                            sumonbdobj.SetActive(true);
+                            sumonbdobj.GetComponent<Animator>().SetTrigger("star");
+                        }
                     }
                     else
                     {
@@ -150,15 +175,25 @@ public class PadController2 : MonoBehaviour
                         {
                             SterController = 1;
                             catchster = i + 1;
-                            if(glowStar[catchster - 1] == true) {
+                            AudioManager.Instance.PlaySE(AudioManager.SeName.Follow);
+
+                            if (glowStar[catchster - 1] == true)
+                            {
                                 move = true;
-                            } else {
-                                glowStar[catchster - 1] = true;
+                            }
+                            else
+                            {
                                 move = false;
                             }
+                                
+
                             SterEfAnime[catchster - 1].SetBool("Change", true);
                             radius = (int)Vector2.Distance(new Vector2(touch.position.x, touch.position.y), SterPos[i].transform.position);
                         }
+                    }
+                    if (catchster != 0)
+                    {
+                        glowStar[catchster - 1] = true;
                     }
                 }
                 else
@@ -172,7 +207,11 @@ public class PadController2 : MonoBehaviour
                 }
 
 
-
+                if (underPos.transform.position .y > touch.position.y&&Vector2.Distance(new Vector2(touch.position.x, touch.position.y), new Vector2(boardObj.transform.position.x, boardObj.transform.position.y)) > boardRadius + 100 && Vector2.Distance(new Vector2(touch.position.x, touch.position.y), summonButton.transform.position) > summonButtonRadius)
+                {
+                    BoardReset();
+                    Debug.Log("うぇい");
+                }
 
             }
             //移動時
@@ -181,8 +220,10 @@ public class PadController2 : MonoBehaviour
 
                 if (SterController == 1)
                 {
+                    
                     moveFlg = false;
                     int radius = chainRadius;
+
                     for (int i = 0; i < SterPos.Length; i++)
                     {
                         if (Vector2.Distance(new Vector2(touch.position.x, touch.position.y), SterPos[i].transform.position) < radius)
@@ -195,6 +236,7 @@ public class PadController2 : MonoBehaviour
                             catchster2 = i + 1;
                             radius = (int)Vector2.Distance(new Vector2(touch.position.x, touch.position.y), SterPos[i].transform.position);
                             moveFlg = true;
+                            
                         }
                     }
                     if (moveFlg)
@@ -255,9 +297,10 @@ public class PadController2 : MonoBehaviour
 
 
 
-
-
+                        
+                        //
                         catchster = catchster2;
+                        ShootingChack();
                     }
                     if (SterController != 0)
                     {
@@ -332,11 +375,11 @@ public class PadController2 : MonoBehaviour
 
             if(sterLineamount != 0&&sumonMode==false )
             {
-                text.text  = "攻撃";
+                //text.text  = "攻撃";
             }
             else
             {
-                text.text = "召喚";
+                //text.text = "召喚";
             }
 
 #if false
@@ -450,9 +493,10 @@ public class PadController2 : MonoBehaviour
                 }
                 if (check == bfList.Length)
                 {
+                    AudioManager.Instance.PlaySE(AudioManager.SeName.gauge);
                     gameController.ModeChange(3, 0);
                     enj.image.fillAmount = 0;
-                    enj.time = enj.attacktime;
+                    enj.time = statusManager .gageSpeed ;
                     //enj.BoardReset();
                     //enj.RandSelect();
                 }
@@ -476,10 +520,11 @@ public class PadController2 : MonoBehaviour
                 }
                 if (check == bfList.Length)
                 {
+                    AudioManager.Instance.PlaySE(AudioManager.SeName.gauge);
                     gameController.weapon = sumonNum;
                     gameController.ModeChange(8, 0);
                     enj.image.fillAmount = 0;
-                    enj.time = enj.attacktime;
+                    enj.time = statusManager.gageSpeed;
                     sumonMode = false;
                     foreach (Transform n in lineParent2.transform)
                     {
@@ -489,8 +534,51 @@ public class PadController2 : MonoBehaviour
             }
             BoardReset();
         }
+        else
+        {
+            BoardReset();
+        }
     }
 
+
+
+
+    private void ShootingChack()
+    {
+        
+        int[] sterLineBf = SterLine;
+
+        Array.Sort(SterLine);
+        Array.Reverse(SterLine);
+
+        int[] bfList = shooting.lineCode;
+        Array.Sort(bfList);
+        Array.Reverse(bfList);
+        Array.Resize(ref bfList, bfList.Length + 1);
+
+        int check = 0;
+        for (int j = 0; j < bfList.Length; j++)
+        {
+            if (bfList[j] == SterLine[j])
+            {
+                check++;
+            }
+        }
+        if (check == bfList.Length)
+        {
+            AudioManager.Instance.PlaySE(AudioManager.SeName.gauge);
+            shooting.lineNum++;
+            shooting.BoardReset();
+            shooting.RandSelect();
+            BoardReset();
+        }
+        else
+        {
+            SterLine = sterLineBf;
+        }
+
+        
+    }
 
 
     public void BoardReset()
@@ -535,7 +623,7 @@ public class PadController2 : MonoBehaviour
                         SterPos[a - 1].GetComponent<Image>().enabled = true;
                         SterPos[b - 1].GetComponent<Image>().enabled = true;
 
-                        GameObject obj = (GameObject)Instantiate(linePr, transform.position, Quaternion.identity, lineParent2.transform);
+                        GameObject obj = (GameObject)Instantiate(BLine, transform.position, Quaternion.identity, lineParent2.transform);
                         UILineRenderer data2 = obj.GetComponent<UILineRenderer>();
                         data2.color = new Color(0.2f,0.2f,0.2f,0.8f);
                         data2.points[0] = new Vector2((SterPos[a - 1].transform.position.x - Screen.width / 2) / Screen.width * CanvasRect.sizeDelta.x, (SterPos[a - 1].transform.position.y - Screen.height / 2) / Screen.height * CanvasRect.sizeDelta.y);
@@ -550,7 +638,5 @@ public class PadController2 : MonoBehaviour
 
         }
     }
-
-
 
 }

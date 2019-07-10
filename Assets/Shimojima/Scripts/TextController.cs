@@ -51,6 +51,11 @@ public class TextController : MonoBehaviour
     private int charCount = 0;
     private bool auto = false;
 
+
+
+    static public bool end=false ;
+
+
     private enum NextText
     {
         next,
@@ -65,6 +70,7 @@ public class TextController : MonoBehaviour
 
     void Start()
     {
+        end = false;
     }
     
     void Update()
@@ -72,29 +78,30 @@ public class TextController : MonoBehaviour
         ScenarioStore();
         time += Time.deltaTime;
 
-        if(nextText == NextText.end) { return; }
+        if(nextText == NextText.end) { end = true; return; }
         PrintText();
     }
     
     private void PrintText()
     {
         AutoTextPrint();
-
-        if (Input.GetKeyDown(KeyCode.Alpha1))
+        if (Input.touchCount > 0)
         {
-            if (auto == false)
+            if (Input.GetTouch(0).phase == TouchPhase.Began)
             {
-                TextSkip();
+                if (auto == false)
+                {
+                    TextSkip();
+                }
             }
         }
-
         if (tIndex < tDataIndex)
         {
             StoreText();
 
             DisplayText();
         }
-        Debug.Log("page:" + page);
+        //Debug.Log("page:" + page);
     }
 
     //テキストデータのロードが終わり次第テキストデータの格納

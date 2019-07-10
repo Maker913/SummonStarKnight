@@ -24,6 +24,17 @@ public class Menu : MonoBehaviour
         menuanime = menu.GetComponent<Animator>();
     }
 
+
+
+    public void TitleBack()
+    {
+        StageCobtroller.stageNum = 1;
+        StageCobtroller.Shooting = false;
+        StageCobtroller.Score = 0;
+        SceneControl.Instance.LoadScene(SceneControl.SceneName.Title, true);
+    }
+
+
     public void MenuOn()
     {
         if (Game.gameMode ==2&&Pad .sumonbd ==false ) {

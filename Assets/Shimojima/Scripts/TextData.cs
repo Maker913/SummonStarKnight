@@ -10,8 +10,20 @@ public class TextData : MonoBehaviour
 
     void Start()
     {
+
+        TextAsset ta=new TextAsset() ;
+        if(StageCobtroller.Shooting ==false )
+        {
+            ta = Resources.Load<TextAsset>("Scenario/MainStage/Scenario" + StageCobtroller.stageNum.ToString());
+        }
+        else
+        {
+            ta = Resources.Load<TextAsset>("Scenario/Shooting/Shooting" + StageCobtroller.stageNum.ToString());
+        }
         
-        TextAsset ta = Resources.Load<TextAsset>("Scenario/Scenario");
+        
+        
+
         string s = ta.text;
         string[] ss = s.Split('\n');
         int i = 0;

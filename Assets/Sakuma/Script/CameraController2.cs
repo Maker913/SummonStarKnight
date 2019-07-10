@@ -12,12 +12,21 @@ public class CameraController2 : MonoBehaviour
     private Vector3 nowPos;
 
 
-    // FirstCamera用
-    [Space(10)]
-    [SerializeField]
-    private GameObject stratPos;
-    [SerializeField]
-    private GameObject[] Pos;
+
+
+    [System.Serializable]
+    public struct CameraPos
+    {
+        public GameObject[] Pos;
+        public GameObject stratPos;
+    }
+
+    public CameraPos[] posData;
+
+
+
+
+
     private GameObject firstPos;
     [SerializeField]
     private float rate;
@@ -27,17 +36,30 @@ public class CameraController2 : MonoBehaviour
     private Vector3 firstAngle;
     private Vector3 nowAngle;
 
-
+    [SerializeField]
+    private Vector3[] shootingPos;
+    [SerializeField ]
+    private Vector3[] shootingRot;
 
     void Start()
     {
-        transform.position = stratPos.transform.position;
-        transform.localEulerAngles = stratPos.transform.localEulerAngles;
-        SetCamera(0, 2);
-        cameraMode = 0;
+        if (StageCobtroller.Shooting == false)
+        {
+            transform.position = posData[StageCobtroller .stageNum -1].stratPos.transform.position;
+            transform.localEulerAngles = posData[StageCobtroller.stageNum - 1].stratPos.transform.localEulerAngles;
+            SetCamera(-1, 0);
+            cameraMode = 0;
+        }
+        else
+        {
+            transform.position = shootingPos [StageCobtroller .stageNum -1];
+            transform.localEulerAngles = shootingRot[StageCobtroller.stageNum - 1];
+            cameraMode = 1;
+        }
+        
     }
 
-    void Update()
+    private void FixedUpdate()
     {
         switch (cameraMode)
         {
@@ -51,11 +73,6 @@ public class CameraController2 : MonoBehaviour
                 break;
         }
 
-
-
-
-
-
     }
 
 
@@ -63,9 +80,9 @@ public class CameraController2 : MonoBehaviour
     private void FirstCamera()
     {
 
-        float anglex = Mathf.LerpAngle(nowAngle.x, firstPos.transform.eulerAngles.x, 1 - ((progressTime) * (progressTime)) / (rate * rate));
-        float angley = Mathf.LerpAngle(nowAngle.y, firstPos.transform.eulerAngles.y, 1 - ((progressTime) * (progressTime)) / (rate * rate));
-        float anglez = Mathf.LerpAngle(nowAngle.z, firstPos.transform.eulerAngles.z, 1 - ((progressTime) * (progressTime)) / (rate * rate));
+        float anglex = Mathf.LerpAngle(nowAngle.x, firstPos.transform.eulerAngles.x, 1f - ((progressTime) * (progressTime)) / (rate * rate));
+        float angley = Mathf.LerpAngle(nowAngle.y, firstPos.transform.eulerAngles.y, 1f - ((progressTime) * (progressTime)) / (rate * rate));
+        float anglez = Mathf.LerpAngle(nowAngle.z, firstPos.transform.eulerAngles.z, 1f - ((progressTime) * (progressTime)) / (rate * rate));
         
 
 
@@ -76,7 +93,7 @@ public class CameraController2 : MonoBehaviour
         progressTime2 += Time.deltaTime;
         if (progressTime2 < rate)
         {
-            transform.position = Vector3.Lerp(nowPos, firstPos.transform.position, 1 - ((progressTime) * (progressTime)) / (rate * rate));
+            transform.position = Vector3.Lerp(nowPos, firstPos.transform.position, 1f - ((progressTime) * (progressTime)) / (rate * rate));
             transform.eulerAngles = new Vector3(anglex, angley, anglez);
         }
 
@@ -91,7 +108,14 @@ public class CameraController2 : MonoBehaviour
 
     public void SetCamera(int num, float data)
     {
-        firstPos = Pos[num];
+        if (num == -1)
+        {
+            firstPos = posData[StageCobtroller.stageNum - 1].stratPos;
+        }
+        else
+        {
+            firstPos = posData[StageCobtroller.stageNum - 1].Pos[num];
+        }
         rate = data;
         nowPos = transform.position;
         time = 1;

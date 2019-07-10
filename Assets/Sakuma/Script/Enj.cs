@@ -34,11 +34,19 @@ public class Enj : MonoBehaviour
     public int summonNum;
 
     [SerializeField]
-    public float attacktime;
+    //public float attacktime;
     public float time=5;
 
     [SerializeField]
     private GameObject sumonbdobj;
+
+
+    [SerializeField]
+    private GameObject StatusManagerObj;
+    private StatusManager statusManager;
+
+
+
 
     private void Update()
     {
@@ -46,16 +54,17 @@ public class Enj : MonoBehaviour
         if (gameController.gameMode ==2&&padController.sumonMode ==false)
         {
             time -= Time.deltaTime;
-            image.fillAmount =1- time / attacktime;
+            image.fillAmount =1- time / statusManager.gageSpeed;
         }
         if (time < 0)
         {
             sumonbdobj.SetActive(false);
             padController.sumonbd = false;
-            time = attacktime;
+            time = statusManager.gageSpeed;
             image.fillAmount = 0;
             gameController.ModeChange(4, 0);
-            Debug.Log(123);
+            AudioManager.Instance.PlaySE(AudioManager.SeName.failed);
+            //Debug.Log(123);
             padController.BoardReset();
         }
 
@@ -71,7 +80,8 @@ public class Enj : MonoBehaviour
 
     private void Start()
     {
-        time = attacktime;
+        statusManager = StatusManagerObj.GetComponent<StatusManager>();
+        time = statusManager.gageSpeed ;
         gameController = gameControllerObj.GetComponent<GameController>();
         padController = padControllerObj.GetComponent<PadController2>();
         image = gageObj.GetComponent<Image>();
@@ -82,7 +92,7 @@ public class Enj : MonoBehaviour
     public void RandSelect()
     {
 
-        time = attacktime;
+        time = statusManager.gageSpeed;
         summonNum = Random.Range(0, gameController.nomalAttack.Length);
         RectTransform CanvasRect = canvas.GetComponent<RectTransform>();
 
