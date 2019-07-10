@@ -85,6 +85,7 @@ public class TextController : MonoBehaviour
     private void PrintText()
     {
         AutoTextPrint();
+#if UNITY_ANDROID
         if (Input.touchCount > 0)
         {
             if (Input.GetTouch(0).phase == TouchPhase.Began)
@@ -95,6 +96,17 @@ public class TextController : MonoBehaviour
                 }
             }
         }
+#endif
+
+#if UNITY_EDITOR
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            if (auto == false)
+            {
+                TextSkip();
+            }
+        }
+#endif
         if (tIndex < tDataIndex)
         {
             StoreText();
