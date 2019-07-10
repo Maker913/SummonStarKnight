@@ -177,8 +177,14 @@ public class PadController2 : MonoBehaviour
                             catchster = i + 1;
                             AudioManager.Instance.PlaySE(AudioManager.SeName.Follow);
 
-                                
+                            if (glowStar[catchster - 1] == true)
+                            {
+                                move = true;
+                            }
+                            else
+                            {
                                 move = false;
+                            }
                                 
 
                             SterEfAnime[catchster - 1].SetBool("Change", true);
