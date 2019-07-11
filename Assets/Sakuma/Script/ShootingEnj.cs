@@ -26,19 +26,16 @@ public class ShootingEnj : MonoBehaviour
 
     private int[,] LincSter = {
         { 2,8,9,0,0},
-        {1,10,3 ,0,0},
+        {1,9,3 ,0,0},
         { 2,10,4,0,0},
-        {3,10,11,0,0 },
-        { 6,4,12,11,0},
-        { 7,12,5,0,0},
-        { 8,13,6,0,0},
-        { 1,13,7,0,0},
-        { 1,2,8,14,0},
-        { 1,2,3,9,11},
-        { 10,12,14,4,0},
-        { 13,14,11,6,0},
-        { 9,14,12,8,7},
-        { 9,10,11,12,13}
+        {3,10,5,0,0 },
+        { 6,4,10,11,0},
+        { 7,11,5,0,0},
+        { 8,11,6,0,0},
+        { 1,9,7,11,0},
+        { 1,2,8,10,11},
+        { 2,4,3,9,11},
+        { 7,6,10,9,5}
     };
 
 
@@ -60,7 +57,7 @@ public class ShootingEnj : MonoBehaviour
 
     public void RandSelect()
     {
-        ster[0] = Random.Range(1,15);
+        ster[0] = Random.Range(1,12);
 
         sterPos[ster[0]-1].GetComponent<Image>().enabled = true;
 
@@ -98,9 +95,9 @@ public class ShootingEnj : MonoBehaviour
         for (int i = 0; i < lineCode.Length; i++)
         {
             int num = 0;
-            for (int a = 1; a <= 14; a++)
+            for (int a = 1; a <= 11; a++)
             {
-                for (int b = a + 1; b <= 14; b++)
+                for (int b = a + 1; b <= 11; b++)
                 {
                     num++;
                     if ((ster[i] == a&&ster[i+1]==b)|| (ster[i] == b && ster[i + 1] == a))
