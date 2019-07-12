@@ -893,6 +893,12 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7064370775014785938, guid: fe93a058ee4084045b217ba5c28ecb77,
+        type: 3}
+      propertyPath: touchPartticleSystem
+      value: 
+      objectReference: {fileID: 6677059637745094253, guid: 95470ecd53570f642b1dcf932d0bdcab,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fe93a058ee4084045b217ba5c28ecb77, type: 3}
 --- !u!1001 &1441085690
@@ -1031,7 +1037,7 @@ PrefabInstance:
     - target: {fileID: 3396141493577987051, guid: 076c8d3f662be554298f10283e11a3e7,
         type: 3}
       propertyPath: m_RootOrder
-      value: 6
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 3396141493577987051, guid: 076c8d3f662be554298f10283e11a3e7,
         type: 3}
@@ -1147,7 +1153,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1832075726
 GameObject:
