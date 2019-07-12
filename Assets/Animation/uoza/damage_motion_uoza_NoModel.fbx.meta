@@ -1,17 +1,70 @@
 fileFormatVersion: 2
-guid: 638d582d7a531724f81cc1c3c1fc4a4d
+guid: a9cedd223c51a6443b909387d2810271
 ModelImporter:
   serializedVersion: 23
   fileIDToRecycleName:
     100000: //RootNode
+    100002: uoza_All_rig
+    100004: uoza_body_joint_1
+    100006: uoza_body_joint_2
+    100008: uoza_body_rig_1
+    100010: uoza_body_rig_2
+    100012: uoza_head_joint
+    100014: uoza_head_rig
+    100016: uoza_left_hand_joint2
+    100018: uoza_left_hand_joint_1
+    100020: uoza_left_hand_joint_3
+    100022: uoza_left_hand_joint_4
+    100024: uoza_left_hand_joint_5
+    100026: uoza_left_hand_rig_1
+    100028: uoza_left_hand_rig_2
+    100030: uoza_left_hand_rig_3
+    100032: uoza_left_hand_rig_4
+    100034: uoza_left_hand_rig_5
+    100036: uoza_right_hand_joint_1
+    100038: uoza_right_hand_joint_2
+    100040: uoza_right_hand_joint_3
+    100042: uoza_right_hand_joint_4
+    100044: uoza_right_hand_joint_5
+    100046: uoza_right_hand_rig_1
+    100048: uoza_right_hand_rig_2
+    100050: uoza_right_hand_rig_3
+    100052: uoza_right_hand_rig_4
+    100054: uoza_right_hand_rig_5
+    100056: uoza_tail_joint
+    100058: uoza_tail_rig
     400000: //RootNode
-    2100000: normal_head_cl
-    2100002: normal_body_al
-    2300000: //RootNode
-    3300000: //RootNode
-    4300000: normal_model
+    400002: uoza_All_rig
+    400004: uoza_body_joint_1
+    400006: uoza_body_joint_2
+    400008: uoza_body_rig_1
+    400010: uoza_body_rig_2
+    400012: uoza_head_joint
+    400014: uoza_head_rig
+    400016: uoza_left_hand_joint2
+    400018: uoza_left_hand_joint_1
+    400020: uoza_left_hand_joint_3
+    400022: uoza_left_hand_joint_4
+    400024: uoza_left_hand_joint_5
+    400026: uoza_left_hand_rig_1
+    400028: uoza_left_hand_rig_2
+    400030: uoza_left_hand_rig_3
+    400032: uoza_left_hand_rig_4
+    400034: uoza_left_hand_rig_5
+    400036: uoza_right_hand_joint_1
+    400038: uoza_right_hand_joint_2
+    400040: uoza_right_hand_joint_3
+    400042: uoza_right_hand_joint_4
+    400044: uoza_right_hand_joint_5
+    400046: uoza_right_hand_rig_1
+    400048: uoza_right_hand_rig_2
+    400050: uoza_right_hand_rig_3
+    400052: uoza_right_hand_rig_4
+    400054: uoza_right_hand_rig_5
+    400056: uoza_tail_joint
+    400058: uoza_tail_rig
+    7400000: NoModel
     9500000: //RootNode
-    2186277476908879412: ImportLogs
   externalObjects: {}
   materials:
     importMaterials: 1
@@ -64,7 +117,7 @@ ModelImporter:
     secondaryUVHardAngle: 88
     secondaryUVPackMargin: 4
     useFileScale: 1
-    previousCalculatedGlobalScale: 1
+    previousCalculatedGlobalScale: 0.01
     hasPreviousCalculatedGlobalScale: 1
   tangentSpace:
     normalSmoothAngle: 60
