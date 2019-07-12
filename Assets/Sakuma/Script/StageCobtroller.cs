@@ -46,9 +46,11 @@ public class StageCobtroller : MonoBehaviour
 
         Instantiate(playerObj , playerPos[stageNum -1]*0.33f + stageParent.transform.position, playerRot[stageNum - 1], stageParent.transform);
 
-        Instantiate(enemyObj[stageNum - 1], enemyPos[stageNum - 1] * 0.33f + stageParent.transform.position, enemyRot[stageNum - 1], stageParent.transform);
-
-
+        GameObject data = Instantiate(enemyObj[stageNum - 1], enemyPos[stageNum - 1] * 0.33f + stageParent.transform.position, enemyRot[stageNum - 1], stageParent.transform);
+        if (stageNum != 3)
+        {
+            AnimationManager.animationManager.ModelSet(data);
+        }
     }
 
 }
