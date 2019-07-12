@@ -4,15 +4,21 @@ using UnityEngine;
 
 public class AnimationManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    static public AnimationManager animationManager;
+    public Animator model;
+
+    void Update()
     {
         
     }
 
-    // Update is called once per frame
-    void Update()
+    public void ModelSet(GameObject gameObject)
     {
-        
+        model = gameObject.GetComponent<Animator>();
+    }
+
+    public void AnimationStart(string aTrigger)
+    {
+        model.SetTrigger(aTrigger);
     }
 }
