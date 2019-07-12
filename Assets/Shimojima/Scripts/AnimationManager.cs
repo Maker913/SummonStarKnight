@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class AnimationManager : MonoBehaviour
 {
-    static public AnimationManager animationManager;
     public Animator model;
 
     void Update()
@@ -12,9 +11,19 @@ public class AnimationManager : MonoBehaviour
         
     }
 
-    public void ModelSet(GameObject gameObject)
+    public void Stop()
     {
-        model = gameObject.GetComponent<Animator>();
+        model.SetFloat("Spead", 0);
+    }
+    public void ReState()
+    {
+        model.SetFloat("Spead", 1);
+    }
+
+    public void ModelSet(GameObject gameObject2)
+    {
+        model = gameObject2.GetComponent<Animator>();
+        
     }
 
     public void AnimationStart(string aTrigger)

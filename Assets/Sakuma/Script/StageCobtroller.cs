@@ -38,19 +38,25 @@ public class StageCobtroller : MonoBehaviour
     [SerializeField]
     private Quaternion[] enemyRot = new Quaternion[3];
 
-
+    [SerializeField]
+    GameObject mag;
 
     void Start()
     {
+        
         Instantiate(stageObj[stageNum-1], stageParent.transform.position, Quaternion.identity, stageParent.transform);
 
         Instantiate(playerObj , playerPos[stageNum -1]*0.33f + stageParent.transform.position, playerRot[stageNum - 1], stageParent.transform);
 
-        GameObject data = Instantiate(enemyObj[stageNum - 1], enemyPos[stageNum - 1] * 0.33f + stageParent.transform.position, enemyRot[stageNum - 1], stageParent.transform);
+        GameObject data = (GameObject)Instantiate(enemyObj[stageNum - 1], enemyPos[stageNum - 1] * 0.33f + stageParent.transform.position, enemyRot[stageNum - 1], stageParent.transform);
+
+
+        
         if (stageNum != 3)
         {
-            AnimationManager.animationManager.ModelSet(data);
+            mag.GetComponent <AnimationManager >().ModelSet(data);
         }
+        
     }
 
 }

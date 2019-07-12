@@ -93,7 +93,7 @@ public class Enj : MonoBehaviour
     {
 
         time = statusManager.gageSpeed;
-        summonNum = 0;// Random.Range(0, gameController.nomalAttack.Length);
+        summonNum = Random.Range(0, gameController.nomalAttack.Length);
         RectTransform CanvasRect = canvas.GetComponent<RectTransform>();
 
 

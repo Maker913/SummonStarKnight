@@ -98,7 +98,9 @@ public class GameController : MonoBehaviour
     [SerializeField]
     private GameObject textPr;
 
-
+    [SerializeField]
+    private GameObject animeCon;
+    private AnimationManager animationManager;
 
 
     static public string result = "NULL";
@@ -117,7 +119,7 @@ public class GameController : MonoBehaviour
     {
         enemyTurn = Random.Range(2, 5);
         gaged = gageobj.GetComponent<Image>();
-        
+        animationManager = animeCon.GetComponent<AnimationManager>();
         text = textObj.GetComponent<Text>();
         padController2 = padControllerObj.GetComponent<PadController2>();
         enj = EnjObj.GetComponent<Enj>();
@@ -223,10 +225,14 @@ public class GameController : MonoBehaviour
 
     private void Scenario()
     {
+        animationManager.Stop();
+
+
         padController2.Pad = false;
         textPadObj.SetActive(false );
         if (TextController .end)
         {
+            animationManager.ReState ();
             if (StageCobtroller.Shooting == false)
             {
                 ModeChange(1, 0);
@@ -366,6 +372,7 @@ public class GameController : MonoBehaviour
 
     private void Battlesoon()
     {
+        animationManager.AnimationStart("Zodiac");
         StageCobtroller.Score += 1;
         statusManager.EnemyTurnCheck();
         statusManager.TurnCheck();
@@ -472,7 +479,7 @@ public class GameController : MonoBehaviour
                     statusManager.summonGage = 100;
                 }
                 //teki.GetComponent<Animator>().SetTrigger("Attack");
-
+                animationManager.AnimationStart("Attack");
                 textPadObj.SetActive(true);
                 text.text = "ダメージアニメーション予定地";
                 AudioManager.Instance.PlaySE(AudioManager.SeName.player_attack);
@@ -520,7 +527,7 @@ public class GameController : MonoBehaviour
                     statusManager.summonGage = 100;
                 }
 
-
+                animationManager.AnimationStart("Damage");
                 AudioManager.Instance.PlaySE(AudioManager.SeName.player_attack);
                 textPadObj.SetActive(true);
                 text.text = "攻撃アニメーション予定地";

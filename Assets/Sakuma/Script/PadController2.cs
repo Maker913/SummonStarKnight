@@ -191,10 +191,10 @@ public class PadController2 : MonoBehaviour
                             radius = (int)Vector2.Distance(new Vector2(touch.position.x, touch.position.y), SterPos[i].transform.position);
                         }
                     }
-                    if (catchster != 0)
-                    {
-                        glowStar[catchster - 1] = true;
-                    }
+                    //if (catchster != 0)
+                    //{
+                    //    glowStar[catchster - 1] = true;
+                    //}
                 }
                 else
                 {
@@ -433,13 +433,22 @@ public class PadController2 : MonoBehaviour
     private void DeleteCheck(int num)
     {
         int[] bfList;
-        if (StageCobtroller .Shooting)
+        if (StageCobtroller.Shooting)
         {
+
             bfList = shooting.lineCode;
+
         }
         else
         {
-            bfList = gameController.nomalAttack[enj.summonNum].Code;
+            if (sumonMode == false)
+            {
+                bfList = gameController.nomalAttack[enj.summonNum].Code;
+            }
+            else
+            {
+                bfList = gameController.technique[sumonNum].Code;
+            }
         }
         Array.Sort(bfList);
         Array.Reverse(bfList);
