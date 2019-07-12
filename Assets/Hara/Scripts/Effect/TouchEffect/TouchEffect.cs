@@ -79,16 +79,16 @@ public class TouchEffect : MonoBehaviour
                 if (touchParticle == null)
                 {
                     // タッチした時のParticleの生成
-                    touchParticle = Instantiate(touchPartticleSystem);
-                    touchParticle.transform.SetParent(particleCamera.transform, false);
+                    touchParticle = Instantiate(touchPartticleSystem, particleCamera.transform, false);
+                    //touchParticle.transform.SetParent(particleCamera.transform, false);
                     touchParticle.Stop();
                 }
 
                 if (swipeParticle == null)
                 {
                     // なぞった時のParticleの生成
-                    swipeParticle = Instantiate(swipeParticleSystem);
-                    swipeParticle.transform.SetParent(particleCamera.transform, false);
+                    swipeParticle = Instantiate(swipeParticleSystem, particleCamera.transform, false);
+                    //swipeParticle.transform.SetParent(particleCamera.transform, false);
                     touchParticle.Stop();
                 }
 
@@ -150,16 +150,6 @@ public class TouchEffect : MonoBehaviour
             if(touch.phase == TouchPhase.Began)
             {
                 // タッチした位置を検知してParticleオブジェクトを移動してParticleを再生する
-                if (touchParticle.isPlaying)
-                {
-                    touchParticle.Stop();
-                }
-
-                if (swipeParticle.isPlaying)
-                {
-                    swipeParticle.Stop();
-                }
-
                 touchParticle.transform.position = pos;
 
                 if (isTouchEffect)
