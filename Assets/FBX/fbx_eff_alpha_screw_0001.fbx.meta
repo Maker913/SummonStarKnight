@@ -1,17 +1,14 @@
 fileFormatVersion: 2
-guid: 638d582d7a531724f81cc1c3c1fc4a4d
+guid: e78a2fcf477f83e4c81d7c311401dd55
 ModelImporter:
   serializedVersion: 23
   fileIDToRecycleName:
     100000: //RootNode
     400000: //RootNode
-    2100000: normal_head_cl
-    2100002: normal_body_al
+    2100000: lambert1
     2300000: //RootNode
     3300000: //RootNode
-    4300000: normal_model
-    9500000: //RootNode
-    2186277476908879412: ImportLogs
+    4300000: fbx_eff_alpha_screw_0001
   externalObjects: {}
   materials:
     importMaterials: 1
@@ -65,7 +62,7 @@ ModelImporter:
     secondaryUVPackMargin: 4
     useFileScale: 1
     previousCalculatedGlobalScale: 1
-    hasPreviousCalculatedGlobalScale: 1
+    hasPreviousCalculatedGlobalScale: 0
   tangentSpace:
     normalSmoothAngle: 60
     normalImportMode: 0
@@ -92,7 +89,7 @@ ModelImporter:
     hasExtraRoot: 0
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
-  animationType: 2
+  animationType: 0
   humanoidOversampling: 1
   additionalBone: 0
   userData: 
