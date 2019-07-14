@@ -230,7 +230,7 @@ public class GameController : MonoBehaviour
 
         padController2.Pad = false;
         textPadObj.SetActive(false );
-        if (TextController .end)
+        if (TextController .end||Input .GetKeyDown(KeyCode.Escape))
         {
             animationManager.ReState ();
             if (StageCobtroller.Shooting == false)

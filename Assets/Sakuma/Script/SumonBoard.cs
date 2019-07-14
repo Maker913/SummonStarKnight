@@ -24,6 +24,10 @@ public class SumonBoard : MonoBehaviour
     private GameObject game;
     [SerializeField]
     private GameObject camera;
+    [SerializeField]
+    private GameObject nameobj;
+
+
     public void Close()
     {
         Pad.GetComponent<PadController2>().sumonbd = false;
@@ -38,9 +42,11 @@ public class SumonBoard : MonoBehaviour
 
         if (game.GetComponent<StatusManager>().summonGage  >= 100)
         {
+            nameobj.GetComponent<Animator>().SetBool("Name", false);
             game.GetComponent<StatusManager>().summonGage = 0;
             Pad.GetComponent<PadController2>().sumonMode = true;
             Pad.GetComponent<PadController2>().sumonbd = false;
+            Pad.GetComponent<PadController2>().NewSummonCl ();
             sumonbd.SetActive(false);
             Pad.GetComponent<PadController2>().sumonNum = num;
             Pad.GetComponent<PadController2>().BlackLine();
@@ -49,7 +55,7 @@ public class SumonBoard : MonoBehaviour
         }
         else
         {
-            Debug.Log("召喚に必要なゲージが足りません");
+            //Debug.Log("召喚に必要なゲージが足りません");
         }
 
     }
