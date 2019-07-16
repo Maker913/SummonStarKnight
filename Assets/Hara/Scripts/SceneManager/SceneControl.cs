@@ -109,9 +109,6 @@ public class SceneControl : MonoBehaviour
         // Titleシーン
         Title = 0,
 
-        // Storyシーン
-
-
         // Stageシーン
         Stage1,
 
