@@ -102,6 +102,7 @@ public class GameController : MonoBehaviour
     private GameObject animeCon;
     private AnimationManager animationManager;
 
+    private Vector3   AttackEfPos;
 
     static public string result = "NULL";
     [Space(10)]
@@ -222,6 +223,10 @@ public class GameController : MonoBehaviour
         }
     }
 
+    public void ObjPosSet(Vector3   apos)
+    {
+        AttackEfPos = apos;
+    }
 
     private void Scenario()
     {
@@ -480,8 +485,8 @@ public class GameController : MonoBehaviour
                 }
                 //teki.GetComponent<Animator>().SetTrigger("Attack");
                 animationManager.AnimationStart("Attack");
-                textPadObj.SetActive(true);
-                text.text = "ダメージアニメーション予定地";
+                //textPadObj.SetActive(true);
+                //text.text = "ダメージアニメーション予定地";
                 AudioManager.Instance.PlaySE(AudioManager.SeName.player_attack);
                 statusManager.playerHP  -= statusManager.enemyAtk ;
                 statusManager.BarrierCheck();
@@ -511,6 +516,7 @@ public class GameController : MonoBehaviour
         {
             if (dcont == 0)
             {
+                EffectControl.Instance.PlayEffect(EffectControl.Effect.Attack, AttackEfPos );
                 camera.GetComponent<CameraController2>().SetCamera(3, 1);
                 dcont++;
                 cameradTime += Time.deltaTime;
@@ -529,6 +535,7 @@ public class GameController : MonoBehaviour
 
                 animationManager.AnimationStart("Damage");
                 AudioManager.Instance.PlaySE(AudioManager.SeName.player_attack);
+                
                 textPadObj.SetActive(true);
                 text.text = "攻撃アニメーション予定地";
                 statusManager.enemyHP  -= statusManager.playerAtk;

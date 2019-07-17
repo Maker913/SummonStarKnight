@@ -5,8 +5,9 @@
         _Color ("Tint", Color) = (1,1,1,1)
 		_Height ("height", Float)=0
 		_Width ("width", Float)=0
-		_Compression ("compression", Float)=0
+		_Compression ("compression", Float)=1
 
+		_Fade("Fade", Range(0,1))=1
 
     }
 
@@ -42,7 +43,7 @@
 			float _Width;
 			float _Height;
 			float _Compression;
-			
+			float _Fade;
 
 
             VertexOutput vert (VertexInput input) {
@@ -62,7 +63,7 @@
 				float data2=(sin((_Time.y*4)+(output.uv.x*5*(_Height/_Width)))+1)/2;
 				float data=1+((-1*abs( output.uv.y-0.5f))*2)-(data2)/4;
 
-				c.a=data;
+				c.a=data*_Fade;
 				c.rgb*= c.a;
                 return c;
             }

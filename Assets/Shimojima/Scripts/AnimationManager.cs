@@ -13,21 +13,32 @@ public class AnimationManager : MonoBehaviour
 
     public void Stop()
     {
-        model.SetFloat("Spead", 0);
+        if (StageCobtroller.stageNum != 3&&!StageCobtroller .Shooting )
+        {
+            model.SetFloat("Spead", 0);
+        }
     }
     public void ReState()
     {
-        model.SetFloat("Spead", 1);
+        if (StageCobtroller.stageNum != 3 && !StageCobtroller.Shooting)
+        {
+            model.SetFloat("Spead", 1);
+        }
     }
 
     public void ModelSet(GameObject gameObject2)
     {
-        model = gameObject2.GetComponent<Animator>();
-        
+        if (StageCobtroller.stageNum != 3 && !StageCobtroller.Shooting)
+        {
+            model = gameObject2.GetComponent<Animator>();
+        }
     }
 
     public void AnimationStart(string aTrigger)
     {
-        model.SetTrigger(aTrigger);
+        if (StageCobtroller.stageNum != 3 && !StageCobtroller.Shooting)
+        {
+            model.SetTrigger(aTrigger);
+        }
     }
 }

@@ -17,8 +17,13 @@ public class Menu : MonoBehaviour
     private GameObject menu;
     private Animator menuanime;
 
+    [SerializeField]
+    private GameObject amine;
+    private AnimationManager animationManager;
+
     void Start()
     {
+        animationManager = amine.GetComponent<AnimationManager>();
         Pad = PadObj.GetComponent<PadController2>();
         Game = Gameobj.GetComponent<GameController>();
         menuanime = menu.GetComponent<Animator>();
@@ -37,6 +42,8 @@ public class Menu : MonoBehaviour
 
     public void MenuOn()
     {
+        animationManager.Stop();
+
         if (Game.gameMode ==2&&Pad .sumonbd ==false ) {
             Pad.Pad = false;
             Game.ModeChange(5, 0);
@@ -48,7 +55,8 @@ public class Menu : MonoBehaviour
 
     public void MenuOff()
     {
-        
+
+        animationManager.ReState ();
         Pad.Pad = true;
         Game.ModeChange(2, 0);
         Game.startPas = 1;

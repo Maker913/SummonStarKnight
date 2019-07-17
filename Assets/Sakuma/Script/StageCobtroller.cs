@@ -22,6 +22,9 @@ public class StageCobtroller : MonoBehaviour
     private GameObject stageParent;
 
 
+    [SerializeField]
+    private GameObject gamecontroller;
+
 
     [SerializeField]
     private GameObject playerObj;
@@ -39,6 +42,9 @@ public class StageCobtroller : MonoBehaviour
     private Quaternion[] enemyRot = new Quaternion[3];
 
     [SerializeField]
+    private Vector3[] attackEfPos = new Vector3[3];
+
+    [SerializeField]
     GameObject mag;
 
     void Start()
@@ -46,16 +52,20 @@ public class StageCobtroller : MonoBehaviour
         
         Instantiate(stageObj[stageNum-1], stageParent.transform.position, Quaternion.identity, stageParent.transform);
 
-        Instantiate(playerObj , playerPos[stageNum -1]*0.33f + stageParent.transform.position, playerRot[stageNum - 1], stageParent.transform);
-
-        GameObject data = (GameObject)Instantiate(enemyObj[stageNum - 1], enemyPos[stageNum - 1] * 0.33f + stageParent.transform.position, enemyRot[stageNum - 1], stageParent.transform);
-
-
-        
-        if (stageNum != 3)
+        GameObject data1 = (GameObject)Instantiate(playerObj , playerPos[stageNum -1]*0.33f + stageParent.transform.position, playerRot[stageNum - 1], stageParent.transform);
+        if (StageCobtroller.Shooting == false)
         {
-            mag.GetComponent <AnimationManager >().ModelSet(data);
+            GameObject data = (GameObject)Instantiate(enemyObj[stageNum - 1], enemyPos[stageNum - 1] * 0.33f + stageParent.transform.position, enemyRot[stageNum - 1], stageParent.transform);
+
+
+
+            if (stageNum != 3)
+            {
+                mag.GetComponent<AnimationManager>().ModelSet(data);
+            }
         }
+
+        gamecontroller.GetComponent<GameController>().ObjPosSet(attackEfPos [stageNum-1]);
         
     }
 

@@ -112,6 +112,11 @@ public class PadController2 : MonoBehaviour
     [SerializeField]
     private GameObject nameobj;
 
+    [SerializeField]
+    private GameObject ster;
+
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -436,6 +441,27 @@ public class PadController2 : MonoBehaviour
         }
     }
 
+
+    private void Success()
+    {
+        for (int i = 0; i < glowSterImage.Length; i++)
+        {
+            if (glowStar[i])
+            {
+                glowSterImage[i].enabled = true;
+            }
+            else
+            {
+                glowSterImage[i].enabled = false;
+            }
+
+        }
+        GameObject test= Instantiate(ster, ster.transform.position, Quaternion.identity,boardObj.transform );
+        test.GetComponent <Animator >().SetTrigger("Success");
+        BoardReset();
+    }
+
+
     private void DeleteCheck(int num)
     {
         int[] bfList;
@@ -472,6 +498,7 @@ public class PadController2 : MonoBehaviour
 
         if (DCheck)
         {
+            AudioManager.Instance.PlaySE(AudioManager.SeName .enemy_Deathblow );
             BoardReset();
         }
 
@@ -544,7 +571,7 @@ public class PadController2 : MonoBehaviour
                 }
                 if (check == bfList.Length)
                 {
-                    BoardReset();
+                    Success();
                     AudioManager.Instance.PlaySE(AudioManager.SeName.gauge);
                     gameController.ModeChange(3, 0);
                     enj.image.fillAmount = 0;
@@ -574,7 +601,7 @@ public class PadController2 : MonoBehaviour
                 }
                 if (check == bfList.Length)
                 {
-                    BoardReset();
+                    Success();
                     AudioManager.Instance.PlaySE(AudioManager.SeName.gauge);
                     gameController.weapon = sumonNum;
                     gameController.ModeChange(8, 0);
@@ -619,7 +646,7 @@ public class PadController2 : MonoBehaviour
             shooting.lineNum++;
             shooting.BoardReset();
             shooting.RandSelect();
-            BoardReset();
+            Success();
         }
         else
         {
