@@ -13,33 +13,45 @@ public class AnimationManager : MonoBehaviour
 
     public void Stop()
     {
-        if (StageCobtroller.stageNum != 3&&!StageCobtroller .Shooting )
+        if (!StageCobtroller.Shooting)
         {
-            model.SetFloat("Spead", 0);
             player.SetFloat("Spead", 0);
+            if (StageCobtroller.stageNum != 3)
+            {
+                model.SetFloat("Spead", 0);
+
+            }
         }
     }
     public void ReState()
     {
-        if (StageCobtroller.stageNum != 3 && !StageCobtroller.Shooting)
+        if (!StageCobtroller.Shooting)
         {
-            model.SetFloat("Spead", 1);
             player.SetFloat("Spead", 1);
+            if (StageCobtroller.stageNum != 3)
+            {
+                model.SetFloat("Spead", 1);
+
+            }
         }
     }
 
     public void ModelSet(GameObject gameObject2,GameObject gameObject )
     {
-        if (StageCobtroller.stageNum != 3 && !StageCobtroller.Shooting)
+        if (!StageCobtroller.Shooting)
         {
-            model = gameObject2.GetComponent<Animator>();
             player = gameObject.GetComponent<Animator>();
+            if (StageCobtroller.stageNum != 3)
+            {
+                model = gameObject2.GetComponent<Animator>();
+
+            }
         }
     }
 
     public void AnimationStart(int num,string aTrigger)
     {
-        if (StageCobtroller.stageNum != 3 && !StageCobtroller.Shooting)
+        if (!StageCobtroller.Shooting)
         {
             if (num == 1)
             {
@@ -47,7 +59,10 @@ public class AnimationManager : MonoBehaviour
             }
             else
             {
-                model.SetTrigger(aTrigger);
+                if (StageCobtroller.stageNum != 3)
+                {
+                    model.SetTrigger(aTrigger);
+                }
             }
         }
     }

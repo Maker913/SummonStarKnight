@@ -59,10 +59,9 @@ public class StageCobtroller : MonoBehaviour
 
 
 
-            if (stageNum != 3)
-            {
+
                 mag.GetComponent<AnimationManager>().ModelSet(data,data1);
-            }
+
         }
 
         gamecontroller.GetComponent<GameController>().ObjPosSet(attackEfPos [stageNum-1]);

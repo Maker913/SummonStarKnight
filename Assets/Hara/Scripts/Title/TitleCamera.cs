@@ -8,7 +8,7 @@ public class TitleCamera : MonoBehaviour
     public bool CameraRotateStop { set { cameraRotateStop = value; } get { return cameraRotateStop; } }
 
     private float time;
-    private float angle = 36;    // 1秒間に回転する角度
+    private float angle = 12;    // 1秒間に回転する角度
 
     // Update is called once per frame
     void Update()

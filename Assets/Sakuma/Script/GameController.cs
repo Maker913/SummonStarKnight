@@ -419,7 +419,7 @@ public class GameController : MonoBehaviour
     private void Lose()
     {
         result = "敗北";
-        text.text = "負け";
+        text.text = "敗北";
         padController2.Pad = false;
         textPadObj.SetActive(true);
         StageCobtroller.Score = 0;
@@ -430,7 +430,7 @@ public class GameController : MonoBehaviour
     private void Win()
     {
         result = "勝利";
-        text.text = "勝ち";
+        text.text = "勝利";
         padController2.Pad = false;
         textPadObj.SetActive(true);
 

@@ -16,6 +16,8 @@ public class ButtonCreate : MonoBehaviour
     [SerializeField]
     private GameObject dtest;
 
+    public Sprite[] sprites;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -46,8 +48,15 @@ public class ButtonCreate : MonoBehaviour
                 ButtonParent.transform
             );
             Obj.GetComponent<ButtonNum>().Num = StageCobtroller.Technique[i];
-            Obj.transform.GetChild(0).gameObject.GetComponent<Text>().text=game.GetComponent <GameController >().technique [StageCobtroller .Technique [i]].Name ;
-           
+            if (sprites[StageCobtroller.Technique[i]] == null)
+            {
+                Obj.transform.GetChild(0).gameObject.GetComponent<Text>().text = game.GetComponent<GameController>().technique[StageCobtroller.Technique[i]].Name;
+            }
+            else
+            {
+                Obj.transform.GetChild(0).gameObject.GetComponent<Text>().text = "";
+                Obj.GetComponent<Image>().sprite = sprites[StageCobtroller.Technique[i]];
+            }
             Obj.GetComponent<Button>().onClick.AddListener(() => { dtest.GetComponent<SumonBoard>().Sumon(Obj); });
         }
 
