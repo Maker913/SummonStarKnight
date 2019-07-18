@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class TitleCamera : MonoBehaviour
 {
-    [SerializeField]
     private bool cameraRotateStop = true;    // カメラの回転を止めるフラグ
     public bool CameraRotateStop { set { cameraRotateStop = value; } get { return cameraRotateStop; } }
 
