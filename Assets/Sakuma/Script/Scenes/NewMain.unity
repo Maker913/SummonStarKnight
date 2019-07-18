@@ -146,7 +146,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 21.3, y: -20.4}
+  m_AnchoredPosition: {x: 20.8, y: -20.4}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &4398164
@@ -968,7 +968,8 @@ MonoBehaviour:
   - {fileID: 4612100932351550512, guid: e51863b328d049041a67bf97fb66ec13, type: 3}
   stageParent: {fileID: 558097611}
   gamecontroller: {fileID: 372643540}
-  playerObj: {fileID: 100000, guid: f3df4bf7dbbe68342b060a4be6e645c7, type: 3}
+  playerObj: {fileID: 6413401251138371919, guid: d42a6068ba5b163469c7679ec93cadfc,
+    type: 3}
   enemyObj:
   - {fileID: 7561459807222607685, guid: 243d4f292cf5ca949be86f54d266faa7, type: 3}
   - {fileID: 7561459807222607685, guid: 243d4f292cf5ca949be86f54d266faa7, type: 3}
@@ -8196,14 +8197,14 @@ RectTransform:
   m_GameObject: {fileID: 1388468636}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2.5, y: 2, z: 1}
+  m_LocalScale: {x: 2, y: 0.8, z: 1}
   m_Children: []
   m_Father: {fileID: 1301987286}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 21.3, y: -20.4}
+  m_AnchoredPosition: {x: 41.4, y: -53.9}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1388468638
@@ -10817,6 +10818,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   model: {fileID: 0}
+  player: {fileID: 0}
 --- !u!4 &1916799713
 Transform:
   m_ObjectHideFlags: 0

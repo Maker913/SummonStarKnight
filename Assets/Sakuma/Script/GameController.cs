@@ -104,6 +104,9 @@ public class GameController : MonoBehaviour
 
     private Vector3   AttackEfPos;
 
+    private bool animeC=false ;
+
+
     static public string result = "NULL";
     [Space(10)]
     [Header("ここからエフェクト")]
@@ -377,7 +380,7 @@ public class GameController : MonoBehaviour
 
     private void Battlesoon()
     {
-        animationManager.AnimationStart("Zodiac");
+        animationManager.AnimationStart(0,"Zodiac");
         StageCobtroller.Score += 1;
         statusManager.EnemyTurnCheck();
         statusManager.TurnCheck();
@@ -398,14 +401,15 @@ public class GameController : MonoBehaviour
         text.text = textdata;
         padController2.Pad = false;
         textPadObj.SetActive(true);
+        animationManager.AnimationStart(1, "transform");
 
-
-        ModeChange(9, 2);
+        ModeChange(9, 2.5f);
     }
 
 
     private void Stop()
     {
+        
         ModeChange(12, 0);
         textPadObj.SetActive(false );
         StageCobtroller.Score -= 1;
@@ -468,7 +472,7 @@ public class GameController : MonoBehaviour
         {
             if (dcont == 0)
             {
-                camera.GetComponent<CameraController2>().SetCamera(0, 1);
+                camera.GetComponent<CameraController2>().SetCamera(0, 0.75f);
                 dcont++;
                 cameradTime += Time.deltaTime;
                 enj.GetComponent<Animator>().SetBool("Open", true);
@@ -484,7 +488,8 @@ public class GameController : MonoBehaviour
                     statusManager.summonGage = 100;
                 }
                 //teki.GetComponent<Animator>().SetTrigger("Attack");
-                animationManager.AnimationStart("Attack");
+                animationManager.AnimationStart(0, "Attack");
+                animationManager.AnimationStart(1, "damage");
                 //textPadObj.SetActive(true);
                 //text.text = "ダメージアニメーション予定地";
                 AudioManager.Instance.PlaySE(AudioManager.SeName.player_attack);
@@ -492,11 +497,11 @@ public class GameController : MonoBehaviour
                 statusManager.BarrierCheck();
                 if (statusManager.playerHP <= 0)
                 {
-                    ModeChange(7, 2f);
+                    ModeChange(7, 1.5f);
                 }
                 else
                 {
-                    ModeChange(11, 2f);
+                    ModeChange(11, 1.5f);
                 }
             }
 
@@ -516,11 +521,14 @@ public class GameController : MonoBehaviour
         {
             if (dcont == 0)
             {
+                animeC = true;
                 EffectControl.Instance.PlayEffect(EffectControl.Effect.Attack, AttackEfPos );
-                camera.GetComponent<CameraController2>().SetCamera(3, 1);
+                camera.GetComponent<CameraController2>().SetCamera(3, 0.75f);
                 dcont++;
                 cameradTime += Time.deltaTime;
                 enj.GetComponent<Animator>().SetBool("Open", true);
+
+
             }
             else
             {
@@ -532,20 +540,20 @@ public class GameController : MonoBehaviour
                 {
                     statusManager.summonGage = 100;
                 }
-
-                animationManager.AnimationStart("Damage");
+                
+                animationManager.AnimationStart(0, "Damage");
                 AudioManager.Instance.PlaySE(AudioManager.SeName.player_attack);
                 
-                textPadObj.SetActive(true);
-                text.text = "攻撃アニメーション予定地";
+                //textPadObj.SetActive(true);
+                //text.text = "攻撃アニメーション予定地";
                 statusManager.enemyHP  -= statusManager.playerAtk;
                 if (statusManager.enemyHP <= 0)
                 {
-                    ModeChange(6, 2f);
+                    ModeChange(6, 1.5f);
                 }
                 else
                 {
-                    ModeChange(11, 2f);
+                    ModeChange(11, 1.5f);
                 }
             }
 
@@ -553,6 +561,11 @@ public class GameController : MonoBehaviour
         else
         {
             cameradTime += Time.deltaTime;
+            if (cameradTime > 0.1f&&animeC)
+            {
+                animationManager.AnimationStart(1, "attack");
+                animeC = false;
+            }
         }
 
     }

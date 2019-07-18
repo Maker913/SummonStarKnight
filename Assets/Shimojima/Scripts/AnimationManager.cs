@@ -5,7 +5,7 @@ using UnityEngine;
 public class AnimationManager : MonoBehaviour
 {
     public Animator model;
-
+    public Animator player;
     void Update()
     {
         
@@ -16,6 +16,7 @@ public class AnimationManager : MonoBehaviour
         if (StageCobtroller.stageNum != 3&&!StageCobtroller .Shooting )
         {
             model.SetFloat("Spead", 0);
+            player.SetFloat("Spead", 0);
         }
     }
     public void ReState()
@@ -23,22 +24,31 @@ public class AnimationManager : MonoBehaviour
         if (StageCobtroller.stageNum != 3 && !StageCobtroller.Shooting)
         {
             model.SetFloat("Spead", 1);
+            player.SetFloat("Spead", 1);
         }
     }
 
-    public void ModelSet(GameObject gameObject2)
+    public void ModelSet(GameObject gameObject2,GameObject gameObject )
     {
         if (StageCobtroller.stageNum != 3 && !StageCobtroller.Shooting)
         {
             model = gameObject2.GetComponent<Animator>();
+            player = gameObject.GetComponent<Animator>();
         }
     }
 
-    public void AnimationStart(string aTrigger)
+    public void AnimationStart(int num,string aTrigger)
     {
         if (StageCobtroller.stageNum != 3 && !StageCobtroller.Shooting)
         {
-            model.SetTrigger(aTrigger);
+            if (num == 1)
+            {
+                player.SetTrigger(aTrigger);
+            }
+            else
+            {
+                model.SetTrigger(aTrigger);
+            }
         }
     }
 }

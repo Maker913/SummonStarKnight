@@ -61,7 +61,7 @@ public class StageCobtroller : MonoBehaviour
 
             if (stageNum != 3)
             {
-                mag.GetComponent<AnimationManager>().ModelSet(data);
+                mag.GetComponent<AnimationManager>().ModelSet(data,data1);
             }
         }
 
