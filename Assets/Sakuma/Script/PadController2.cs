@@ -719,6 +719,7 @@ public class PadController2 : MonoBehaviour
 
     public void BlackLine2()
     {
+#if false
         BlackLineDL();
         RectTransform CanvasRect = canvas.GetComponent<RectTransform>();
 
@@ -750,6 +751,7 @@ public class PadController2 : MonoBehaviour
 
 
         }
+#endif
     }
 
     public void BlackLineDL()

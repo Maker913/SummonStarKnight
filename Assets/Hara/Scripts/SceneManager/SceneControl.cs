@@ -98,6 +98,7 @@ public class SceneControl : MonoBehaviour
     /// <param name="isFade">フェードを実行する場合はtrue</param>
     /// <param name="interval">フェード開始から終了までの時間(秒)<para>0秒以下ならフェードなしとして実行</para></param>
     /// <param name="unityAction">画面が完全に暗くなったタイミングで実行したい処理<para>フェードを実行した場合のみ有効</para></param>
+
     public void LoadScene(SceneName scene, bool isFade = false, float interval = 1.0f, UnityEngine.Events.UnityAction unityAction = null)
     {
         if (isFading) return;
