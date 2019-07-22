@@ -18,11 +18,10 @@ public class TextController : MonoBehaviour
     //時間
     [SerializeField]
     private float time;
+
     //保存時間
-    [SerializeField]
     private float tmpTime;
 
-    [SerializeField]
     private float autoOnlyTime;
     //文字の表示される速度
     [SerializeField][Range(0.001f, 0.3f)]
@@ -268,6 +267,9 @@ public class TextController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 自動でテキスト送りを行う
+    /// </summary>
     private void AutoTextPrint()
     {
         if (auto)
@@ -282,6 +284,9 @@ public class TextController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// オートの切り替えを行う
+    /// </summary>
     public void AutoSwitch()
     {
         if (auto == false)

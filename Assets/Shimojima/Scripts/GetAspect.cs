@@ -14,6 +14,9 @@ public class GetAspect : MonoBehaviour
         FontSizeAdjust();
     }
     
+    /// <summary>
+    /// フォントサイズの調整
+    /// </summary>
     public void FontSizeAdjust()
     {
         w = Screen.width;
@@ -35,7 +38,12 @@ public class GetAspect : MonoBehaviour
 
     }
 
-    //最大公約数を返す
+    /// <summary>
+    /// 最大公約数を返す
+    /// </summary>
+    /// <param name="a"></param>
+    /// <param name="b"></param>
+    /// <returns></returns>
     private float Euclidean(float a, float b)
     {
         if (a < b)

@@ -4,22 +4,33 @@ using UnityEngine;
 
 public class TextData : MonoBehaviour
 {
+    public string scenarioName;
+    public int debugNumber;
     public List<string> textData;
     public bool loadFinish = false;
     private string scenario;
 
     void Start()
     {
+        TextAsset ta = new TextAsset();
 
-        TextAsset ta=new TextAsset() ;
-        if(StageCobtroller.Shooting ==false )
+        if (debugNumber == 0)
         {
-            ta = Resources.Load<TextAsset>("Scenario/MainStage/Scenario" + StageCobtroller.stageNum.ToString());
+            ta = Resources.Load<TextAsset>("Scenario/MainStage/" + scenarioName);
+            
         }
-        else
+        else if (debugNumber == 1)
         {
-            ta = Resources.Load<TextAsset>("Scenario/Shooting/Shooting" + StageCobtroller.stageNum.ToString());
+            if (StageCobtroller.Shooting == false)
+            {
+                ta = Resources.Load<TextAsset>("Scenario/MainStage/Scenario" + StageCobtroller.stageNum.ToString());
+            }
+            else
+            {
+                ta = Resources.Load<TextAsset>("Scenario/Shooting/Shooting" + StageCobtroller.stageNum.ToString());
+            }
         }
+        
         
         
         
