@@ -337,7 +337,7 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 35
+    m_FontSize: 30
     m_FontStyle: 1
     m_BestFit: 0
     m_MinSize: 2
@@ -563,7 +563,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 9139049892383509003}
+      - m_Target: {fileID: 3059102449741389891}
         m_MethodName: AutoSwitch
         m_Mode: 1
         m_Arguments:
@@ -738,8 +738,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9139049892383509002}
-  - component: {fileID: 9139049892383509003}
-  - component: {fileID: 2584332090865410984}
+  - component: {fileID: 3059102449741389891}
+  - component: {fileID: 3059102449741389916}
   m_Layer: 5
   m_Name: TextController
   m_TagString: Untagged
@@ -761,7 +761,7 @@ Transform:
   m_Father: {fileID: 1313351673830399303}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &9139049892383509003
+--- !u!114 &3059102449741389891
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -770,22 +770,22 @@ MonoBehaviour:
   m_GameObject: {fileID: 9139049892383508996}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 457f0f26da87f4445b11bd2b5d41f28a, type: 3}
+  m_Script: {fileID: 11500000, guid: 01587f88f55746041a4fda07daf24ee7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tData: {fileID: 9139049892383508996}
-  uiText: {fileID: 1313351674132735168}
-  autoText: {fileID: 1313351673876139670}
+  scenarioText: {fileID: 1313351674132735168}
   nameText: {fileID: 2779834408028840787}
-  time: 0
-  tmpTime: 0
-  autoOnlyTime: 0
-  DisplayTextIntarval: 0.05
+  autoButtonText: {fileID: 1313351673876139670}
+  newTD: {fileID: 3059102449741389916}
+  tState: 0
   texts: []
-  tDataIndex: 0
-  page: 0
-  nextText: 0
---- !u!114 &2584332090865410984
+  sDataIndex: 0
+  nowIndex: 0
+  commandLineCount: 
+  time: 0
+  displayTextInterval: 0.05
+  autoDisplayTextInterval: 1
+--- !u!114 &3059102449741389916
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -794,10 +794,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 9139049892383508996}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ed16df362694c6543acd9dec52dc3a8c, type: 3}
+  m_Script: {fileID: 11500000, guid: fd1370510ebcd234cb77e253dd9ddd69, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scenarioName: summary
-  debugNumber: 0
+  sName: summary
+  gName: MainStage/
   textData: []
   loadFinish: 0
