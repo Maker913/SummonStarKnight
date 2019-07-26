@@ -49,11 +49,11 @@ public class AnimationManager : MonoBehaviour
         }
     }
 
-    public void AnimationStart(float rimit, int num,string aTrigger)
+    public void AnimationStart(float rimitTime, int num,string aTrigger)
     {
         if (!StageCobtroller.Shooting)
         {
-            StartCoroutine(Animation(rimit, num, aTrigger));
+            StartCoroutine(Animation(rimitTime, num, aTrigger));
         }
     }
 

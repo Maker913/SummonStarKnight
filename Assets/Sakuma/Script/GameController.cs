@@ -238,7 +238,7 @@ public class GameController : MonoBehaviour
 
         padController2.Pad = false;
         textPadObj.SetActive(false );
-        if (TextController .end||Input .GetKeyDown(KeyCode.Escape))
+        if (NewTextController .end||Input .GetKeyDown(KeyCode.Escape))
         {
             animationManager.ReState ();
             if (StageCobtroller.Shooting == false)
@@ -380,7 +380,7 @@ public class GameController : MonoBehaviour
 
     private void Battlesoon()
     {
-        animationManager.AnimationStart(0,"Zodiac");
+        animationManager.AnimationStart(0,0,"Zodiac");
         StageCobtroller.Score += 1;
         statusManager.EnemyTurnCheck();
         statusManager.TurnCheck();
@@ -401,7 +401,7 @@ public class GameController : MonoBehaviour
         text.text = textdata;
         padController2.Pad = false;
         textPadObj.SetActive(true);
-        animationManager.AnimationStart(1, "transform");
+        animationManager.AnimationStart(0, 1, "transform");
 
         ModeChange(9, 2.5f);
     }
@@ -488,8 +488,8 @@ public class GameController : MonoBehaviour
                     statusManager.summonGage = 100;
                 }
                 //teki.GetComponent<Animator>().SetTrigger("Attack");
-                animationManager.AnimationStart(0, "Attack");
-                animationManager.AnimationStart(1, "damage");
+                animationManager.AnimationStart(0, 0, "Attack");
+                animationManager.AnimationStart(0, 1, "damage");
                 //textPadObj.SetActive(true);
                 //text.text = "ダメージアニメーション予定地";
                 AudioManager.Instance.PlaySE(AudioManager.SeName.player_attack);
@@ -541,7 +541,7 @@ public class GameController : MonoBehaviour
                     statusManager.summonGage = 100;
                 }
                 
-                animationManager.AnimationStart(0, "Damage");
+                animationManager.AnimationStart(0, 0, "Damage");
                 AudioManager.Instance.PlaySE(AudioManager.SeName.player_attack);
                 
                 //textPadObj.SetActive(true);
@@ -563,7 +563,7 @@ public class GameController : MonoBehaviour
             cameradTime += Time.deltaTime;
             if (cameradTime > 0.1f&&animeC)
             {
-                animationManager.AnimationStart(1, "attack");
+                animationManager.AnimationStart(0, 1, "attack");
                 animeC = false;
             }
         }

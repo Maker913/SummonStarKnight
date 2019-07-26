@@ -56,11 +56,13 @@ public class NewTextController : MonoBehaviour
     [SerializeField, Tooltip("コマンドテキストが有る行数の保管")]
     private List<int> commandLineCount = new List<int>();
 
+
     [Header("-時間-")]
-    private float autoTime;
 
     [SerializeField]
     private float time;
+
+    private float autoTime;
 
     private float targetTime;
 
@@ -264,7 +266,6 @@ public class NewTextController : MonoBehaviour
                 }
 
                 sData[i].page = count;
-                Debug.Log(sData[i].page);
 
                 //名前が記述されている場合はキャラクターネームをセットする
                 if (newTD.textData[i].Substring(0, 1) == "~")
