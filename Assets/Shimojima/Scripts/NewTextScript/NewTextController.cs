@@ -72,8 +72,11 @@ public class NewTextController : MonoBehaviour
 
     private bool auto = false;  //オート機能のON,OFF切り替え用
 
+    public static bool end;
+
     void Start()
     {
+        end = false;
     }
 
     void Update()
@@ -81,7 +84,7 @@ public class NewTextController : MonoBehaviour
         TextDataLoad();
         time += Time.deltaTime;
 
-        if (tState == TextState.end) { return; }
+        if (tState == TextState.end) { end = true; return; }
         PrintText();
     }
 
