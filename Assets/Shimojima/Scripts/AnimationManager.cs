@@ -6,9 +6,9 @@ public class AnimationManager : MonoBehaviour
 {
     public Animator model;
     public Animator player;
+    
     void Update()
     {
-        
     }
 
     public void Stop()
@@ -49,20 +49,26 @@ public class AnimationManager : MonoBehaviour
         }
     }
 
-    public void AnimationStart(int num,string aTrigger)
+    public void AnimationStart(float rimit, int num,string aTrigger)
     {
         if (!StageCobtroller.Shooting)
         {
-            if (num == 1)
+            StartCoroutine(Animation(rimit, num, aTrigger));
+        }
+    }
+
+    IEnumerator Animation(float rimit, int num, string aTrigger)
+    {
+        yield return new WaitForSeconds(rimit);
+        if (num == 1)
+        {
+            player.SetTrigger(aTrigger);
+        }
+        else
+        {
+            if (StageCobtroller.stageNum != 3)
             {
-                player.SetTrigger(aTrigger);
-            }
-            else
-            {
-                if (StageCobtroller.stageNum != 3)
-                {
-                    model.SetTrigger(aTrigger);
-                }
+                model.SetTrigger(aTrigger);
             }
         }
     }
