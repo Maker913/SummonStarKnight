@@ -115,6 +115,15 @@ public class PadController2 : MonoBehaviour
     [SerializeField]
     private GameObject ster;
 
+    public bool summonRem = false;
+    public float summonDelay = 0;
+
+    private float summonRemTime=0;
+
+    [SerializeField]
+    private float BLineTime;
+
+
 
 
     // Start is called before the first frame update
@@ -143,7 +152,7 @@ public class PadController2 : MonoBehaviour
         //Debug.Log(SterLine[0] + " " + SterLine[1] + " " + SterLine[2] + " " + SterLine[3] + " " + SterLine[4] + " " + SterLine[5] + " " + SterLine[6]);
 
 
-        if (Input.touchCount > 0 && Pad && sumonbd == false)
+        if (Input.touchCount > 0 && Pad && sumonbd == false&& summonRem==false )
         {
 
 
@@ -376,18 +385,7 @@ public class PadController2 : MonoBehaviour
             }
 
 
-            for (int i = 0; i < glowSterImage.Length; i++)
-            {
-                if (glowStar[i])
-                {
-                    glowSterImage[i].enabled = true;
-                }
-                else
-                {
-                    glowSterImage[i].enabled = false;
-                }
 
-            }
 
 
             if (sterLineamount != 0 && sumonMode == false)
@@ -439,6 +437,60 @@ public class PadController2 : MonoBehaviour
 
 
         }
+
+
+        for (int i = 0; i < glowSterImage.Length; i++)
+        {
+            if (glowStar[i])
+            {
+                glowSterImage[i].enabled = true;
+            }
+            else
+            {
+                glowSterImage[i].enabled = false;
+            }
+
+        }
+
+
+        if (summonRem)
+        {
+            if(summonDelay < 0)
+            {
+                summonRemTime -= Time.deltaTime;
+
+
+                if(summonRemTime < 0)
+                {
+                    Debug.Log("開始");
+                    summonRem = false;
+                    BlackLineDL();
+                }
+
+
+            }
+            else
+            {
+                summonDelay -= Time.deltaTime;
+                if(summonDelay < 0)
+                {
+                    summonRemTime = BLineTime;
+                    Debug.Log("カメラ移動完了");
+                }
+            }
+
+
+
+
+
+        }
+
+
+
+
+
+
+
     }
 
 
@@ -498,8 +550,14 @@ public class PadController2 : MonoBehaviour
 
         if (DCheck)
         {
+
             AudioManager.Instance.PlaySE(AudioManager.SeName .enemy_Deathblow );
             BoardReset();
+            if (sumonMode)
+            {
+                gameController.ModeChange(23, 0);
+                sumonMode = false;
+            }
         }
 
     }

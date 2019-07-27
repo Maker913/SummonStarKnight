@@ -31,7 +31,7 @@ public class NewTextData : MonoBehaviour
         //ta = Resources.Load<TextAsset>("Scenario/" + gameModeName + scenarioName);
 
         //デバッグ用 ↑の確認をするときはコメントアウトしてください
-        ta = Resources.Load<TextAsset>("Scenario/" + gName + sName);
+        ta = Resources.Load<TextAsset>("Scenario/" + gName +"/"+ sName);
 
 
         string s = ta.text;

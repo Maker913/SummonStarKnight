@@ -215,6 +215,11 @@ public class GameController : MonoBehaviour
             case 22:
                 Scenario();
                 break;
+            case 23:
+                SumonMiss();
+                break;
+
+
 
             case 99:
                 None();
@@ -402,7 +407,15 @@ public class GameController : MonoBehaviour
         padController2.Pad = false;
         textPadObj.SetActive(true);
         animationManager.AnimationStart(0, 1, "transform");
+        ModeChange(9, 2.5f);
+    }
 
+    private void SumonMiss()
+    {
+        enj.GetComponent<Animator>().SetBool("Open", true);
+        text.text = "召喚に失敗しました";
+        padController2.Pad = false;
+        textPadObj.SetActive(true);
         ModeChange(9, 2.5f);
     }
 
