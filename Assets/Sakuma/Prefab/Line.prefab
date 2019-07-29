@@ -79,3 +79,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shader: {fileID: 4800000, guid: 66afdf350cede1b44bb78047895786b7, type: 3}
+  falseLine: 0
+  color:
+    serializedVersion: 2
+    rgba: 4278190335

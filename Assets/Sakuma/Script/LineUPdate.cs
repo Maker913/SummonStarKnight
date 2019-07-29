@@ -10,6 +10,11 @@ public class LineUPdate : MonoBehaviour
     [SerializeField]
     private Shader shader;
 
+    public bool falseLine = false;
+    private float time = 0.5f;
+    [SerializeField]
+    private Color32 color;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -25,5 +30,20 @@ public class LineUPdate : MonoBehaviour
     {
         material.SetFloat("_Height", Vector2.Distance (UIline.points[0],UIline .points [1]  ));
         material.SetFloat("_Width", UIline.width *2);
+
+
+        if(falseLine)
+        {
+            time -= Time.deltaTime;
+            material.SetColor("_Color",color);
+            material.SetFloat("_Fade", time / 0.5f);
+            if (time < 0)
+            {
+                Destroy(gameObject);
+            }
+
+
+        }
+
     }
 }
