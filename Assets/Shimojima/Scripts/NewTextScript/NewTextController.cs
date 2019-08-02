@@ -90,6 +90,14 @@ public class NewTextController : MonoBehaviour
         PrintText();
     }
 
+    public void ResetText()
+    {
+        tState = TextState.next;
+        sDataIndex = 0;
+        nowIndex = 0;
+        time = 0;
+    }
+
     /// <summary>
     /// テキストデータを表示する
     /// </summary>

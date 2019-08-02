@@ -33,6 +33,8 @@ public class NewTextData : MonoBehaviour
     /// </summary>
     public void TextDataRead(string name)
     {
+        gameObject.GetComponent<NewTextController>().ResetText();
+        textData = new List<string>();
         TextAsset ta = new TextAsset();
 
         //↓本番時または実際の挙動を確認するときにコメントアウトを消してください
