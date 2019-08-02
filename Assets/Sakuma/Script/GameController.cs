@@ -265,6 +265,7 @@ public class GameController : MonoBehaviour
         textPadObj.SetActive(false);
         if (NewTextController.end || Input.GetKeyDown(KeyCode.Escape))
         {
+            Debug.Log("sasasasa");
             textPr.SetActive(false);
             animationManager.ReState();
 
@@ -648,6 +649,7 @@ public class GameController : MonoBehaviour
                 textPr.SetActive(true);
                 NewTextObj.GetComponent<NewTextData>().TextDataRead("Tutorial/SummonB");
                 TutorialFlg.SummonBefore = true;
+                ModeChange(24,0);
             } 
 
         }
