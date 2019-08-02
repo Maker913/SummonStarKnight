@@ -23,11 +23,15 @@ public class NewTextData : MonoBehaviour
     public bool loadFinish = false;
     private string scenario;
 
+    private void Start()
+    {
+        TextDataRead(gName+sName);
+    }
 
     /// <summary>
     /// テキストデータの読込
     /// </summary>
-    public void TextDataRead()
+    public void TextDataRead(string name)
     {
         TextAsset ta = new TextAsset();
 
@@ -35,7 +39,7 @@ public class NewTextData : MonoBehaviour
         //ta = Resources.Load<TextAsset>("Scenario/" + gameModeName + scenarioName);
 
         //デバッグ用 ↑の確認をするときはコメントアウトしてください
-        ta = Resources.Load<TextAsset>("Scenario/" + gName +"/"+ sName);
+        ta = Resources.Load<TextAsset>("Scenario/" +name);
 
 
         string s = ta.text;

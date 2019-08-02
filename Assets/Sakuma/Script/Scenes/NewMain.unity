@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.015554899, g: 0.015063122, b: 0.014816758, a: 1}
+  m_IndirectSpecularColor: {r: 0.015554532, g: 0.015063206, b: 0.014816795, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2447,6 +2447,7 @@ MonoBehaviour:
   resultObjtext: {fileID: 1785426001}
   textPr: {fileID: 1313351673740345950}
   animeCon: {fileID: 1916799711}
+  NewTextObj: {fileID: 9139049892343272729}
   teki: {fileID: 0}
 --- !u!4 &372643542
 Transform:
@@ -13282,7 +13283,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sName: Scenario1
-  gName: MainStage
+  gName: MainStage/
   textData: []
   loadFinish: 0
 --- !u!114 &3059102449835638622

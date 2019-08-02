@@ -106,6 +106,17 @@ public class GameController : MonoBehaviour
 
     private bool animeC=false ;
 
+    private float summonTutorialTime = 0;
+
+    [SerializeField]
+    private GameObject NewTextObj;
+
+
+
+
+
+
+
 
     static public string result = "NULL";
     [Space(10)]
@@ -218,7 +229,9 @@ public class GameController : MonoBehaviour
             case 23:
                 SumonMiss();
                 break;
-
+            case 24:
+                summonTutorial();
+                break;
 
 
             case 99:
@@ -236,6 +249,37 @@ public class GameController : MonoBehaviour
         AttackEfPos = apos;
     }
 
+
+
+
+
+
+
+
+    private void summonTutorial()
+    {
+        animationManager.Stop();
+
+
+        padController2.Pad = false;
+        textPadObj.SetActive(false);
+        if (NewTextController.end || Input.GetKeyDown(KeyCode.Escape))
+        {
+            textPr.SetActive(false);
+            animationManager.ReState();
+
+                ModeChange(2, 0);
+            TextController.end = false;
+        }
+
+
+
+    }
+
+
+
+
+
     private void Scenario()
     {
         animationManager.Stop();
@@ -245,6 +289,7 @@ public class GameController : MonoBehaviour
         textPadObj.SetActive(false );
         if (NewTextController .end||Input .GetKeyDown(KeyCode.Escape))
         {
+            textPr.SetActive(false);
             animationManager.ReState ();
             if (StageCobtroller.Shooting == false)
             {
@@ -593,6 +638,24 @@ public class GameController : MonoBehaviour
             startPas = 1;
             
         }
+
+        if(padController2 .sumonMode)
+        {
+            summonTutorialTime += Time.deltaTime;
+
+            if(summonTutorialTime>1&&!TutorialFlg.SummonBefore)
+            {
+                textPr.SetActive(true);
+                NewTextObj.GetComponent<NewTextData>().TextDataRead("MainStage/summary");
+                TutorialFlg.SummonBefore = true;
+            } 
+
+        }
+
+
+
+
+
         text.text = "";
         padController2.Pad = true;
         textPadObj.SetActive(false);
@@ -602,7 +665,7 @@ public class GameController : MonoBehaviour
     private void Stert()
     {
         camera.GetComponent<CameraController2>().SetCamera(0, 2);
-        textPr.SetActive(false);
+        
         textPadObj.SetActive(true);
         text.text = "STAGE "+StageCobtroller .stageNum .ToString ();
         ModeChange(12, 3f);
