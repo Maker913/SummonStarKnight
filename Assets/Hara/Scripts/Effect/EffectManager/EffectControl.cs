@@ -54,17 +54,19 @@ public class EffectControl : MonoBehaviour
 
     /// <summary>
     /// エフェクトを再生する
-    /// <para>PlayEffect(EffectControl.Effect.再生するエフェクト, エフェクトを表示する座標)</para>
+    /// <para>PlayEffect(EffectControl.Effect.再生するエフェクト, エフェクトを表示する座標, エフェクトの向き)</para>
     /// </summary>
     /// <param name="effectName">再生するエフェクト名</param>
     /// <param name="effectPos">エフェクトを再生する座標</param>
-    public void PlayEffect(Effect effectName, Vector3 effectPos)
+    /// <param name="effectRot">エフェクトを再生する向き</param>
+    public void PlayEffect(Effect effectName, Vector3 effectPos, Vector3 effectRot)
     {
         if (particles[(int)effectName].isPlaying)
         {
             particles[(int)effectName].Stop();
         }
         particles[(int)effectName].transform.position = effectPos;
+        particles[(int)effectName].transform.rotation = Quaternion.Euler(effectRot);
         particles[(int)effectName].Play();
     }
 

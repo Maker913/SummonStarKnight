@@ -7,6 +7,8 @@ public class Test : MonoBehaviour
     [SerializeField]
     private Vector3 pos;
     [SerializeField]
+    private Vector3 rot;
+    [SerializeField]
     private EffectControl.Effect effect;
 
     // Update is called once per frame
@@ -14,7 +16,7 @@ public class Test : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            EffectControl.Instance.PlayEffect(effect, pos);
+            EffectControl.Instance.PlayEffect(effect, pos, rot);
         }
 
         if (Input.GetMouseButtonDown(1))
