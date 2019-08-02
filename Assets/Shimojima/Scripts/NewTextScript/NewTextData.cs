@@ -29,6 +29,7 @@ public class NewTextData : MonoBehaviour
     /// </summary>
     public void TextDataRead()
     {
+        gameObject.GetComponent<NewTextController>().ResetText();
         textData = new List<string>();
         TextAsset ta = new TextAsset();
 
