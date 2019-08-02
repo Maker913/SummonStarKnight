@@ -23,12 +23,16 @@ public class NewTextData : MonoBehaviour
     public bool loadFinish = false;
     private string scenario;
 
-
+    private void Start()
+    {
+        TextDataRead();
+    }
     /// <summary>
     /// テキストデータの読込
     /// </summary>
     public void TextDataRead()
     {
+        NewTextController.end = false;
         gameObject.GetComponent<NewTextController>().ResetText();
         textData = new List<string>();
         TextAsset ta = new TextAsset();
