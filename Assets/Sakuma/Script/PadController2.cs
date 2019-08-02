@@ -115,7 +115,17 @@ public class PadController2 : MonoBehaviour
     [SerializeField]
     private GameObject ster;
 
+    public bool summonRem = false;
+    public float summonDelay = 0;
 
+    private float summonRemTime=0;
+
+    [SerializeField]
+    private float BLineTime;
+
+    private int deleteSterNum=-1;
+    [SerializeField]
+    private GameObject falseLineP;
 
     // Start is called before the first frame update
     void Start()
@@ -143,7 +153,7 @@ public class PadController2 : MonoBehaviour
         //Debug.Log(SterLine[0] + " " + SterLine[1] + " " + SterLine[2] + " " + SterLine[3] + " " + SterLine[4] + " " + SterLine[5] + " " + SterLine[6]);
 
 
-        if (Input.touchCount > 0 && Pad && sumonbd == false)
+        if (Input.touchCount > 0 && Pad && sumonbd == false&& summonRem==false )
         {
 
 
@@ -194,11 +204,18 @@ public class PadController2 : MonoBehaviour
                             else
                             {
                                 move = false;
+                                glowStar[catchster - 1] = true;
+                                deleteSterNum = catchster - 1;
                             }
 
 
                             SterEfAnime[catchster - 1].SetBool("Change", true);
                             radius = (int)Vector2.Distance(new Vector2(touch.position.x, touch.position.y), SterPos[i].transform.position);
+
+
+
+
+                            
                         }
                     }
                     //if (catchster != 0)
@@ -252,11 +269,16 @@ public class PadController2 : MonoBehaviour
                     }
                     if (moveFlg)
                     {
+                        deleteSterNum = -1;
                         move = true;
                         glowStar[catchster2 - 1] = true;
                         glowStar[catchster - 1] = true;
-                        SterEfAnime[catchster2 - 1].SetBool("Change", true);
-                        SterEfAnime[catchster - 1].SetBool("Change", false);
+
+
+
+
+
+
                         int num = 0;
                         for (int a = 1; a <= SterPos.Length; a++)
                         {
@@ -274,7 +296,7 @@ public class PadController2 : MonoBehaviour
                                         UILineRenderer data2 = obj.GetComponent<UILineRenderer>();
                                         data2.points[0] = new Vector2((SterPos[catchster - 1].transform.position.x - Screen.width / 2) / Screen.width * CanvasRect.sizeDelta.x, (SterPos[catchster - 1].transform.position.y - Screen.height / 2) / Screen.height * CanvasRect.sizeDelta.y);
                                         data2.points[1] = new Vector2((SterPos[catchster2 - 1].transform.position.x - Screen.width / 2) / Screen.width * CanvasRect.sizeDelta.x, (SterPos[catchster2 - 1].transform.position.y - Screen.height / 2) / Screen.height * CanvasRect.sizeDelta.y);
-                                        DeleteCheck(num);
+                                        DeleteCheck(num,obj);
                                     }
                                     else
                                     {
@@ -300,20 +322,28 @@ public class PadController2 : MonoBehaviour
                                             data2.points[0] = new Vector2((SterPos[catchster - 1].transform.position.x - Screen.width / 2) / Screen.width * CanvasRect.sizeDelta.x, (SterPos[catchster - 1].transform.position.y - Screen.height / 2) / Screen.height * CanvasRect.sizeDelta.y);
                                             data2.points[1] = new Vector2((SterPos[catchster2 - 1].transform.position.x - Screen.width / 2) / Screen.width * CanvasRect.sizeDelta.x, (SterPos[catchster2 - 1].transform.position.y - Screen.height / 2) / Screen.height * CanvasRect.sizeDelta.y);
                                             //obj.transform.parent = lineParent.transform;
-                                            DeleteCheck(num);
+                                            DeleteCheck(num,obj);
                                         }
                                     }
                                 }
                             }
                         }
 
+                        if (!Summon())
+                        {
 
+
+                            SterEfAnime[catchster2 - 1].SetBool("Change", true);
+                            SterEfAnime[catchster - 1].SetBool("Change", false);
+                        }
 
 
 
                         //
                         catchster = catchster2;
-                        Summon();
+
+
+
                         if (StageCobtroller.Shooting)
                         {
                             ShootingChack();
@@ -359,9 +389,17 @@ public class PadController2 : MonoBehaviour
                     SterController = 0;
                     sterUILine.points[1] = new Vector2(0, 0);
                     sterUILine.points[0] = new Vector2(0, 0);
-                    if (move == false)
+                    //if (move == false)
+                    //{
+                    //    glowStar[catchster - 1] = false;
+                    //}
+
+                    if(deleteSterNum != -1)
                     {
-                        glowStar[catchster - 1] = false;
+                        glowStar[deleteSterNum] = false;
+                        deleteSterNum = -1;
+
+                        Debug.Log("   aa  ");
                     }
                 }
                 if (angleController)
@@ -376,18 +414,7 @@ public class PadController2 : MonoBehaviour
             }
 
 
-            for (int i = 0; i < glowSterImage.Length; i++)
-            {
-                if (glowStar[i])
-                {
-                    glowSterImage[i].enabled = true;
-                }
-                else
-                {
-                    glowSterImage[i].enabled = false;
-                }
 
-            }
 
 
             if (sterLineamount != 0 && sumonMode == false)
@@ -439,6 +466,60 @@ public class PadController2 : MonoBehaviour
 
 
         }
+
+
+        for (int i = 0; i < glowSterImage.Length; i++)
+        {
+            if (glowStar[i])
+            {
+                glowSterImage[i].enabled = true;
+            }
+            else
+            {
+                glowSterImage[i].enabled = false;
+            }
+
+        }
+
+
+        if (summonRem)
+        {
+            if(summonDelay < 0)
+            {
+                summonRemTime -= Time.deltaTime;
+
+
+                if(summonRemTime < 0)
+                {
+                    Debug.Log("開始");
+                    summonRem = false;
+                    BlackLineDL();
+                }
+
+
+            }
+            else
+            {
+                summonDelay -= Time.deltaTime;
+                if(summonDelay < 0)
+                {
+                    summonRemTime = BLineTime;
+                    Debug.Log("カメラ移動完了");
+                }
+            }
+
+
+
+
+
+        }
+
+
+
+
+
+
+
     }
 
 
@@ -457,12 +538,19 @@ public class PadController2 : MonoBehaviour
 
         }
         GameObject test= Instantiate(ster, ster.transform.position, Quaternion.identity,boardObj.transform );
+        GameObject test2 = test.transform.GetChild(1).gameObject;
+
+        for(int i=0;i<test2.transform.childCount; i++)
+        {
+            test2.transform.GetChild(i).GetChild(0).GetComponent<Image>().enabled = false;
+        }
+
         test.GetComponent <Animator >().SetTrigger("Success");
         BoardReset();
     }
 
 
-    private void DeleteCheck(int num)
+    private void DeleteCheck(int num,GameObject Obj)
     {
         int[] bfList;
         if (StageCobtroller.Shooting)
@@ -498,14 +586,31 @@ public class PadController2 : MonoBehaviour
 
         if (DCheck)
         {
+            GameObject obj1 = (GameObject)Instantiate(Obj, Obj.transform .position, Quaternion.identity, falseLineP.transform);
+            obj1.GetComponent<LineUPdate>().falseLine = true;
+
+            GameObject obj2 = (GameObject)Instantiate(lineParent, lineParent.transform.position, Quaternion.identity, falseLineP.transform);
+            foreach (Transform n in obj2.transform)
+            {
+                n.gameObject.GetComponent<LineUPdate>().falseLine = true;
+            }
+
+
+
             AudioManager.Instance.PlaySE(AudioManager.SeName .enemy_Deathblow );
             BoardReset();
+            if (sumonMode)
+            {
+                gameController.ModeChange(23, 0);
+                sumonMode = false;
+            }
         }
 
     }
 
-    private void Summon()
+    private bool Summon()
     {
+        bool end = false;
         if (gameController.gameMode == 2)
         {
 #if false
@@ -580,6 +685,7 @@ public class PadController2 : MonoBehaviour
                     //enj.RandSelect();
                     BlackLineDL();
                     nameobj.GetComponent<Animator>().SetBool("Name", false);
+                    end = true;
                 }
             }
             else
@@ -609,10 +715,13 @@ public class PadController2 : MonoBehaviour
                     enj.time = statusManager.gageSpeed;
                     sumonMode = false;
                     BlackLineDL();
+                    end = true;
                 }
             }
             //BoardReset();
         }
+        Debug.Log(end);
+        return end;
 
     }
 
