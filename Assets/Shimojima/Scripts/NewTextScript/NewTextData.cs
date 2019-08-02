@@ -23,7 +23,11 @@ public class NewTextData : MonoBehaviour
     public bool loadFinish = false;
     private string scenario;
 
-    void Start()
+
+    /// <summary>
+    /// テキストデータの読込
+    /// </summary>
+    public void TextDataRead()
     {
         TextAsset ta = new TextAsset();
 
