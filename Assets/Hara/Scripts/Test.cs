@@ -10,18 +10,23 @@ public class Test : MonoBehaviour
     private Vector3 rot;
     [SerializeField]
     private EffectControl.Effect effect;
+    [SerializeField]
+    private bool updateOn;
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (updateOn)
         {
-            EffectControl.Instance.PlayEffect(effect, pos, rot);
-        }
+            if (Input.GetMouseButtonDown(0))
+            {
+                EffectControl.Instance.PlayEffect(effect, pos, rot);
+            }
 
-        if (Input.GetMouseButtonDown(1))
-        {
-            EffectControl.Instance.StopEffect(effect);
-        }
+            if (Input.GetMouseButtonDown(1))
+            {
+                EffectControl.Instance.StopEffect(effect);
+            }
+        } 
     }
 }
