@@ -268,7 +268,7 @@ public class GameController : MonoBehaviour
             textPr.SetActive(false);
             animationManager.ReState();
 
-                ModeChange(2, 0);
+            ModeChange(2, 0);
             TextController.end = false;
         }
 
@@ -646,7 +646,7 @@ public class GameController : MonoBehaviour
             if(summonTutorialTime>1&&!TutorialFlg.SummonBefore)
             {
                 textPr.SetActive(true);
-                NewTextObj.GetComponent<NewTextData>().TextDataRead("MainStage/summary");
+                NewTextObj.GetComponent<NewTextData>().TextDataRead("Tutorial/SummonB");
                 TutorialFlg.SummonBefore = true;
             } 
 
