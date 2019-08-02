@@ -538,6 +538,13 @@ public class PadController2 : MonoBehaviour
 
         }
         GameObject test= Instantiate(ster, ster.transform.position, Quaternion.identity,boardObj.transform );
+        GameObject test2 = test.transform.GetChild(1).gameObject;
+
+        for(int i=0;i<test2.transform.childCount; i++)
+        {
+            test2.transform.GetChild(i).GetChild(0).GetComponent<Image>().enabled = false;
+        }
+
         test.GetComponent <Animator >().SetTrigger("Success");
         BoardReset();
     }
