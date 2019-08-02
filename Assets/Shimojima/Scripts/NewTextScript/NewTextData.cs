@@ -29,6 +29,7 @@ public class NewTextData : MonoBehaviour
     /// </summary>
     public void TextDataRead()
     {
+        textData = new List<string>();
         TextAsset ta = new TextAsset();
 
         //↓本番時または実際の挙動を確認するときにコメントアウトを消してください
