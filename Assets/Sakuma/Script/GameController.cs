@@ -258,6 +258,16 @@ public class GameController : MonoBehaviour
 
     private void summonTutorial()
     {
+
+        if (startPas == 0)
+        {
+            textPr.SetActive(true);
+            NewTextObj.GetComponent<NewTextData>().TextDataRead("Tutorial/SummonB");
+            TutorialFlg.SummonBefore = true;
+            startPas = 1;
+        }
+
+
         animationManager.Stop();
 
 
@@ -270,6 +280,7 @@ public class GameController : MonoBehaviour
             animationManager.ReState();
 
             ModeChange(2, 0);
+            startPas = 1;
             TextController.end = false;
         }
 
@@ -283,6 +294,34 @@ public class GameController : MonoBehaviour
 
     private void Scenario()
     {
+
+        if (startPas == 0)
+        {
+            textPr.SetActive(true);
+
+            string folderName = "";
+            string fileName = "";
+
+            if (!StageCobtroller .Shooting)
+            {
+                folderName = "MainStage";
+                fileName = "Stage"+ StageCobtroller .stageNum.ToString ()+"-1";
+            }
+            else
+            {
+                folderName = "Shooting";
+                fileName = "Shooting" + StageCobtroller.stageNum.ToString();
+            }
+
+            //NewTextObj.GetComponent<NewTextData>().TextDataRead(folderName+"/"+fileName );
+
+            NewTextObj.GetComponent<NewTextData>().TextDataRead("MainStage/Scenario1");
+            TutorialFlg.SummonBefore = true;
+            startPas = 1;
+        }
+
+
+
         animationManager.Stop();
 
 
@@ -646,9 +685,6 @@ public class GameController : MonoBehaviour
 
             if(summonTutorialTime>1&&!TutorialFlg.SummonBefore)
             {
-                textPr.SetActive(true);
-                NewTextObj.GetComponent<NewTextData>().TextDataRead("Tutorial/SummonB");
-                TutorialFlg.SummonBefore = true;
                 ModeChange(24,0);
             } 
 

@@ -25,7 +25,7 @@ public class NewTextData : MonoBehaviour
 
     private void Start()
     {
-        TextDataRead(gName + sName);
+        //TextDataRead(gName + sName);
     }
     /// <summary>
     /// テキストデータの読込

@@ -486,7 +486,10 @@ public class PadController2 : MonoBehaviour
         {
             if(summonDelay < 0)
             {
-                summonRemTime -= Time.deltaTime;
+                if (gameController.gameMode == 2)
+                {
+                    summonRemTime -= Time.deltaTime;
+                }
 
 
                 if(summonRemTime < 0)
@@ -503,6 +506,7 @@ public class PadController2 : MonoBehaviour
                 summonDelay -= Time.deltaTime;
                 if(summonDelay < 0)
                 {
+                    BlackLine();
                     summonRemTime = BLineTime;
                     Debug.Log("カメラ移動完了");
                 }

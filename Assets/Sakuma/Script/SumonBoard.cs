@@ -49,10 +49,9 @@ public class SumonBoard : MonoBehaviour
             Pad.GetComponent<PadController2>().NewSummonCl ();
             sumonbd.SetActive(false);
             Pad.GetComponent<PadController2>().sumonNum = num;
-            Pad.GetComponent<PadController2>().BlackLine();
             Pad.GetComponent<PadController2>().summonDelay =1;
             Pad.GetComponent<PadController2>().summonRem = true;
-
+            Pad.GetComponent<PadController2>().BoardReset();
 
 
             camera.GetComponent<CameraController2>().SetCamera(1, 1);
