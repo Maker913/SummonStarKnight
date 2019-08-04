@@ -25,14 +25,14 @@ public class NewTextData : MonoBehaviour
 
     private void Start()
     {
-        //TextDataRead(gName + sName);
+        TextDataRead(gName+sName);
     }
+
     /// <summary>
     /// テキストデータの読込
     /// </summary>
     public void TextDataRead(string name)
     {
-        NewTextController.end = false;
         gameObject.GetComponent<NewTextController>().ResetText();
         textData = new List<string>();
         TextAsset ta = new TextAsset();
@@ -41,7 +41,7 @@ public class NewTextData : MonoBehaviour
         //ta = Resources.Load<TextAsset>("Scenario/" + gameModeName + scenarioName);
 
         //デバッグ用 ↑の確認をするときはコメントアウトしてください
-        ta = Resources.Load<TextAsset>("Scenario/" +name );
+        ta = Resources.Load<TextAsset>("Scenario/" +name);
 
 
         string s = ta.text;
