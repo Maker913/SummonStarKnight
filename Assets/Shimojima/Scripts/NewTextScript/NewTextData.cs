@@ -25,7 +25,7 @@ public class NewTextData : MonoBehaviour
 
     private void Start()
     {
-        TextDataRead(gName+sName);
+        //TextDataRead(gName+sName);
     }
 
     /// <summary>
@@ -37,10 +37,6 @@ public class NewTextData : MonoBehaviour
         textData = new List<string>();
         TextAsset ta = new TextAsset();
 
-        //↓本番時または実際の挙動を確認するときにコメントアウトを消してください
-        //ta = Resources.Load<TextAsset>("Scenario/" + gameModeName + scenarioName);
-
-        //デバッグ用 ↑の確認をするときはコメントアウトしてください
         ta = Resources.Load<TextAsset>("Scenario/" +name);
 
 
