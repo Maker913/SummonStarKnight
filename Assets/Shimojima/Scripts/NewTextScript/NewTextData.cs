@@ -17,7 +17,7 @@ public class NewTextData : MonoBehaviour
     //ゲームモード名と" / "を入れてください
     // 例) MainStage/    Shooting/
     //ゲームモード名がない場合は空のままにしてください
-    public static string gameModeName = "";
+    //public static string gameModeName = "";
 
     public List<string> textData;
     public bool loadFinish = false;
@@ -49,6 +49,7 @@ public class NewTextData : MonoBehaviour
             i++;
         }
         i = 0;
+
         loadFinish = true;
     }
 }
