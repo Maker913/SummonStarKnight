@@ -19,7 +19,7 @@ public class AnimationManager : MonoBehaviour
             if (StageCobtroller.stageNum != 3)
             {
                 model.SetFloat("Spead", 0);
-
+                player.SetFloat("Spead", 0);
             }
         }
     }

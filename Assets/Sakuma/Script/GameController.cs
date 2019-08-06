@@ -56,7 +56,7 @@ public class GameController : MonoBehaviour
 
 
     //2のみ開始時処理使用
-   public  int startPas;
+   public  int startPas=0;
 
 
     //敵星座板の奴
@@ -111,7 +111,7 @@ public class GameController : MonoBehaviour
     [SerializeField]
     private GameObject NewTextObj;
 
-
+    private float fastContTime = 0;
 
 
 
@@ -132,6 +132,11 @@ public class GameController : MonoBehaviour
 
     void Start()
     {
+        if(StageCobtroller .stageNum ==1&&StageCobtroller .Shooting ==false)
+        {
+            TutorialFlg.TutorialReSet();
+        }
+
         enemyTurn = Random.Range(2, 5);
         gaged = gageobj.GetComponent<Image>();
         animationManager = animeCon.GetComponent<AnimationManager>();
@@ -140,10 +145,10 @@ public class GameController : MonoBehaviour
         enj = EnjObj.GetComponent<Enj>();
         statusManager = StatusManagerObj.GetComponent<StatusManager>();
         shooting = shootingObj.GetComponent<ShootingEnj>();
+        startPas = 0;
 
-
-            gameMode = 22;
-
+        gameMode = 22;
+        summonTutorialTime = 0;
 
         AudioManager.Instance.PlayBGM(AudioManager.BgmName.ThemeBGM);
     }
@@ -232,6 +237,28 @@ public class GameController : MonoBehaviour
             case 24:
                 summonTutorial();
                 break;
+            case 25:
+                EndScenario();
+                break;
+            case 26:
+                FastContactTutorial();
+                break;
+
+            case 27:
+                FastAtk();
+                break;
+            case 28:
+                GageMax();
+                break;
+            case 29:
+                SummonOpen();
+                break;
+
+
+
+
+
+
 
 
             case 99:
@@ -253,15 +280,167 @@ public class GameController : MonoBehaviour
 
 
 
+    private void SummonOpen()
+    {
+        if (startPas == 0 && !StageCobtroller.Shooting)
+        {
+            textPr.SetActive(true);
+            NewTextObj.GetComponent<NewTextData>().TextDataRead("Tutorial/SyoukanMENUwo dasita ato");
+            TutorialFlg.SummonOpen  = true;
+            startPas = 1;
+        }
 
+
+        animationManager.Stop();
+
+
+        padController2.Pad = false;
+        textPadObj.SetActive(false);
+        if (NewTextController.end || Input.GetKeyDown(KeyCode.Escape))
+        {
+            textPr.SetActive(false);
+            animationManager.ReState();
+
+            ModeChange(2, 0);
+            startPas = 1;
+            TextController.end = false;
+        }
+    }
+
+    private void GageMax()
+    {
+
+
+        if (startPas == 0 && !StageCobtroller.Shooting)
+        {
+            textPr.SetActive(true);
+            NewTextObj.GetComponent<NewTextData>().TextDataRead("Tutorial/SyoukanGAGEga tamattatoki");
+            TutorialFlg.GageMax  = true;
+
+            startPas = 1;
+        }
+
+
+        animationManager.Stop();
+
+
+        padController2.Pad = false;
+        textPadObj.SetActive(false);
+        if (NewTextController.end || Input.GetKeyDown(KeyCode.Escape))
+        {
+            textPr.SetActive(false);
+            animationManager.ReState();
+
+            ModeChange(12, 0);
+            TextController.end = false;
+        }
+
+
+    }
+
+
+    private void FastAtk()
+    {
+
+
+        if (startPas == 0 && !StageCobtroller.Shooting)
+        {
+            textPr.SetActive(true);
+            NewTextObj.GetComponent<NewTextData>().TextDataRead("Tutorial/Seizabanwo nazotta ato");
+            TutorialFlg.FastAtk = true;
+
+            startPas = 1;
+        }
+
+
+        animationManager.Stop();
+
+
+        padController2.Pad = false;
+        textPadObj.SetActive(false);
+        if (NewTextController.end || Input.GetKeyDown(KeyCode.Escape))
+        {
+            textPr.SetActive(false);
+            animationManager.ReState();
+
+            ModeChange(11, 0); 
+            TextController.end = false;
+        }
+
+
+    }
+
+
+    private void FastContactTutorial()
+    {
+
+
+        if (startPas == 0 && !StageCobtroller.Shooting)
+        {
+            textPr.SetActive(true);
+            NewTextObj.GetComponent<NewTextData>().TextDataRead("Tutorial/Seizabanwo nazorumae");
+            TutorialFlg.FastContact = true;
+            startPas = 1;
+        }
+
+
+        animationManager.Stop();
+
+
+        padController2.Pad = false;
+        textPadObj.SetActive(false);
+        if (NewTextController.end || Input.GetKeyDown(KeyCode.Escape))
+        {
+            textPr.SetActive(false);
+            animationManager.ReState();
+
+            ModeChange(2, 0);
+            startPas = 1;
+            TextController.end = false;
+        }
+
+
+    }
+
+
+    private void EndScenario()
+    {
+        if (startPas == 0&&!StageCobtroller .Shooting )
+        {
+            textPr.SetActive(true);
+            NewTextObj.GetComponent<NewTextData>().TextDataRead("MainStage/Stage"+StageCobtroller .stageNum .ToString ()+"-2");
+            startPas = 1;
+        }
+
+
+        animationManager.Stop();
+
+
+        padController2.Pad = false;
+        textPadObj.SetActive(false);
+        if (NewTextController.end || Input.GetKeyDown(KeyCode.Escape))
+        {
+            result = "勝利";
+            text.text = "勝利";
+            textPadObj.SetActive(true);
+
+
+            textPr.SetActive(false);
+            animationManager.ReState();
+
+            ModeChange(20, 1);
+            startPas = 1;
+            TextController.end = false;
+        }
+    }
 
 
     private void summonTutorial()
     {
-
         if (startPas == 0)
         {
             textPr.SetActive(true);
+
             NewTextObj.GetComponent<NewTextData>().TextDataRead("Tutorial/SummonB");
             TutorialFlg.SummonBefore = true;
             startPas = 1;
@@ -275,7 +454,6 @@ public class GameController : MonoBehaviour
         textPadObj.SetActive(false);
         if (NewTextController.end || Input.GetKeyDown(KeyCode.Escape))
         {
-            Debug.Log("sasasasa");
             textPr.SetActive(false);
             animationManager.ReState();
 
@@ -312,11 +490,10 @@ public class GameController : MonoBehaviour
                 folderName = "Shooting";
                 fileName = "Shooting" + StageCobtroller.stageNum.ToString();
             }
+            
+            NewTextObj.GetComponent<NewTextData>().TextDataRead(folderName+"/"+fileName );
 
-            //NewTextObj.GetComponent<NewTextData>().TextDataRead(folderName+"/"+fileName );
-
-            NewTextObj.GetComponent<NewTextData>().TextDataRead("MainStage/Scenario1");
-            TutorialFlg.SummonBefore = true;
+            //NewTextObj.GetComponent<NewTextData>().TextDataRead("MainStage/Scenario1");
             startPas = 1;
         }
 
@@ -470,6 +647,15 @@ public class GameController : MonoBehaviour
 
     private void Battlesoon()
     {
+
+        if(!TutorialFlg.GageMax&&statusManager.summonGage >=100)
+        {
+            textPadObj.SetActive(false);
+            ModeChange(28, 0);
+            return;
+        }
+
+
         animationManager.AnimationStart(0,0,"Zodiac");
         StageCobtroller.Score += 1;
         statusManager.EnemyTurnCheck();
@@ -527,17 +713,10 @@ public class GameController : MonoBehaviour
 
     private void Win()
     {
-        result = "勝利";
-        text.text = "勝利";
-        padController2.Pad = false;
-        textPadObj.SetActive(true);
-
-
-
         
         //SceneControl.Instance.LoadScene(SceneControl.SceneName.Stage1, true);
 
-        ModeChange(20, 1);
+        ModeChange(25, 0);
     }
 
 
@@ -641,17 +820,31 @@ public class GameController : MonoBehaviour
                 
                 animationManager.AnimationStart(0, 0, "Damage");
                 AudioManager.Instance.PlaySE(AudioManager.SeName.player_attack);
-                
+
                 //textPadObj.SetActive(true);
                 //text.text = "攻撃アニメーション予定地";
-                statusManager.enemyHP  -= statusManager.playerAtk;
+                if (padController2.oneLine)
+                {
+                    statusManager.enemyHP -= (int)(statusManager.playerAtk*1.5f);
+                }
+                else
+                {
+                    statusManager.enemyHP -= statusManager.playerAtk;
+                }
                 if (statusManager.enemyHP <= 0)
                 {
                     ModeChange(6, 1.5f);
                 }
                 else
                 {
-                    ModeChange(11, 1.5f);
+                    if (!TutorialFlg.FastAtk)
+                    {
+                        ModeChange(27, 1.5f);
+                    }
+                    else
+                    {
+                        ModeChange(11, 1.5f);
+                    }
                 }
             }
 
@@ -672,14 +865,25 @@ public class GameController : MonoBehaviour
     {
         if(startPas == 0)
         {
+
+            padController2.oneLine = true;
             enj.GetComponent<Animator>().SetBool("Start", true);
             enj.GetComponent<Animator>().SetBool("Open", false);
             enj.NextGame();
             startPas = 1;
+
+
+
             
         }
 
-        if(padController2 .sumonMode)
+        text.text = "";
+        padController2.Pad = true;
+        textPadObj.SetActive(false);
+
+
+
+        if (padController2 .sumonMode)
         {
             summonTutorialTime += Time.deltaTime;
 
@@ -690,13 +894,20 @@ public class GameController : MonoBehaviour
 
         }
 
+        if (!TutorialFlg.FastContact)
+        {
+            padController2.Pad = false;
+            fastContTime += Time.deltaTime;
+            if (fastContTime > 0.5f)
+            {
+                ModeChange(26, 0);
+                return;
+            }
+        }
 
 
 
 
-        text.text = "";
-        padController2.Pad = true;
-        textPadObj.SetActive(false);
         
     }
 

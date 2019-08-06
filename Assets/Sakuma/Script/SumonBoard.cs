@@ -26,7 +26,8 @@ public class SumonBoard : MonoBehaviour
     private GameObject camera;
     [SerializeField]
     private GameObject nameobj;
-
+    [SerializeField]
+    private GameObject gameCon;
 
     public void Close()
     {
@@ -40,7 +41,7 @@ public class SumonBoard : MonoBehaviour
     {
         int num = Button.GetComponent<ButtonNum>().Num;
 
-        if (game.GetComponent<StatusManager>().summonGage  >= 100)
+        if (game.GetComponent<StatusManager>().summonGage  >= 100&&gameCon.GetComponent<GameController >().gameMode ==2 )
         {
             nameobj.GetComponent<Animator>().SetBool("Name", false);
             game.GetComponent<StatusManager>().summonGage = 0;

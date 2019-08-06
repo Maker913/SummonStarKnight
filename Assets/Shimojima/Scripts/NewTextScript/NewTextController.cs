@@ -103,11 +103,13 @@ public class NewTextController : MonoBehaviour
     /// </summary>
     public void ResetText()
     {
+        scenarioText.text = "";
         tState = TextState.next;
         commandLineCount = new List<int>();
         sDataIndex = 0;
         nowIndex = 0;
         time = 0;
+        end = false;
     }
 
     /// <summary>

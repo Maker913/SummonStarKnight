@@ -127,6 +127,12 @@ public class PadController2 : MonoBehaviour
     [SerializeField]
     private GameObject falseLineP;
 
+    public bool oneLine = true;
+    public bool oneLineCheck = true;
+
+    [SerializeField]
+    private GameObject oneLineText;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -196,6 +202,8 @@ public class PadController2 : MonoBehaviour
                             SterController = 1;
                             catchster = i + 1;
                             AudioManager.Instance.PlaySE(AudioManager.SeName.Follow);
+
+                            oneLineCheck = true;
 
                             if (glowStar[catchster - 1] == true)
                             {
@@ -275,7 +283,7 @@ public class PadController2 : MonoBehaviour
                         glowStar[catchster - 1] = true;
 
 
-
+                        oneLineCheck = false;
 
 
 
@@ -323,6 +331,10 @@ public class PadController2 : MonoBehaviour
                                             data2.points[1] = new Vector2((SterPos[catchster2 - 1].transform.position.x - Screen.width / 2) / Screen.width * CanvasRect.sizeDelta.x, (SterPos[catchster2 - 1].transform.position.y - Screen.height / 2) / Screen.height * CanvasRect.sizeDelta.y);
                                             //obj.transform.parent = lineParent.transform;
                                             DeleteCheck(num,obj);
+                                        }
+                                        else
+                                        {
+                                            oneLine = false;
                                         }
                                     }
                                 }
@@ -386,6 +398,13 @@ public class PadController2 : MonoBehaviour
                 }
                 if (SterController == 1)
                 {
+                    if(!oneLineCheck&&gameController.gameMode==2)
+                    {
+                        oneLine = false;
+                    }
+
+
+
                     SterController = 0;
                     sterUILine.points[1] = new Vector2(0, 0);
                     sterUILine.points[0] = new Vector2(0, 0);
@@ -399,7 +418,7 @@ public class PadController2 : MonoBehaviour
                         glowStar[deleteSterNum] = false;
                         deleteSterNum = -1;
 
-                        Debug.Log("   aa  ");
+                        //Debug.Log("   aa  ");
                     }
                 }
                 if (angleController)
@@ -494,7 +513,7 @@ public class PadController2 : MonoBehaviour
 
                 if(summonRemTime < 0)
                 {
-                    Debug.Log("開始");
+                    //Debug.Log("開始");
                     summonRem = false;
                     BlackLineDL();
                 }
@@ -508,7 +527,7 @@ public class PadController2 : MonoBehaviour
                 {
                     BlackLine();
                     summonRemTime = BLineTime;
-                    Debug.Log("カメラ移動完了");
+                    //Debug.Log("カメラ移動完了");
                 }
             }
 
@@ -680,6 +699,14 @@ public class PadController2 : MonoBehaviour
                 }
                 if (check == bfList.Length)
                 {
+                    if(oneLine)
+                    {
+                        Instantiate(oneLineText, SterPos [catchster2-1].transform.position+new Vector3 (0,50,0), Quaternion.identity, boardObj.transform);
+                    }
+
+
+
+
                     Success();
                     AudioManager.Instance.PlaySE(AudioManager.SeName.gauge);
                     gameController.ModeChange(3, 0);
@@ -724,7 +751,7 @@ public class PadController2 : MonoBehaviour
             }
             //BoardReset();
         }
-        Debug.Log(end);
+        //Debug.Log(end);
         return end;
 
     }
@@ -810,8 +837,8 @@ public class PadController2 : MonoBehaviour
                     num++;
                     if (gameController.technique[sumonNum].Code[i] == num)
                     {
-                        SterPos[a - 1].GetComponent<Image>().enabled = true;
-                        SterPos[b - 1].GetComponent<Image>().enabled = true;
+                        //SterPos[a - 1].GetComponent<Image>().enabled = true;
+                        //SterPos[b - 1].GetComponent<Image>().enabled = true;
 
                         GameObject obj = (GameObject)Instantiate(BLine, transform.position, Quaternion.identity, lineParent2.transform);
                         UILineRenderer data2 = obj.GetComponent<UILineRenderer>();
@@ -878,10 +905,14 @@ public class PadController2 : MonoBehaviour
 
     public void SummonCast()
     {
-        if (sumonMode == false && StageCobtroller.Shooting == false&&Pad)
+        if (sumonMode == false && StageCobtroller.Shooting == false&&Pad&&statusManager .summonGage >=100)
         {
             if(sumonbd == false)
             {
+                if(!TutorialFlg .SummonOpen)
+                {
+                    gameController .ModeChange(29, 1);
+                }
                 sumonbd = true;
                 newsummonanime.SetBool("Open", true);
                 newsummonanime.SetBool("Close", false );
