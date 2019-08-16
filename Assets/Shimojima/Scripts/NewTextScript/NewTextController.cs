@@ -162,12 +162,13 @@ public class NewTextController : MonoBehaviour
                 {
                     nameText.text = sData[nowIndex].characterName;
                 }
-                if (sData[nowIndex].imageNumber != 0 && sData[nowIndex].imageNumber != 9)
+
+                if (sData[nowIndex].imageNumber != 0 && sData[nowIndex].imageNumber != 99)
                 {
                     image.sprite = useSprite[sData[nowIndex].imageNumber - 1];
                     image.color = new Color(1,1,1,1);
                 }
-                else if (sData[nowIndex].imageNumber == 9)
+                else if (sData[nowIndex].imageNumber == 99)
                 {
                     image.sprite = null;
                     image.color = new Color(1, 1, 1, 0);
@@ -324,12 +325,12 @@ public class NewTextController : MonoBehaviour
     /// </summary>
     private void CImageSerach(string beforeText, int i)
     {
-        if (Regex.IsMatch(beforeText, "cImage."))
+        if (Regex.IsMatch(beforeText, "cImage.."))
         {
             int x = beforeText.IndexOf("cImage") + 6;
-            string s = beforeText.Substring(x, 1);
+            string s = beforeText.Substring(x, 2);
             sData[i].imageNumber = int.Parse(s);
-            string afterText = beforeText.Remove(x - 7, 8);
+            string afterText = beforeText.Remove(x - 7, 9);
             sData[i].originText = afterText;
         }
     }
@@ -368,6 +369,15 @@ public class NewTextController : MonoBehaviour
             Animator animator = autoButtonText.GetComponent<Animator>();
             animator.SetBool("On", false);
         }
+    }
+
+    /// <summary>
+    /// シナリオをスキップし終了する
+    /// </summary>
+    public void ScenarioSkip()
+    {
+        tState = TextState.end;
+        end = true;
     }
 
 }
