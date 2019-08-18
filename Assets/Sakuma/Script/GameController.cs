@@ -114,8 +114,12 @@ public class GameController : MonoBehaviour
     private float fastContTime = 0;
 
 
+    [SerializeField]
+    private GameObject startEf;
+    [SerializeField]
+    Text startText;
 
-
+    public float sterTime;
 
 
     static public string result = "NULL";
@@ -602,9 +606,9 @@ public class GameController : MonoBehaviour
     }
     private void Shooting()
     {
-        ShootingTime += Time.deltaTime;
+        sterTime  -= Time.deltaTime;
 
-        if (ShootingTime > 10)
+        if (sterTime <= 0)
         {
             ModeChange(19, 0);
             padController2.Pad = false ;
@@ -655,7 +659,7 @@ public class GameController : MonoBehaviour
             return;
         }
 
-
+        startEf.SetActive(false);
         animationManager.AnimationStart(0,0,"Zodiac");
         StageCobtroller.Score += 1;
         statusManager.EnemyTurnCheck();
@@ -915,8 +919,27 @@ public class GameController : MonoBehaviour
     {
         camera.GetComponent<CameraController2>().SetCamera(0, 2);
         
-        textPadObj.SetActive(true);
+        //textPadObj.SetActive(true);
         text.text = "STAGE "+StageCobtroller .stageNum .ToString ();
+        startEf.GetComponent<Animator>().SetBool("set", true);
+        string name="";
+
+        switch (StageCobtroller .stageNum)
+        {
+            case 1:
+                name = "魚座";
+                break;
+            case 2:
+                name = "蟹座";
+                break;
+            case 3:
+                name = "蛇使い座";
+                startText.GetComponent<Text>().fontSize =64;
+                break;
+
+        }
+
+        startText.GetComponent<Text>().text = name;
         ModeChange(12, 3f);
     }
 
