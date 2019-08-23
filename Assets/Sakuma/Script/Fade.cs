@@ -1,26 +1,27 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-public class OneLineText : MonoBehaviour
+using UnityEngine.UI;
+public class Fade : MonoBehaviour
 {
-    private float time = 0;
+    Image image;
+    float time = 0;
     // Start is called before the first frame update
     void Start()
     {
-        time = 0;
+        image = GetComponent<Image>();
     }
 
     // Update is called once per frame
     void Update()
     {
         time += Time.deltaTime;
-        if (time >= 2)
+
+
+        if (time > 1.75f)
         {
-            Destroy(gameObject.transform.parent.gameObject);
+            image.color = new Color(1, 1, 1, Mathf.Abs ( time-2f)*2);
         }
+
     }
-
-
-
 }

@@ -49,11 +49,6 @@ public class GameController : MonoBehaviour
     private GameObject textObj;
     private Text text;
 
-    //HP
-    //public int myHP;
-    //public int tekiHP;
-    //public int gage;
-
 
     //2のみ開始時処理使用
    public  int startPas=0;
@@ -112,7 +107,7 @@ public class GameController : MonoBehaviour
     private GameObject NewTextObj;
 
     private float fastContTime = 0;
-
+    public int combo = 0;
 
     [SerializeField]
     private GameObject startEf;
@@ -120,7 +115,8 @@ public class GameController : MonoBehaviour
     Text startText;
 
     public float sterTime;
-
+    [SerializeField]
+    GameObject summonobj;
 
     static public string result = "NULL";
     [Space(10)]
@@ -257,7 +253,9 @@ public class GameController : MonoBehaviour
             case 29:
                 SummonOpen();
                 break;
-
+            case 30:
+                SummonMissTuto();
+                break;
 
 
 
@@ -281,6 +279,33 @@ public class GameController : MonoBehaviour
     }
 
 
+
+    private void SummonMissTuto()
+    {
+        if (startPas == 0 && !StageCobtroller.Shooting)
+        {
+            textPr.SetActive(true);
+            NewTextObj.GetComponent<NewTextData>().TextDataRead("Tutorial/SummonMiss");
+            TutorialFlg.SummonOpen = true;
+            startPas = 1;
+        }
+
+
+        animationManager.Stop();
+
+
+        padController2.Pad = false;
+        textPadObj.SetActive(false);
+        if (NewTextController.end || Input.GetKeyDown(KeyCode.Escape))
+        {
+            textPr.SetActive(false);
+            animationManager.ReState();
+            summonobj.GetComponent<SumonBoard>().Rep();
+            ModeChange(2, 0);
+            startPas = 1;
+            TextController.end = false;
+        }
+    }
 
 
 
@@ -676,6 +701,10 @@ public class GameController : MonoBehaviour
 
     private void Sumon()
     {
+        if(!TutorialFlg.FastSummonMiss)
+        {
+            TutorialFlg.FastSummonMiss = true;
+        }
         enj.GetComponent<Animator>().SetBool("Open", true);
         string textdata=statusManager.SummonCheck(weapon);
         text.text = textdata;
@@ -687,11 +716,18 @@ public class GameController : MonoBehaviour
 
     private void SumonMiss()
     {
-        enj.GetComponent<Animator>().SetBool("Open", true);
-        text.text = "召喚に失敗しました";
-        padController2.Pad = false;
-        textPadObj.SetActive(true);
-        ModeChange(9, 2.5f);
+        if (TutorialFlg.FastSummonMiss)
+        {
+            enj.GetComponent<Animator>().SetBool("Open", true);
+            text.text = "召喚に失敗しました";
+            padController2.Pad = false;
+            textPadObj.SetActive(true);
+            ModeChange(9, 2.5f);
+        }
+        else
+        {
+            ModeChange(30, 0);
+        }
     }
 
 
@@ -753,6 +789,7 @@ public class GameController : MonoBehaviour
         {
             if (dcont == 0)
             {
+                combo = 0;
                 camera.GetComponent<CameraController2>().SetCamera(0, 0.75f);
                 dcont++;
                 cameradTime += Time.deltaTime;
@@ -797,11 +834,17 @@ public class GameController : MonoBehaviour
 
     private void MyAtk()
     {
+        
         padController2.Pad = false;
         if (cameradTime == 0 || cameradTime > 1)
         {
             if (dcont == 0)
             {
+                if(!TutorialFlg.FastGageStop)
+                {
+                    TutorialFlg.FastGageStop = true;
+                }
+                combo++;
                 animeC = true;
                 EffectControl.Instance.PlayEffect(EffectControl.Effect.Attack, AttackEfPos );
                 camera.GetComponent<CameraController2>().SetCamera(3, 0.75f);
@@ -829,7 +872,7 @@ public class GameController : MonoBehaviour
                 //text.text = "攻撃アニメーション予定地";
                 if (padController2.oneLine)
                 {
-                    statusManager.enemyHP -= (int)(statusManager.playerAtk*1.5f);
+                    statusManager.enemyHP -= (int)((statusManager.playerAtk+combo -1)*1.5f);
                 }
                 else
                 {

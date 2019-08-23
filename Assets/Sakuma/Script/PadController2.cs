@@ -132,7 +132,8 @@ public class PadController2 : MonoBehaviour
 
     [SerializeField]
     private GameObject oneLineText;
-
+    [SerializeField]
+    private GameObject textPos;
     // Start is called before the first frame update
     void Start()
     {
@@ -699,9 +700,21 @@ public class PadController2 : MonoBehaviour
                 }
                 if (check == bfList.Length)
                 {
-                    if(oneLine)
+                    if(oneLine||gameController .combo >0)
                     {
-                        Instantiate(oneLineText, SterPos [catchster2-1].transform.position+new Vector3 (0,50,0), Quaternion.identity, boardObj.transform);
+                        string popText = "";
+                        if(gameController.combo > 0)
+                        {
+                            popText += (gameController.combo+1).ToString() + "回連続成功ボーナス\n";
+                        }
+                        if (oneLine)
+                        {
+                            popText += "一筆書きボーナス\n";
+                        }
+
+                        GameObject bf= Instantiate(oneLineText, textPos .transform.position, Quaternion.identity, boardObj.transform);
+                        bf.transform.GetChild (1).GetComponent<Text>().text = popText;
+                        
                     }
 
 

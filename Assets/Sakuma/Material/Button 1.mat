@@ -70,7 +70,7 @@ Material:
     - _OcclusionStrength: 1
     - _P: 14
     - _Parallax: 0.02
-    - _Radius: 0
+    - _Radius: 0.06
     - _S: 5
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1

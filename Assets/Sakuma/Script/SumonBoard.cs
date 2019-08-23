@@ -65,7 +65,21 @@ public class SumonBoard : MonoBehaviour
     }
 
 
+    public void Rep()
+    {
+        nameobj.GetComponent<Animator>().SetBool("Name", false);
+        game.GetComponent<StatusManager>().summonGage = 0;
+        Pad.GetComponent<PadController2>().sumonMode = true;
+        Pad.GetComponent<PadController2>().sumonbd = false;
+        Pad.GetComponent<PadController2>().NewSummonCl();
+        sumonbd.SetActive(false);
+        Pad.GetComponent<PadController2>().sumonNum = 0;
+        Pad.GetComponent<PadController2>().summonDelay = 0;
+        Pad.GetComponent<PadController2>().summonRem = true;
+        Pad.GetComponent<PadController2>().BoardReset();
 
+
+    }
 
 
 
