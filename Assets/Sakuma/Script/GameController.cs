@@ -48,10 +48,14 @@ public class GameController : MonoBehaviour
     [SerializeField]
     private GameObject textObj;
     private Text text;
+    [SerializeField]
+    private GameObject nameObj;
+    private Text nametext;
 
+    string Ename;
 
     //2のみ開始時処理使用
-   public  int startPas=0;
+    public  int startPas=0;
 
 
     //敵星座板の奴
@@ -141,6 +145,7 @@ public class GameController : MonoBehaviour
         gaged = gageobj.GetComponent<Image>();
         animationManager = animeCon.GetComponent<AnimationManager>();
         text = textObj.GetComponent<Text>();
+        nametext = nameObj.GetComponent<Text>();
         padController2 = padControllerObj.GetComponent<PadController2>();
         enj = EnjObj.GetComponent<Enj>();
         statusManager = StatusManagerObj.GetComponent<StatusManager>();
@@ -151,6 +156,23 @@ public class GameController : MonoBehaviour
         summonTutorialTime = 0;
 
         AudioManager.Instance.PlayBGM(AudioManager.BgmName.ThemeBGM);
+
+
+        switch (StageCobtroller.stageNum)
+        {
+            case 1:
+                Ename = "魚座";
+                break;
+            case 2:
+                Ename = "蟹座";
+                break;
+            case 3:
+                Ename = "蛇使い座";
+                startText.GetComponent<Text>().fontSize = 64;
+                break;
+
+        }
+
     }
 
 
@@ -158,6 +180,7 @@ public class GameController : MonoBehaviour
     void Update()
     {
         //Debug.Log(gameMode);
+        //Debug.Log(Random.Range(StageCobtroller.stageNum, statusManager.EnemyActionrange + StageCobtroller.stageNum));
         gaged.fillAmount = (float)statusManager .summonGage  / 100f;
         switch (gameMode)
         {
@@ -450,8 +473,8 @@ public class GameController : MonoBehaviour
         if (NewTextController.end || Input.GetKeyDown(KeyCode.Escape))
         {
             result = "勝利";
-            text.text = "勝利";
-            textPadObj.SetActive(true);
+            //text.text = "勝利";
+            //textPadObj.SetActive(true);
 
 
             textPr.SetActive(false);
@@ -659,8 +682,10 @@ public class GameController : MonoBehaviour
         if (enemyTurn <=0)
         {
             AudioManager.Instance.PlaySE(AudioManager.SeName.enemy_Deathblow);
-            text.text = "2ターンの間制限時間減少";
-            statusManager.EnemyAction(Random.Range(1, statusManager .EnemyActionrange +1));
+            
+            nametext.text = Ename+"の妨害能力";
+            
+            text.text = statusManager.EnemyAction(Random.Range(StageCobtroller.stageNum, statusManager .EnemyActionrange+StageCobtroller .stageNum ));
             textPadObj.SetActive(true);
             ModeChange(12, 2);
             enemyTurn = Random.Range(2, 5);
@@ -689,7 +714,14 @@ public class GameController : MonoBehaviour
         StageCobtroller.Score += 1;
         statusManager.EnemyTurnCheck();
         statusManager.TurnCheck();
-        ModeChange(2, 1f);
+        if (statusManager.enemyHP <= 0)
+        {
+            ModeChange(6, 1f);
+        }
+        else
+        {
+            ModeChange(2, 1f);
+        }
         camera.GetComponent<CameraController2>().SetCamera(2, 1);
     }
 
@@ -708,10 +740,15 @@ public class GameController : MonoBehaviour
         enj.GetComponent<Animator>().SetBool("Open", true);
         string textdata=statusManager.SummonCheck(weapon);
         text.text = textdata;
+        nametext.text = " "+technique[weapon].Name + "の力";
         padController2.Pad = false;
         textPadObj.SetActive(true);
         animationManager.AnimationStart(0, 1, "transform");
-        ModeChange(9, 2.5f);
+
+
+            ModeChange(9, 2.5f);
+        
+        
     }
 
     private void SumonMiss()
@@ -719,7 +756,8 @@ public class GameController : MonoBehaviour
         if (TutorialFlg.FastSummonMiss)
         {
             enj.GetComponent<Animator>().SetBool("Open", true);
-            text.text = "召喚に失敗しました";
+            text.text = " 能力を取得できませんでした";
+            nametext.text = "召喚失敗";
             padController2.Pad = false;
             textPadObj.SetActive(true);
             ModeChange(9, 2.5f);
@@ -745,7 +783,7 @@ public class GameController : MonoBehaviour
         result = "敗北";
         text.text = "敗北";
         padController2.Pad = false;
-        textPadObj.SetActive(true);
+        //textPadObj.SetActive(true);
         StageCobtroller.Score = 0;
         StageCobtroller.stageNum = 1;
         ModeChange(10, 1);
@@ -963,7 +1001,7 @@ public class GameController : MonoBehaviour
         camera.GetComponent<CameraController2>().SetCamera(0, 2);
         
         //textPadObj.SetActive(true);
-        text.text = "STAGE "+StageCobtroller .stageNum .ToString ();
+        //text.text = "STAGE "+StageCobtroller .stageNum .ToString ();
         startEf.GetComponent<Animator>().SetBool("set", true);
         string name="";
 
