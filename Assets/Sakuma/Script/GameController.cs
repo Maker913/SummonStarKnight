@@ -884,7 +884,8 @@ public class GameController : MonoBehaviour
                 }
                 combo++;
                 animeC = true;
-                EffectControl.Instance.PlayEffect(EffectControl.Effect.Attack, AttackEfPos );
+                // エフェクト修正箇所
+                //EffectControl.Instance.PlayEffect(EffectControl.Effect.Attack, AttackEfPos );
                 camera.GetComponent<CameraController2>().SetCamera(3, 0.75f);
                 dcont++;
                 cameradTime += Time.deltaTime;
