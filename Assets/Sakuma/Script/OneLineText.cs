@@ -17,7 +17,10 @@ public class OneLineText : MonoBehaviour
         time += Time.deltaTime;
         if (time >= 2)
         {
-            Destroy(gameObject);
+            Destroy(gameObject.transform.parent.gameObject);
         }
     }
+
+
+
 }

@@ -9,7 +9,8 @@ public class TutorialFlg : MonoBehaviour
     static public bool FastAtk = false;
     static public bool GageMax = false;
     static public bool SummonOpen = false;
-
+    static public bool FastGageStop = false;
+    static public bool FastSummonMiss = false;
 
     static public void TutorialReSet()
     {
@@ -18,5 +19,7 @@ public class TutorialFlg : MonoBehaviour
         FastAtk = false;
         GageMax = false;
         SummonOpen = false;
+        FastGageStop = false;
+        FastSummonMiss = false;
     }
 }
