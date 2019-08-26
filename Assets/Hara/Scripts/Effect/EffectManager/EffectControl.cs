@@ -54,18 +54,34 @@ public class EffectControl : MonoBehaviour
 
     /// <summary>
     /// エフェクトを再生する
-    /// <para>PlayEffect(EffectControl.Effect.再生するエフェクト, エフェクトを表示する座標)</para>
+    /// <para>PlayEffect(EffectControl.Effect.再生するエフェクト, エフェクトを表示する座標, エフェクトの向き, 再生時間)</para>
     /// </summary>
     /// <param name="effectName">再生するエフェクト名</param>
     /// <param name="effectPos">エフェクトを再生する座標</param>
-    public void PlayEffect(Effect effectName, Vector3 effectPos)
+    /// <param name="effectRot">エフェクトを再生する向き</param>
+    /// <param name="duration">エフェクトの再生時間</param>
+    public void PlayEffect(Effect effectName, Vector3 effectPos, Vector3 effectRot, float duration = 0)
     {
-        if (particles[(int)effectName].isPlaying)
+        int effectNumber = (int)effectName;
+        StartCoroutine(PlayEffectCotoutine(effectNumber, effectPos, effectRot, duration));
+    }
+
+    private IEnumerator PlayEffectCotoutine(int effectNumber, Vector3 effectPos, Vector3 effectRot, float duration)
+    {
+        if (particles[effectNumber].isPlaying)
         {
-            particles[(int)effectName].Stop();
+            particles[effectNumber].Stop();
         }
-        particles[(int)effectName].transform.position = effectPos;
-        particles[(int)effectName].Play();
+        particles[effectNumber].transform.position = effectPos;
+        particles[effectNumber].transform.rotation = Quaternion.Euler(effectRot);
+        particles[effectNumber].Play();
+
+        // durationに0より多い値が宣言された場合、duration秒後にエフェクトの再生を止める
+        if(duration > 0)
+        {
+            yield return new WaitForSeconds(duration);
+            particles[effectNumber].Stop();
+        }
     }
 
     /// <summary>
