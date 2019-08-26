@@ -6,7 +6,7 @@ public class StageCobtroller : MonoBehaviour
 {
 
 
-    static public int stageNum = 3;
+    static public int stageNum = 2;
 
     static public bool Shooting = false;//*/true ;
 
