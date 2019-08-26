@@ -48,15 +48,14 @@ public class GameController : MonoBehaviour
     [SerializeField]
     private GameObject textObj;
     private Text text;
+    [SerializeField]
+    private GameObject nameObj;
+    private Text nametext;
 
-    //HP
-    //public int myHP;
-    //public int tekiHP;
-    //public int gage;
-
+    string Ename;
 
     //2のみ開始時処理使用
-   public  int startPas;
+    public  int startPas=0;
 
 
     //敵星座板の奴
@@ -106,6 +105,22 @@ public class GameController : MonoBehaviour
 
     private bool animeC=false ;
 
+    private float summonTutorialTime = 0;
+
+    [SerializeField]
+    private GameObject NewTextObj;
+
+    private float fastContTime = 0;
+    public int combo = 0;
+
+    [SerializeField]
+    private GameObject startEf;
+    [SerializeField]
+    Text startText;
+
+    public float sterTime;
+    [SerializeField]
+    GameObject summonobj;
 
     static public string result = "NULL";
     [Space(10)]
@@ -121,20 +136,43 @@ public class GameController : MonoBehaviour
 
     void Start()
     {
+        if(StageCobtroller .stageNum ==1&&StageCobtroller .Shooting ==false)
+        {
+            TutorialFlg.TutorialReSet();
+        }
+
         enemyTurn = Random.Range(2, 5);
         gaged = gageobj.GetComponent<Image>();
         animationManager = animeCon.GetComponent<AnimationManager>();
         text = textObj.GetComponent<Text>();
+        nametext = nameObj.GetComponent<Text>();
         padController2 = padControllerObj.GetComponent<PadController2>();
         enj = EnjObj.GetComponent<Enj>();
         statusManager = StatusManagerObj.GetComponent<StatusManager>();
         shooting = shootingObj.GetComponent<ShootingEnj>();
+        startPas = 0;
 
-
-            gameMode = 22;
-
+        gameMode = 22;
+        summonTutorialTime = 0;
 
         AudioManager.Instance.PlayBGM(AudioManager.BgmName.ThemeBGM);
+
+
+        switch (StageCobtroller.stageNum)
+        {
+            case 1:
+                Ename = "魚座";
+                break;
+            case 2:
+                Ename = "蟹座";
+                break;
+            case 3:
+                Ename = "蛇使い座";
+                startText.GetComponent<Text>().fontSize = 64;
+                break;
+
+        }
+
     }
 
 
@@ -142,6 +180,7 @@ public class GameController : MonoBehaviour
     void Update()
     {
         //Debug.Log(gameMode);
+        //Debug.Log(Random.Range(StageCobtroller.stageNum, statusManager.EnemyActionrange + StageCobtroller.stageNum));
         gaged.fillAmount = (float)statusManager .summonGage  / 100f;
         switch (gameMode)
         {
@@ -218,6 +257,32 @@ public class GameController : MonoBehaviour
             case 23:
                 SumonMiss();
                 break;
+            case 24:
+                summonTutorial();
+                break;
+            case 25:
+                EndScenario();
+                break;
+            case 26:
+                FastContactTutorial();
+                break;
+
+            case 27:
+                FastAtk();
+                break;
+            case 28:
+                GageMax();
+                break;
+            case 29:
+                SummonOpen();
+                break;
+            case 30:
+                SummonMissTuto();
+                break;
+
+
+
+
 
 
 
@@ -236,8 +301,256 @@ public class GameController : MonoBehaviour
         AttackEfPos = apos;
     }
 
+
+
+    private void SummonMissTuto()
+    {
+        if (startPas == 0 && !StageCobtroller.Shooting)
+        {
+            textPr.SetActive(true);
+            NewTextObj.GetComponent<NewTextData>().TextDataRead("Tutorial/SummonMiss");
+            TutorialFlg.SummonOpen = true;
+            startPas = 1;
+        }
+
+
+        animationManager.Stop();
+
+
+        padController2.Pad = false;
+        textPadObj.SetActive(false);
+        if (NewTextController.end || Input.GetKeyDown(KeyCode.Escape))
+        {
+            textPr.SetActive(false);
+            animationManager.ReState();
+            summonobj.GetComponent<SumonBoard>().Rep();
+            ModeChange(2, 0);
+            startPas = 1;
+            TextController.end = false;
+        }
+    }
+
+
+
+    private void SummonOpen()
+    {
+        if (startPas == 0 && !StageCobtroller.Shooting)
+        {
+            textPr.SetActive(true);
+            NewTextObj.GetComponent<NewTextData>().TextDataRead("Tutorial/SyoukanMENUwo dasita ato");
+            TutorialFlg.SummonOpen  = true;
+            startPas = 1;
+        }
+
+
+        animationManager.Stop();
+
+
+        padController2.Pad = false;
+        textPadObj.SetActive(false);
+        if (NewTextController.end || Input.GetKeyDown(KeyCode.Escape))
+        {
+            textPr.SetActive(false);
+            animationManager.ReState();
+
+            ModeChange(2, 0);
+            startPas = 1;
+            TextController.end = false;
+        }
+    }
+
+    private void GageMax()
+    {
+
+
+        if (startPas == 0 && !StageCobtroller.Shooting)
+        {
+            textPr.SetActive(true);
+            NewTextObj.GetComponent<NewTextData>().TextDataRead("Tutorial/SyoukanGAGEga tamattatoki");
+            TutorialFlg.GageMax  = true;
+
+            startPas = 1;
+        }
+
+
+        animationManager.Stop();
+
+
+        padController2.Pad = false;
+        textPadObj.SetActive(false);
+        if (NewTextController.end || Input.GetKeyDown(KeyCode.Escape))
+        {
+            textPr.SetActive(false);
+            animationManager.ReState();
+
+            ModeChange(12, 0);
+            TextController.end = false;
+        }
+
+
+    }
+
+
+    private void FastAtk()
+    {
+
+
+        if (startPas == 0 && !StageCobtroller.Shooting)
+        {
+            textPr.SetActive(true);
+            NewTextObj.GetComponent<NewTextData>().TextDataRead("Tutorial/Seizabanwo nazotta ato");
+            TutorialFlg.FastAtk = true;
+
+            startPas = 1;
+        }
+
+
+        animationManager.Stop();
+
+
+        padController2.Pad = false;
+        textPadObj.SetActive(false);
+        if (NewTextController.end || Input.GetKeyDown(KeyCode.Escape))
+        {
+            textPr.SetActive(false);
+            animationManager.ReState();
+
+            ModeChange(11, 0); 
+            TextController.end = false;
+        }
+
+
+    }
+
+
+    private void FastContactTutorial()
+    {
+
+
+        if (startPas == 0 && !StageCobtroller.Shooting)
+        {
+            textPr.SetActive(true);
+            NewTextObj.GetComponent<NewTextData>().TextDataRead("Tutorial/Seizabanwo nazorumae");
+            TutorialFlg.FastContact = true;
+            startPas = 1;
+        }
+
+
+        animationManager.Stop();
+
+
+        padController2.Pad = false;
+        textPadObj.SetActive(false);
+        if (NewTextController.end || Input.GetKeyDown(KeyCode.Escape))
+        {
+            textPr.SetActive(false);
+            animationManager.ReState();
+
+            ModeChange(2, 0);
+            startPas = 1;
+            TextController.end = false;
+        }
+
+
+    }
+
+
+    private void EndScenario()
+    {
+        if (startPas == 0&&!StageCobtroller .Shooting )
+        {
+            textPr.SetActive(true);
+            NewTextObj.GetComponent<NewTextData>().TextDataRead("MainStage/Stage"+StageCobtroller .stageNum .ToString ()+"-2");
+            startPas = 1;
+        }
+
+
+        animationManager.Stop();
+
+
+        padController2.Pad = false;
+        textPadObj.SetActive(false);
+        if (NewTextController.end || Input.GetKeyDown(KeyCode.Escape))
+        {
+            result = "勝利";
+            //text.text = "勝利";
+            //textPadObj.SetActive(true);
+
+
+            textPr.SetActive(false);
+            animationManager.ReState();
+
+            ModeChange(20, 1);
+            startPas = 1;
+            TextController.end = false;
+        }
+    }
+
+
+    private void summonTutorial()
+    {
+        if (startPas == 0)
+        {
+            textPr.SetActive(true);
+
+            NewTextObj.GetComponent<NewTextData>().TextDataRead("Tutorial/SummonB");
+            TutorialFlg.SummonBefore = true;
+            startPas = 1;
+        }
+
+
+        animationManager.Stop();
+
+
+        padController2.Pad = false;
+        textPadObj.SetActive(false);
+        if (NewTextController.end || Input.GetKeyDown(KeyCode.Escape))
+        {
+            textPr.SetActive(false);
+            animationManager.ReState();
+
+            ModeChange(2, 0);
+            startPas = 1;
+            TextController.end = false;
+        }
+
+
+
+    }
+
+
+
+
+
     private void Scenario()
     {
+
+        if (startPas == 0)
+        {
+            textPr.SetActive(true);
+
+            string folderName = "";
+            string fileName = "";
+
+            if (!StageCobtroller .Shooting)
+            {
+                folderName = "MainStage";
+                fileName = "Stage"+ StageCobtroller .stageNum.ToString ()+"-1";
+            }
+            else
+            {
+                folderName = "Shooting";
+                fileName = "Shooting" + StageCobtroller.stageNum.ToString();
+            }
+            
+            NewTextObj.GetComponent<NewTextData>().TextDataRead(folderName+"/"+fileName );
+
+            //NewTextObj.GetComponent<NewTextData>().TextDataRead("MainStage/Scenario1");
+            startPas = 1;
+        }
+
+
+
         animationManager.Stop();
 
 
@@ -245,6 +558,7 @@ public class GameController : MonoBehaviour
         textPadObj.SetActive(false );
         if (NewTextController .end||Input .GetKeyDown(KeyCode.Escape))
         {
+            textPr.SetActive(false);
             animationManager.ReState ();
             if (StageCobtroller.Shooting == false)
             {
@@ -340,9 +654,9 @@ public class GameController : MonoBehaviour
     }
     private void Shooting()
     {
-        ShootingTime += Time.deltaTime;
+        sterTime  -= Time.deltaTime;
 
-        if (ShootingTime > 10)
+        if (sterTime <= 0)
         {
             ModeChange(19, 0);
             padController2.Pad = false ;
@@ -368,8 +682,10 @@ public class GameController : MonoBehaviour
         if (enemyTurn <=0)
         {
             AudioManager.Instance.PlaySE(AudioManager.SeName.enemy_Deathblow);
-            text.text = "2ターンの間制限時間減少";
-            statusManager.EnemyAction(Random.Range(1, statusManager .EnemyActionrange +1));
+            
+            nametext.text = Ename+"の妨害能力";
+            
+            text.text = statusManager.EnemyAction(Random.Range(StageCobtroller.stageNum, statusManager .EnemyActionrange+StageCobtroller .stageNum ));
             textPadObj.SetActive(true);
             ModeChange(12, 2);
             enemyTurn = Random.Range(2, 5);
@@ -385,11 +701,27 @@ public class GameController : MonoBehaviour
 
     private void Battlesoon()
     {
+
+        if(!TutorialFlg.GageMax&&statusManager.summonGage >=100)
+        {
+            textPadObj.SetActive(false);
+            ModeChange(28, 0);
+            return;
+        }
+
+        startEf.SetActive(false);
         animationManager.AnimationStart(0,0,"Zodiac");
         StageCobtroller.Score += 1;
         statusManager.EnemyTurnCheck();
         statusManager.TurnCheck();
-        ModeChange(2, 1f);
+        if (statusManager.enemyHP <= 0)
+        {
+            ModeChange(6, 1f);
+        }
+        else
+        {
+            ModeChange(2, 1f);
+        }
         camera.GetComponent<CameraController2>().SetCamera(2, 1);
     }
 
@@ -401,22 +733,39 @@ public class GameController : MonoBehaviour
 
     private void Sumon()
     {
+        if(!TutorialFlg.FastSummonMiss)
+        {
+            TutorialFlg.FastSummonMiss = true;
+        }
         enj.GetComponent<Animator>().SetBool("Open", true);
         string textdata=statusManager.SummonCheck(weapon);
         text.text = textdata;
+        nametext.text = " "+technique[weapon].Name + "の力";
         padController2.Pad = false;
         textPadObj.SetActive(true);
         animationManager.AnimationStart(0, 1, "transform");
-        ModeChange(9, 2.5f);
+
+
+            ModeChange(9, 2.5f);
+        
+        
     }
 
     private void SumonMiss()
     {
-        enj.GetComponent<Animator>().SetBool("Open", true);
-        text.text = "召喚に失敗しました";
-        padController2.Pad = false;
-        textPadObj.SetActive(true);
-        ModeChange(9, 2.5f);
+        if (TutorialFlg.FastSummonMiss)
+        {
+            enj.GetComponent<Animator>().SetBool("Open", true);
+            text.text = " 能力を取得できませんでした";
+            nametext.text = "召喚失敗";
+            padController2.Pad = false;
+            textPadObj.SetActive(true);
+            ModeChange(9, 2.5f);
+        }
+        else
+        {
+            ModeChange(30, 0);
+        }
     }
 
 
@@ -434,7 +783,7 @@ public class GameController : MonoBehaviour
         result = "敗北";
         text.text = "敗北";
         padController2.Pad = false;
-        textPadObj.SetActive(true);
+        //textPadObj.SetActive(true);
         StageCobtroller.Score = 0;
         StageCobtroller.stageNum = 1;
         ModeChange(10, 1);
@@ -442,17 +791,10 @@ public class GameController : MonoBehaviour
 
     private void Win()
     {
-        result = "勝利";
-        text.text = "勝利";
-        padController2.Pad = false;
-        textPadObj.SetActive(true);
-
-
-
         
         //SceneControl.Instance.LoadScene(SceneControl.SceneName.Stage1, true);
 
-        ModeChange(20, 1);
+        ModeChange(25, 0);
     }
 
 
@@ -485,6 +827,7 @@ public class GameController : MonoBehaviour
         {
             if (dcont == 0)
             {
+                combo = 0;
                 camera.GetComponent<CameraController2>().SetCamera(0, 0.75f);
                 dcont++;
                 cameradTime += Time.deltaTime;
@@ -529,11 +872,17 @@ public class GameController : MonoBehaviour
 
     private void MyAtk()
     {
+        
         padController2.Pad = false;
         if (cameradTime == 0 || cameradTime > 1)
         {
             if (dcont == 0)
             {
+                if(!TutorialFlg.FastGageStop)
+                {
+                    TutorialFlg.FastGageStop = true;
+                }
+                combo++;
                 animeC = true;
                 EffectControl.Instance.PlayEffect(EffectControl.Effect.Attack, AttackEfPos );
                 camera.GetComponent<CameraController2>().SetCamera(3, 0.75f);
@@ -556,17 +905,31 @@ public class GameController : MonoBehaviour
                 
                 animationManager.AnimationStart(0, 0, "Damage");
                 AudioManager.Instance.PlaySE(AudioManager.SeName.player_attack);
-                
+
                 //textPadObj.SetActive(true);
                 //text.text = "攻撃アニメーション予定地";
-                statusManager.enemyHP  -= statusManager.playerAtk;
+                if (padController2.oneLine)
+                {
+                    statusManager.enemyHP -= (int)((statusManager.playerAtk+combo -1)*1.5f);
+                }
+                else
+                {
+                    statusManager.enemyHP -= statusManager.playerAtk;
+                }
                 if (statusManager.enemyHP <= 0)
                 {
                     ModeChange(6, 1.5f);
                 }
                 else
                 {
-                    ModeChange(11, 1.5f);
+                    if (!TutorialFlg.FastAtk)
+                    {
+                        ModeChange(27, 1.5f);
+                    }
+                    else
+                    {
+                        ModeChange(11, 1.5f);
+                    }
                 }
             }
 
@@ -587,24 +950,77 @@ public class GameController : MonoBehaviour
     {
         if(startPas == 0)
         {
+
+            padController2.oneLine = true;
             enj.GetComponent<Animator>().SetBool("Start", true);
             enj.GetComponent<Animator>().SetBool("Open", false);
             enj.NextGame();
             startPas = 1;
+
+
+
             
         }
+
         text.text = "";
         padController2.Pad = true;
         textPadObj.SetActive(false);
+
+
+
+        if (padController2 .sumonMode)
+        {
+            summonTutorialTime += Time.deltaTime;
+
+            if(summonTutorialTime>1&&!TutorialFlg.SummonBefore)
+            {
+                ModeChange(24,0);
+            } 
+
+        }
+
+        if (!TutorialFlg.FastContact)
+        {
+            padController2.Pad = false;
+            fastContTime += Time.deltaTime;
+            if (fastContTime > 0.5f)
+            {
+                ModeChange(26, 0);
+                return;
+            }
+        }
+
+
+
+
         
     }
 
     private void Stert()
     {
         camera.GetComponent<CameraController2>().SetCamera(0, 2);
-        textPr.SetActive(false);
-        textPadObj.SetActive(true);
-        text.text = "STAGE "+StageCobtroller .stageNum .ToString ();
+        
+        //textPadObj.SetActive(true);
+        //text.text = "STAGE "+StageCobtroller .stageNum .ToString ();
+        startEf.GetComponent<Animator>().SetBool("set", true);
+        string name="";
+
+        switch (StageCobtroller .stageNum)
+        {
+            case 1:
+                name = "魚座";
+                break;
+            case 2:
+                name = "蟹座";
+                break;
+            case 3:
+                name = "蛇使い座";
+                startText.GetComponent<Text>().fontSize =64;
+                break;
+
+        }
+
+        startText.GetComponent<Text>().text = name;
         ModeChange(12, 3f);
     }
 

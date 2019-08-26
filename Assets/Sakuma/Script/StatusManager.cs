@@ -21,12 +21,13 @@ public class StatusManager : MonoBehaviour
         public float gageSpeedDef;
         public int enemyAtkDef;
         public int enemyHPDef;
+        public int turn;
     }
     [SerializeField]
     public  Ability[] abilities = new Ability[3];
 
 
-    public int EnemyActionrange=1;
+    public int EnemyActionrange=4;
 
 
 
@@ -137,13 +138,20 @@ public class StatusManager : MonoBehaviour
         if (reoSlip > 0)
         {
             reoSlip--;
-            enemyHP -= 5;
+            if (enemyHP > 10)
+            {
+                enemyHP -= 10;
+            }
+
         }
         //サソリ
         if (scorSlip > 0)
         {
             scorSlip--;
-            enemyHP -= 5;
+            if (enemyHP > 10)
+            {
+                enemyHP -= 10;
+            }
         }
         //魚
         if (pisBarrier > 0)
@@ -167,11 +175,35 @@ public class StatusManager : MonoBehaviour
             aquariTurn--;
         }
 
+
+
+
+
         //敵
-        if (data > 0)
+        if (data[0] > 0)
         {
             gageSpeed -= 2;
-            data--;
+            data[0]--;
+        }
+        if (data[1] > 0)
+        {
+            enemyAtk += 10;
+            data[1]--;
+        }
+        if (data[2] > 0)
+        {
+            gageSpeed -= 3;
+            data[2]--;
+        }
+        if (data[4] > 0)
+        {
+            gageSpeed -= 1;
+            data[4]--;
+        }
+        if (data[5] > 0)
+        {
+            enemyAtk += 5;
+            data[5]--;
         }
 
     }
@@ -204,22 +236,43 @@ public class StatusManager : MonoBehaviour
 
 
 
-    private int data=0;
-
-    public void EnemyAction(int num)
+    private int[] data=new int[10];
+    public string EnemyAction(int num)
     {
+        string text = "";
         switch (num)
         {
             case 1:
                 //操作時間減少　魚
-                data = 2;
+                data[0] = 2;
+                text = " 2ターンの間制限時間減少";
+                break;
+            case 2:
+                data[1] = 1;
+                text = " 1ターンの間攻撃力上昇";
+                break;
+            case 3:
+                data[2] = 1;
+                text = " 1ターンの間制限時間大幅減少";
+                break;
+            case 4:
+                playerAtk -= 2;
+                text = " 受けるダメージが少し減少";
+                break;
+            case 5:
+                data[4] = 5;
+                text = " 5ターンの間制限時間が少し減少";
+                break;
+            case 6:
+                data[5] = 3;
+                text = " 3ターンの間攻撃力が少し上昇";
                 break;
             default:
                 break;
 
         }
-        
 
+        return text;
 
     }
 

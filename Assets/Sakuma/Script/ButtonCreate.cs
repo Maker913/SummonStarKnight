@@ -36,7 +36,7 @@ public class ButtonCreate : MonoBehaviour
             float brock = ButtonParent.GetComponent<RectTransform>().sizeDelta.x+400;
             
             float brockSize =brock/( data + 1);
-            Debug.Log(brockSize);
+            //Debug.Log(brockSize);
             GameObject Obj= Instantiate(
                 ButtonObj,
                 new Vector3 (

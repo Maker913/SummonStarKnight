@@ -16,11 +16,8 @@ public class AnimationManager : MonoBehaviour
         if (!StageCobtroller.Shooting)
         {
             player.SetFloat("Spead", 0);
-            if (StageCobtroller.stageNum != 3)
-            {
                 model.SetFloat("Spead", 0);
-
-            }
+                player.SetFloat("Spead", 0);
         }
     }
     public void ReState()
@@ -28,11 +25,10 @@ public class AnimationManager : MonoBehaviour
         if (!StageCobtroller.Shooting)
         {
             player.SetFloat("Spead", 1);
-            if (StageCobtroller.stageNum != 3)
-            {
+
                 model.SetFloat("Spead", 1);
 
-            }
+            
         }
     }
 
@@ -41,11 +37,10 @@ public class AnimationManager : MonoBehaviour
         if (!StageCobtroller.Shooting)
         {
             player = gameObject.GetComponent<Animator>();
-            if (StageCobtroller.stageNum != 3)
-            {
+
                 model = gameObject2.GetComponent<Animator>();
 
-            }
+
         }
     }
 
@@ -66,10 +61,9 @@ public class AnimationManager : MonoBehaviour
         }
         else
         {
-            if (StageCobtroller.stageNum != 3)
-            {
+
                 model.SetTrigger(aTrigger);
-            }
+
         }
     }
 }

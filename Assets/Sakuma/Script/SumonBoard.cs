@@ -26,7 +26,8 @@ public class SumonBoard : MonoBehaviour
     private GameObject camera;
     [SerializeField]
     private GameObject nameobj;
-
+    [SerializeField]
+    private GameObject gameCon;
 
     public void Close()
     {
@@ -40,7 +41,7 @@ public class SumonBoard : MonoBehaviour
     {
         int num = Button.GetComponent<ButtonNum>().Num;
 
-        if (game.GetComponent<StatusManager>().summonGage  >= 100)
+        if (game.GetComponent<StatusManager>().summonGage  >= 100&&gameCon.GetComponent<GameController >().gameMode ==2 )
         {
             nameobj.GetComponent<Animator>().SetBool("Name", false);
             game.GetComponent<StatusManager>().summonGage = 0;
@@ -49,10 +50,9 @@ public class SumonBoard : MonoBehaviour
             Pad.GetComponent<PadController2>().NewSummonCl ();
             sumonbd.SetActive(false);
             Pad.GetComponent<PadController2>().sumonNum = num;
-            Pad.GetComponent<PadController2>().BlackLine();
             Pad.GetComponent<PadController2>().summonDelay =1;
             Pad.GetComponent<PadController2>().summonRem = true;
-
+            Pad.GetComponent<PadController2>().BoardReset();
 
 
             camera.GetComponent<CameraController2>().SetCamera(1, 1);
@@ -65,7 +65,21 @@ public class SumonBoard : MonoBehaviour
     }
 
 
+    public void Rep()
+    {
+        nameobj.GetComponent<Animator>().SetBool("Name", false);
+        game.GetComponent<StatusManager>().summonGage = 0;
+        Pad.GetComponent<PadController2>().sumonMode = true;
+        Pad.GetComponent<PadController2>().sumonbd = false;
+        Pad.GetComponent<PadController2>().NewSummonCl();
+        sumonbd.SetActive(false);
+        Pad.GetComponent<PadController2>().sumonNum = 0;
+        Pad.GetComponent<PadController2>().summonDelay = 0;
+        Pad.GetComponent<PadController2>().summonRem = true;
+        Pad.GetComponent<PadController2>().BoardReset();
 
+
+    }
 
 
 

@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -19,12 +20,19 @@ public class NewTextController : MonoBehaviour
     [SerializeField]
     private NewTextData newTD;
 
+    [SerializeField]
+    private Sprite[] useSprite;
+
+    [SerializeField]
+    private Image image;
+
     //シナリオデータを各データごとに格納する為の構造体
     private struct ScenarioData
     {
         public string originText;
         public string characterName;
         public int page;
+        public int imageNumber;
     }
 
     ScenarioData[] sData;
@@ -91,6 +99,20 @@ public class NewTextController : MonoBehaviour
     }
 
     /// <summary>
+    /// 初期化関数
+    /// </summary>
+    public void ResetText()
+    {
+        scenarioText.text = "";
+        tState = TextState.next;
+        commandLineCount = new List<int>();
+        sDataIndex = 0;
+        nowIndex = 0;
+        time = 0;
+        end = false;
+    }
+
+    /// <summary>
     /// テキストデータを表示する
     /// </summary>
     private void PrintText()
@@ -139,6 +161,16 @@ public class NewTextController : MonoBehaviour
                 if (sData[nowIndex].characterName != "")
                 {
                     nameText.text = sData[nowIndex].characterName;
+                }
+                if (sData[nowIndex].imageNumber != 0 && sData[nowIndex].imageNumber != 9)
+                {
+                    image.sprite = useSprite[sData[nowIndex].imageNumber - 1];
+                    image.color = new Color(1,1,1,1);
+                }
+                else if (sData[nowIndex].imageNumber == 9)
+                {
+                    image.sprite = null;
+                    image.color = new Color(1, 1, 1, 0);
                 }
                 //表示スペースの調整
                 scenarioText.text += " ";
@@ -273,15 +305,33 @@ public class NewTextController : MonoBehaviour
                     string[] s = newTD.textData[i].Split('~');
                     sData[i].characterName = s[1];
                     sData[i].originText = s[2];
+                    CImageSerach(sData[i].originText, i);
+
                 }
                 else
                 {
                     sData[i].characterName = "";
                     sData[i].originText = newTD.textData[i];
+                    CImageSerach(sData[i].originText, i);
                 }
             }
         }
         newTD.loadFinish = false;
+    }
+
+    /// <summary>
+    /// イメージがある場合はテキスト表示時に出すようにsDataに格納する
+    /// </summary>
+    private void CImageSerach(string beforeText, int i)
+    {
+        if (Regex.IsMatch(beforeText, "cImage."))
+        {
+            int x = beforeText.IndexOf("cImage") + 6;
+            string s = beforeText.Substring(x, 1);
+            sData[i].imageNumber = int.Parse(s);
+            string afterText = beforeText.Remove(x - 7, 8);
+            sData[i].originText = afterText;
+        }
     }
 
     /// <summary>

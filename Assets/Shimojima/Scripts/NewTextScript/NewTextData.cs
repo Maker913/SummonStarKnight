@@ -17,21 +17,27 @@ public class NewTextData : MonoBehaviour
     //ゲームモード名と" / "を入れてください
     // 例) MainStage/    Shooting/
     //ゲームモード名がない場合は空のままにしてください
-    public static string gameModeName = "";
+    //public static string gameModeName = "";
 
     public List<string> textData;
     public bool loadFinish = false;
     private string scenario;
 
-    void Start()
+    private void Start()
     {
+        //TextDataRead(gName+sName);
+    }
+
+    /// <summary>
+    /// テキストデータの読込
+    /// </summary>
+    public void TextDataRead(string name)
+    {
+        gameObject.GetComponent<NewTextController>().ResetText();
+        textData = new List<string>();
         TextAsset ta = new TextAsset();
 
-        //↓本番時または実際の挙動を確認するときにコメントアウトを消してください
-        //ta = Resources.Load<TextAsset>("Scenario/" + gameModeName + scenarioName);
-
-        //デバッグ用 ↑の確認をするときはコメントアウトしてください
-        ta = Resources.Load<TextAsset>("Scenario/" + gName +"/"+ sName);
+        ta = Resources.Load<TextAsset>("Scenario/" +name);
 
 
         string s = ta.text;
@@ -43,6 +49,7 @@ public class NewTextData : MonoBehaviour
             i++;
         }
         i = 0;
+
         loadFinish = true;
     }
 }
