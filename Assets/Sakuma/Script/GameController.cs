@@ -122,6 +122,12 @@ public class GameController : MonoBehaviour
     [SerializeField]
     GameObject summonobj;
 
+    [SerializeField]
+    GameObject startef;
+    [SerializeField]
+    GameObject endef;
+
+
     static public string result = "NULL";
     [Space(10)]
     [Header("ここからエフェクト")]
@@ -580,10 +586,14 @@ public class GameController : MonoBehaviour
     private void ShootingEndCount()
     {
         padController2.Pad = false;
-        countObj.SetActive(true);
-        countObj.GetComponent<Text>().text = "終了";
+        //countObj.SetActive(true);
+        //countObj.GetComponent<Text>().text = "終了";
+        if (startPas==0) {
+            endef.GetComponent<Animator>().SetTrigger("set");
+            startPas = 1;
+        }
         ShootingTime += Time.deltaTime;
-        if (ShootingTime > 1)
+        if (ShootingTime > 1.5f)
         {
             countObj.SetActive(false);
 
@@ -669,9 +679,10 @@ public class GameController : MonoBehaviour
     private void ShootingStart()
     {
         textPr.SetActive(false);
-        ModeChange(18, 2);
-        text.text = "ボーナスゲーム開始";
-        textPadObj.SetActive(true);
+        ModeChange(18, 1.5f);
+        startef.GetComponent<Animator>().SetTrigger("set");
+        //text.text = "ボーナスゲーム開始";
+        //textPadObj.SetActive(true);
         ShootingTime = 0;
         countNum = 0;
     }
