@@ -233,8 +233,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ntd: {fileID: 873836502}
   text: {fileID: 894682652}
-  a: 
-  b: Scenario
+  a: MainStage/
+  b: hebitukaizabattleafter8
 --- !u!4 &1275431365
 Transform:
   m_ObjectHideFlags: 0
@@ -329,6 +329,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: EventCanvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 3059102449741389916, guid: a087a0b089d7b1040bcd2b603d5be2a6,
+        type: 3}
+      propertyPath: sName
+      value: Prelude1
       objectReference: {fileID: 0}
     - target: {fileID: 1313351673830399303, guid: a087a0b089d7b1040bcd2b603d5be2a6,
         type: 3}
@@ -435,6 +440,75 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5437170440697908890, guid: a087a0b089d7b1040bcd2b603d5be2a6,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0.73
+      objectReference: {fileID: 0}
+    - target: {fileID: 5437170440697908890, guid: a087a0b089d7b1040bcd2b603d5be2a6,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5437170440697908890, guid: a087a0b089d7b1040bcd2b603d5be2a6,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5437170440697908890, guid: a087a0b089d7b1040bcd2b603d5be2a6,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0.44
+      objectReference: {fileID: 0}
+    - target: {fileID: 5437170440697908890, guid: a087a0b089d7b1040bcd2b603d5be2a6,
+        type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 5437170440697908890, guid: a087a0b089d7b1040bcd2b603d5be2a6,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5437170440697908890, guid: a087a0b089d7b1040bcd2b603d5be2a6,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5437170440697908890, guid: a087a0b089d7b1040bcd2b603d5be2a6,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 3059102449741389891, guid: a087a0b089d7b1040bcd2b603d5be2a6,
+        type: 3}
+      propertyPath: useSprite.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3059102449741389891, guid: a087a0b089d7b1040bcd2b603d5be2a6,
+        type: 3}
+      propertyPath: useSprite.Array.data[2]
+      value: 
+      objectReference: {fileID: 21300000, guid: 8222c9c30c8dd7d4b985c6f47a5216fc,
+        type: 3}
+    - target: {fileID: 3059102449741389891, guid: a087a0b089d7b1040bcd2b603d5be2a6,
+        type: 3}
+      propertyPath: useSprite.Array.data[3]
+      value: 
+      objectReference: {fileID: 21300000, guid: 6288d002c99c71645b7df0f00fe89f26,
+        type: 3}
+    - target: {fileID: 3059102449741389891, guid: a087a0b089d7b1040bcd2b603d5be2a6,
+        type: 3}
+      propertyPath: useSprite.Array.data[0]
+      value: 
+      objectReference: {fileID: 21300000, guid: bd617a9c344c9914c9c55604f847f94d,
+        type: 3}
+    - target: {fileID: 3059102449741389891, guid: a087a0b089d7b1040bcd2b603d5be2a6,
+        type: 3}
+      propertyPath: useSprite.Array.data[1]
+      value: 
+      objectReference: {fileID: 21300000, guid: b3b05085f67e1724a88f0be47f98fb1c,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a087a0b089d7b1040bcd2b603d5be2a6, type: 3}
 --- !u!1 &1843519373

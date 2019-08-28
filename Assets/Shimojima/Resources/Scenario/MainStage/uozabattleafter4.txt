@@ -1,0 +1,13 @@
+﻿~獅子座~流星、あれを見ろ。cImage02
+{next}
+~獅子座~まだ別の奴が暴れているみたいだぞ cImage02
+{next} 
+~流星~あれは……！ cImage01
+{next}
+~獅子座~先を急げ。cImage02
+{next}
+~獅子座~あれを放っておくと犠牲が増えるぞ cImage02
+{next}
+~流星~わかった。さて、急ごう cImage01
+{next}
+{end}
