@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481694, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -538,7 +538,7 @@ PrefabInstance:
         type: 3}
       propertyPath: OutputAudioMixerGroup
       value: 
-      objectReference: {fileID: 243664402723223204, guid: cd82e2d09556f89418ec1c49a4803ee6,
+      objectReference: {fileID: 243806701514757262, guid: be7513a7ba5f28b4aba76910712686ab,
         type: 2}
     - target: {fileID: 4969599485207666200, guid: 30e4960cdc1f0f14b99ea79fdefb1332,
         type: 3}
