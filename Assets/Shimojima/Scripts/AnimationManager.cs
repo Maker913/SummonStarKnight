@@ -61,9 +61,7 @@ public class AnimationManager : MonoBehaviour
         }
         else
         {
-
-                model.SetTrigger(aTrigger);
-
+            model.SetTrigger(aTrigger);
         }
     }
 }

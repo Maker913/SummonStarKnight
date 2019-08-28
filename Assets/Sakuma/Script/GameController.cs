@@ -127,6 +127,15 @@ public class GameController : MonoBehaviour
     [SerializeField]
     GameObject endef;
 
+    [SerializeField]
+    GameObject AttackEf;
+
+    [SerializeField]
+    float[] effectdirayTime=new float[3];
+    [SerializeField ]
+    float[] BreakdirayTime = new float[3];
+    [SerializeField]
+    float[] refrectdirayTime = new float[3];
 
     static public string result = "NULL";
     [Space(10)]
@@ -838,6 +847,7 @@ public class GameController : MonoBehaviour
         {
             if (dcont == 0)
             {
+               
                 combo = 0;
                 camera.GetComponent<CameraController2>().SetCamera(0, 0.75f);
                 dcont++;
@@ -846,6 +856,7 @@ public class GameController : MonoBehaviour
             }
             else
             {
+                AttackEf.GetComponent<AttackEffect>().btfalse(effectdirayTime[StageCobtroller.stageNum - 1]);
                 dcont = 0;
                 cameradTime = 0;
 
@@ -864,11 +875,11 @@ public class GameController : MonoBehaviour
                 statusManager.BarrierCheck();
                 if (statusManager.playerHP <= 0)
                 {
-                    ModeChange(7, 1.5f);
+                    ModeChange(7, 2.5f);
                 }
                 else
                 {
-                    ModeChange(11, 1.5f);
+                    ModeChange(11, 2.5f);
                 }
             }
 
@@ -893,6 +904,7 @@ public class GameController : MonoBehaviour
                 {
                     TutorialFlg.FastGageStop = true;
                 }
+
                 combo++;
                 animeC = true;
                 // エフェクト修正箇所
@@ -906,6 +918,7 @@ public class GameController : MonoBehaviour
             }
             else
             {
+                AttackEf.GetComponent<AttackEffect>().bttrue(effectdirayTime [ StageCobtroller .stageNum -1]);
                 dcont = 0;
                 cameradTime = 0;
 
@@ -914,8 +927,10 @@ public class GameController : MonoBehaviour
                 {
                     statusManager.summonGage = 100;
                 }
-                
-                animationManager.AnimationStart(0, 0, "Damage");
+                animationManager.AnimationStart(0, 0, "Attack");
+                animationManager.AnimationStart(BreakdirayTime[StageCobtroller.stageNum -1], 0, "Damage");
+                animationManager.AnimationStart(refrectdirayTime[StageCobtroller.stageNum - 1], 1, "attack");
+                //animationManager.AnimationStart(0, 0, "Damage");
                 AudioManager.Instance.PlaySE(AudioManager.SeName.player_attack);
 
                 //textPadObj.SetActive(true);
@@ -930,17 +945,17 @@ public class GameController : MonoBehaviour
                 }
                 if (statusManager.enemyHP <= 0)
                 {
-                    ModeChange(6, 1.5f);
+                    ModeChange(6, 2.5f);
                 }
                 else
                 {
                     if (!TutorialFlg.FastAtk)
                     {
-                        ModeChange(27, 1.5f);
+                        ModeChange(27, 2.5f);
                     }
                     else
                     {
-                        ModeChange(11, 1.5f);
+                        ModeChange(11, 2.5f);
                     }
                 }
             }
@@ -951,7 +966,7 @@ public class GameController : MonoBehaviour
             cameradTime += Time.deltaTime;
             if (cameradTime > 0.1f&&animeC)
             {
-                animationManager.AnimationStart(0, 1, "attack");
+                //animationManager.AnimationStart(0, 1, "attack");
                 animeC = false;
             }
         }
