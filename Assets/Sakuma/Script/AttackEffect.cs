@@ -13,9 +13,29 @@ public class AttackEffect : MonoBehaviour
     GameObject[] EndPosObj;
     [SerializeField]
     GameObject EffectPr;
+    [SerializeField]
+    GameObject ReversePr;
+
+
 
     [SerializeField]
     float Spead;
+
+    [SerializeField ]
+    GameObject bomPr;
+    [SerializeField]
+    GameObject statusManagerObj;
+    StatusManager statusManager;
+    [SerializeField]
+    GameObject padController2Obj;
+    PadController2 padController2;
+    [SerializeField]
+    GameObject gamecontrollerObj;
+    GameController gamecontroller;
+
+
+
+
 
 
 
@@ -32,6 +52,15 @@ public class AttackEffect : MonoBehaviour
     bool reverse;
 
     float reverseSpeed;
+
+
+    private void Start()
+    {
+        padController2 = padController2Obj.GetComponent<PadController2>();
+        statusManager = statusManagerObj.GetComponent<StatusManager>();
+        gamecontroller = gamecontrollerObj.GetComponent<GameController>();
+    }
+
 
     public void EffectSettrue()
     {
@@ -74,6 +103,7 @@ public class AttackEffect : MonoBehaviour
                         dis= Vector3.Distance(EffectObj.transform.position, EndPosObj[StageCobtroller.stageNum - 1].transform.position);
 
                         reverseSpeed = Spead*1.5f;
+                        Instantiate(ReversePr , EffectObj.transform.position+new Vector3 (0,0,0.1f), Quaternion.identity);
                     }
                 }
                 else
@@ -82,10 +112,18 @@ public class AttackEffect : MonoBehaviour
 
                     if (time >= 1 / reverseSpeed)
                     {
+                        Instantiate(bomPr, EffectObj.transform.position, Quaternion.identity);
                         Destroy(EffectObj);
                         effectOn = false;
 
-
+                        if (padController2.oneLine)
+                        {
+                            statusManager.enemyHP -= (int)((statusManager.playerAtk + gamecontroller.combo - 1) * 1.5f);
+                        }
+                        else
+                        {
+                            statusManager.enemyHP -= statusManager.playerAtk;
+                        }
 
 
                     }
@@ -111,6 +149,9 @@ public class AttackEffect : MonoBehaviour
                     effectOn = false;
 
 
+                    Instantiate(bomPr, EffectObj.transform.position, Quaternion.identity);
+                    statusManager.playerHP -= statusManager.enemyAtk;
+                    statusManager.BarrierCheck();
 
                 }
 

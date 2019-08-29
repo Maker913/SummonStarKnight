@@ -136,6 +136,8 @@ public class GameController : MonoBehaviour
     float[] BreakdirayTime = new float[3];
     [SerializeField]
     float[] refrectdirayTime = new float[3];
+    [SerializeField]
+    float[] damagedirayTime = new float[3];
 
     static public string result = "NULL";
     [Space(10)]
@@ -730,7 +732,10 @@ public class GameController : MonoBehaviour
         }
 
         startEf.SetActive(false);
-        animationManager.AnimationStart(0,0,"Zodiac");
+        if (statusManager.enemyHP > 0)
+        {
+            animationManager.AnimationStart(0, 0, "Zodiac");
+        }
         StageCobtroller.Score += 1;
         statusManager.EnemyTurnCheck();
         statusManager.TurnCheck();
@@ -867,12 +872,11 @@ public class GameController : MonoBehaviour
                 }
                 //teki.GetComponent<Animator>().SetTrigger("Attack");
                 animationManager.AnimationStart(0, 0, "Attack");
-                animationManager.AnimationStart(0, 1, "damage");
+                animationManager.AnimationStart(damagedirayTime [StageCobtroller .stageNum -1], 1, "damage");
                 //textPadObj.SetActive(true);
                 //text.text = "ダメージアニメーション予定地";
                 AudioManager.Instance.PlaySE(AudioManager.SeName.player_attack);
-                statusManager.playerHP  -= statusManager.enemyAtk ;
-                statusManager.BarrierCheck();
+                ///
                 if (statusManager.playerHP <= 0)
                 {
                     ModeChange(7, 2.5f);
@@ -922,7 +926,7 @@ public class GameController : MonoBehaviour
                 dcont = 0;
                 cameradTime = 0;
 
-                statusManager.summonGage += Random .Range (20,40);
+                statusManager.summonGage += Random .Range (30,40);
                 if (statusManager.summonGage > 100)
                 {
                     statusManager.summonGage = 100;
@@ -935,14 +939,9 @@ public class GameController : MonoBehaviour
 
                 //textPadObj.SetActive(true);
                 //text.text = "攻撃アニメーション予定地";
-                if (padController2.oneLine)
-                {
-                    statusManager.enemyHP -= (int)((statusManager.playerAtk+combo -1)*1.5f);
-                }
-                else
-                {
-                    statusManager.enemyHP -= statusManager.playerAtk;
-                }
+
+                ///
+
                 if (statusManager.enemyHP <= 0)
                 {
                     ModeChange(6, 2.5f);
