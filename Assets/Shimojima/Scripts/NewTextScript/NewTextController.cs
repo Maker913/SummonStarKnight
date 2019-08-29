@@ -25,6 +25,8 @@ public class NewTextController : MonoBehaviour
 
     [SerializeField]
     private Image image;
+    [SerializeField]
+    private Image image2;
 
     //シナリオデータを各データごとに格納する為の構造体
     private struct ScenarioData
@@ -109,6 +111,8 @@ public class NewTextController : MonoBehaviour
         sDataIndex = 0;
         nowIndex = 0;
         time = 0;
+        image.sprite = null;
+        image2.sprite = null;
         end = false;
     }
 
@@ -163,15 +167,26 @@ public class NewTextController : MonoBehaviour
                     nameText.text = sData[nowIndex].characterName;
                 }
 
-                if (sData[nowIndex].imageNumber != 0 && sData[nowIndex].imageNumber != 99)
+                if (sData[nowIndex].imageNumber != 0 && sData[nowIndex].imageNumber != 99 && sData[nowIndex].imageNumber != 4)
                 {
                     image.sprite = useSprite[sData[nowIndex].imageNumber - 1];
                     image.color = new Color(1,1,1,1);
+                    image2.sprite = null;
+                    image2.color = new Color(1, 1, 1, 0);
+                }
+                else if (sData[nowIndex].imageNumber == 4)
+                {
+                    image.sprite = null;
+                    image.color = new Color(1, 1, 1, 0);
+                    image2.sprite = useSprite[sData[nowIndex].imageNumber - 1];
+                    image2.color = new Color(1, 1, 1, 1);
                 }
                 else if (sData[nowIndex].imageNumber == 99)
                 {
                     image.sprite = null;
                     image.color = new Color(1, 1, 1, 0);
+                    image2.sprite = null;
+                    image2.color = new Color(1, 1, 1, 0);
                 }
                 //表示スペースの調整
                 scenarioText.text += " ";
