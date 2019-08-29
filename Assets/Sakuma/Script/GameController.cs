@@ -122,6 +122,23 @@ public class GameController : MonoBehaviour
     [SerializeField]
     GameObject summonobj;
 
+    [SerializeField]
+    GameObject startef;
+    [SerializeField]
+    GameObject endef;
+
+    [SerializeField]
+    GameObject AttackEf;
+
+    [SerializeField]
+    float[] effectdirayTime=new float[3];
+    [SerializeField ]
+    float[] BreakdirayTime = new float[3];
+    [SerializeField]
+    float[] refrectdirayTime = new float[3];
+    [SerializeField]
+    float[] damagedirayTime = new float[3];
+
     static public string result = "NULL";
     [Space(10)]
     [Header("ここからエフェクト")]
@@ -494,7 +511,7 @@ public class GameController : MonoBehaviour
             textPr.SetActive(true);
 
             NewTextObj.GetComponent<NewTextData>().TextDataRead("Tutorial/SummonB");
-            TutorialFlg.SummonBefore = true;
+            
             startPas = 1;
         }
 
@@ -506,6 +523,7 @@ public class GameController : MonoBehaviour
         textPadObj.SetActive(false);
         if (NewTextController.end || Input.GetKeyDown(KeyCode.Escape))
         {
+            TutorialFlg.SummonBefore = true;
             textPr.SetActive(false);
             animationManager.ReState();
 
@@ -581,9 +599,13 @@ public class GameController : MonoBehaviour
     {
         padController2.Pad = false;
         countObj.SetActive(true);
-        countObj.GetComponent<Text>().text = "終了";
+        countObj.GetComponent<Text>().text = "GAME SET";
+        if (startPas==0) {
+            //endef.GetComponent<Animator>().SetTrigger("set");
+            startPas = 1;
+        }
         ShootingTime += Time.deltaTime;
-        if (ShootingTime > 1)
+        if (ShootingTime > 1.5f)
         {
             countObj.SetActive(false);
 
@@ -669,9 +691,12 @@ public class GameController : MonoBehaviour
     private void ShootingStart()
     {
         textPr.SetActive(false);
-        ModeChange(18, 2);
-        text.text = "ボーナスゲーム開始";
-        textPadObj.SetActive(true);
+        ModeChange(18, 1.5f);
+        //startef.GetComponent<Animator>().SetTrigger("set");
+        //text.text = "BONUS GAME";
+        countObj.SetActive(true);
+        countObj.GetComponent<Text>().text = "BONUS GAME";
+        //textPadObj.SetActive(true);
         ShootingTime = 0;
         countNum = 0;
     }
@@ -710,7 +735,10 @@ public class GameController : MonoBehaviour
         }
 
         startEf.SetActive(false);
-        animationManager.AnimationStart(0,0,"Zodiac");
+        if (statusManager.enemyHP > 0)
+        {
+            animationManager.AnimationStart(0, 0, "Zodiac");
+        }
         StageCobtroller.Score += 1;
         statusManager.EnemyTurnCheck();
         statusManager.TurnCheck();
@@ -737,6 +765,8 @@ public class GameController : MonoBehaviour
         {
             TutorialFlg.FastSummonMiss = true;
         }
+        //EffectControl.Instance.PlayEffect(EffectControl.Effect .Aura_Red,AttackEfPos ,Vector3 .zero);
+
         enj.GetComponent<Animator>().SetBool("Open", true);
         string textdata=statusManager.SummonCheck(weapon);
         text.text = textdata;
@@ -827,6 +857,7 @@ public class GameController : MonoBehaviour
         {
             if (dcont == 0)
             {
+               
                 combo = 0;
                 camera.GetComponent<CameraController2>().SetCamera(0, 0.75f);
                 dcont++;
@@ -835,6 +866,7 @@ public class GameController : MonoBehaviour
             }
             else
             {
+                AttackEf.GetComponent<AttackEffect>().btfalse(effectdirayTime[StageCobtroller.stageNum - 1]);
                 dcont = 0;
                 cameradTime = 0;
 
@@ -845,20 +877,12 @@ public class GameController : MonoBehaviour
                 }
                 //teki.GetComponent<Animator>().SetTrigger("Attack");
                 animationManager.AnimationStart(0, 0, "Attack");
-                animationManager.AnimationStart(0, 1, "damage");
+                animationManager.AnimationStart(damagedirayTime [StageCobtroller .stageNum -1], 1, "damage");
                 //textPadObj.SetActive(true);
                 //text.text = "ダメージアニメーション予定地";
                 AudioManager.Instance.PlaySE(AudioManager.SeName.player_attack);
-                statusManager.playerHP  -= statusManager.enemyAtk ;
-                statusManager.BarrierCheck();
-                if (statusManager.playerHP <= 0)
-                {
-                    ModeChange(7, 1.5f);
-                }
-                else
-                {
-                    ModeChange(11, 1.5f);
-                }
+                ///
+                ModeChange(99, 0);
             }
 
         }
@@ -882,9 +906,11 @@ public class GameController : MonoBehaviour
                 {
                     TutorialFlg.FastGageStop = true;
                 }
+
                 combo++;
                 animeC = true;
-                EffectControl.Instance.PlayEffect(EffectControl.Effect.Attack, AttackEfPos );
+                // エフェクト修正箇所
+                //EffectControl.Instance.PlayEffect(EffectControl.Effect.Attack, AttackEfPos );
                 camera.GetComponent<CameraController2>().SetCamera(3, 0.75f);
                 dcont++;
                 cameradTime += Time.deltaTime;
@@ -894,43 +920,27 @@ public class GameController : MonoBehaviour
             }
             else
             {
+                AttackEf.GetComponent<AttackEffect>().bttrue(effectdirayTime [ StageCobtroller .stageNum -1]);
                 dcont = 0;
                 cameradTime = 0;
 
-                statusManager.summonGage += Random .Range (20,40);
+                statusManager.summonGage += Random .Range (30,40);
                 if (statusManager.summonGage > 100)
                 {
                     statusManager.summonGage = 100;
                 }
-                
-                animationManager.AnimationStart(0, 0, "Damage");
+                animationManager.AnimationStart(0, 0, "Attack");
+                animationManager.AnimationStart(BreakdirayTime[StageCobtroller.stageNum -1], 0, "Damage");
+                animationManager.AnimationStart(refrectdirayTime[StageCobtroller.stageNum - 1], 1, "attack");
+                //animationManager.AnimationStart(0, 0, "Damage");
                 AudioManager.Instance.PlaySE(AudioManager.SeName.player_attack);
 
                 //textPadObj.SetActive(true);
                 //text.text = "攻撃アニメーション予定地";
-                if (padController2.oneLine)
-                {
-                    statusManager.enemyHP -= (int)((statusManager.playerAtk+combo -1)*1.5f);
-                }
-                else
-                {
-                    statusManager.enemyHP -= statusManager.playerAtk;
-                }
-                if (statusManager.enemyHP <= 0)
-                {
-                    ModeChange(6, 1.5f);
-                }
-                else
-                {
-                    if (!TutorialFlg.FastAtk)
-                    {
-                        ModeChange(27, 1.5f);
-                    }
-                    else
-                    {
-                        ModeChange(11, 1.5f);
-                    }
-                }
+
+                ///
+                ModeChange(99, 0);
+
             }
 
         }
@@ -939,7 +949,7 @@ public class GameController : MonoBehaviour
             cameradTime += Time.deltaTime;
             if (cameradTime > 0.1f&&animeC)
             {
-                animationManager.AnimationStart(0, 1, "attack");
+                //animationManager.AnimationStart(0, 1, "attack");
                 animeC = false;
             }
         }

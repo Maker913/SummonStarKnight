@@ -103,7 +103,7 @@ public class Enj : MonoBehaviour
     {
 
         time = statusManager.gageSpeed;
-        summonNum = Random.Range(0, gameController.nomalAttack.Length);
+        summonNum =  Random.Range(0, gameController.nomalAttack.Length);
         RectTransform CanvasRect = canvas.GetComponent<RectTransform>();
         padController.BlackLine2();
         nameAnime.SetBool("Name",true);

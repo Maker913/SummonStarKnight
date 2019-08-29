@@ -134,6 +134,14 @@ public class PadController2 : MonoBehaviour
     private GameObject oneLineText;
     [SerializeField]
     private GameObject textPos;
+
+    [SerializeField]
+    private GameObject oboeroPr;
+    [SerializeField]
+    private GameObject nazorePr;
+    [SerializeField]
+    private GameObject nazoP;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -514,6 +522,7 @@ public class PadController2 : MonoBehaviour
 
                 if(summonRemTime < 0)
                 {
+                    Instantiate(nazorePr, nazoP.transform.position , Quaternion.identity, nazoP.transform );
                     //Debug.Log("開始");
                     summonRem = false;
                     BlackLineDL();
@@ -526,6 +535,7 @@ public class PadController2 : MonoBehaviour
                 summonDelay -= Time.deltaTime;
                 if(summonDelay < 0)
                 {
+                    Instantiate(oboeroPr, nazoP.transform.position, Quaternion.identity, nazoP.transform);
                     BlackLine();
                     summonRemTime = BLineTime;
                     //Debug.Log("カメラ移動完了");
