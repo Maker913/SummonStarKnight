@@ -126,6 +126,23 @@ public class AttackEffect : MonoBehaviour
                         }
 
 
+                        if (statusManager.enemyHP <= 0)
+                        {
+                            gamecontroller.ModeChange(6, 0.5f);
+                        }
+                        else
+                        {
+                            if (!TutorialFlg.FastAtk)
+                            {
+                                gamecontroller.ModeChange(27, 0.5f);
+                            }
+                            else
+                            {
+                                gamecontroller.ModeChange(11, 0.5f);
+                            }
+                        }
+
+
                     }
 
 
@@ -152,6 +169,15 @@ public class AttackEffect : MonoBehaviour
                     Instantiate(bomPr, EffectObj.transform.position, Quaternion.identity);
                     statusManager.playerHP -= statusManager.enemyAtk;
                     statusManager.BarrierCheck();
+
+                    if (statusManager.playerHP <= 0)
+                    {
+                        gamecontroller . ModeChange(7, 0.5f);
+                    }
+                    else
+                    {
+                        gamecontroller . ModeChange(11, 0.5f);
+                    }
 
                 }
 

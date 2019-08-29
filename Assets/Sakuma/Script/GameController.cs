@@ -511,7 +511,7 @@ public class GameController : MonoBehaviour
             textPr.SetActive(true);
 
             NewTextObj.GetComponent<NewTextData>().TextDataRead("Tutorial/SummonB");
-            TutorialFlg.SummonBefore = true;
+            
             startPas = 1;
         }
 
@@ -523,6 +523,7 @@ public class GameController : MonoBehaviour
         textPadObj.SetActive(false);
         if (NewTextController.end || Input.GetKeyDown(KeyCode.Escape))
         {
+            TutorialFlg.SummonBefore = true;
             textPr.SetActive(false);
             animationManager.ReState();
 
@@ -597,10 +598,10 @@ public class GameController : MonoBehaviour
     private void ShootingEndCount()
     {
         padController2.Pad = false;
-        //countObj.SetActive(true);
-        //countObj.GetComponent<Text>().text = "終了";
+        countObj.SetActive(true);
+        countObj.GetComponent<Text>().text = "GAME SET";
         if (startPas==0) {
-            endef.GetComponent<Animator>().SetTrigger("set");
+            //endef.GetComponent<Animator>().SetTrigger("set");
             startPas = 1;
         }
         ShootingTime += Time.deltaTime;
@@ -691,8 +692,10 @@ public class GameController : MonoBehaviour
     {
         textPr.SetActive(false);
         ModeChange(18, 1.5f);
-        startef.GetComponent<Animator>().SetTrigger("set");
-        //text.text = "ボーナスゲーム開始";
+        //startef.GetComponent<Animator>().SetTrigger("set");
+        //text.text = "BONUS GAME";
+        countObj.SetActive(true);
+        countObj.GetComponent<Text>().text = "BONUS GAME";
         //textPadObj.SetActive(true);
         ShootingTime = 0;
         countNum = 0;
@@ -762,6 +765,8 @@ public class GameController : MonoBehaviour
         {
             TutorialFlg.FastSummonMiss = true;
         }
+        //EffectControl.Instance.PlayEffect(EffectControl.Effect .Aura_Red,AttackEfPos ,Vector3 .zero);
+
         enj.GetComponent<Animator>().SetBool("Open", true);
         string textdata=statusManager.SummonCheck(weapon);
         text.text = textdata;
@@ -877,14 +882,7 @@ public class GameController : MonoBehaviour
                 //text.text = "ダメージアニメーション予定地";
                 AudioManager.Instance.PlaySE(AudioManager.SeName.player_attack);
                 ///
-                if (statusManager.playerHP <= 0)
-                {
-                    ModeChange(7, 2.5f);
-                }
-                else
-                {
-                    ModeChange(11, 2.5f);
-                }
+                ModeChange(99, 0);
             }
 
         }
@@ -941,22 +939,8 @@ public class GameController : MonoBehaviour
                 //text.text = "攻撃アニメーション予定地";
 
                 ///
+                ModeChange(99, 0);
 
-                if (statusManager.enemyHP <= 0)
-                {
-                    ModeChange(6, 2.5f);
-                }
-                else
-                {
-                    if (!TutorialFlg.FastAtk)
-                    {
-                        ModeChange(27, 2.5f);
-                    }
-                    else
-                    {
-                        ModeChange(11, 2.5f);
-                    }
-                }
             }
 
         }
