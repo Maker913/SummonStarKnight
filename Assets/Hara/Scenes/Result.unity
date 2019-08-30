@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.015554899, g: 0.015063122, b: 0.014816758, a: 1}
+  m_IndirectSpecularColor: {r: 0.015554532, g: 0.015063206, b: 0.014816795, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2083,6 +2083,21 @@ PrefabInstance:
       propertyPath: m_Name
       value: Canvas
       objectReference: {fileID: 0}
+    - target: {fileID: 7783336704376096755, guid: 1d75215b8420c4c4fbfa7f23c8f89209,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7783336704376096755, guid: 1d75215b8420c4c4fbfa7f23c8f89209,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7783336704376096755, guid: 1d75215b8420c4c4fbfa7f23c8f89209,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 7783336705689059181, guid: 1d75215b8420c4c4fbfa7f23c8f89209,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2193,21 +2208,6 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 1152076528}
-    - target: {fileID: 7783336704376096755, guid: 1d75215b8420c4c4fbfa7f23c8f89209,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7783336704376096755, guid: 1d75215b8420c4c4fbfa7f23c8f89209,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7783336704376096755, guid: 1d75215b8420c4c4fbfa7f23c8f89209,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
-      value: 2
-      objectReference: {fileID: 0}
     - target: {fileID: 7783336704038163376, guid: 1d75215b8420c4c4fbfa7f23c8f89209,
         type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -2258,5 +2258,29 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -145
       objectReference: {fileID: 0}
+    - target: {fileID: 7783336704038163389, guid: 1d75215b8420c4c4fbfa7f23c8f89209,
+        type: 3}
+      propertyPath: image.Array.data[0]
+      value: 
+      objectReference: {fileID: 21300000, guid: 7caf0df9cb8022048a6df83d8900b43d,
+        type: 3}
+    - target: {fileID: 7783336704038163389, guid: 1d75215b8420c4c4fbfa7f23c8f89209,
+        type: 3}
+      propertyPath: image.Array.data[1]
+      value: 
+      objectReference: {fileID: 21300000, guid: cf8a8ee45281e0d4aaf045057119fcbf,
+        type: 3}
+    - target: {fileID: 7783336704038163389, guid: 1d75215b8420c4c4fbfa7f23c8f89209,
+        type: 3}
+      propertyPath: image.Array.data[2]
+      value: 
+      objectReference: {fileID: 21300000, guid: ab87284bf47341c4fbd832a28c1d74bd,
+        type: 3}
+    - target: {fileID: 7783336704038163389, guid: 1d75215b8420c4c4fbfa7f23c8f89209,
+        type: 3}
+      propertyPath: image.Array.data[3]
+      value: 
+      objectReference: {fileID: 21300000, guid: 7f14e96f06d49c44081dab47efac2176,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1d75215b8420c4c4fbfa7f23c8f89209, type: 3}

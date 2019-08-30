@@ -111,8 +111,8 @@ public class NewTextController : MonoBehaviour
         sDataIndex = 0;
         nowIndex = 0;
         time = 0;
-        image.sprite = null;
-        image2.sprite = null;
+        //image.sprite = null;
+        //image2.sprite = null;
         end = false;
     }
 

@@ -554,6 +554,10 @@ public class GameController : MonoBehaviour
             {
                 folderName = "MainStage";
                 fileName = "Stage"+ StageCobtroller .stageNum.ToString ()+"-1";
+                if (StageCobtroller.stageNum  == 1)
+                {
+                    StageCobtroller.Score = 0;
+                }
             }
             else
             {

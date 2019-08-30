@@ -865,7 +865,7 @@ public class PadController2 : MonoBehaviour
 
                         GameObject obj = (GameObject)Instantiate(BLine, transform.position, Quaternion.identity, lineParent2.transform);
                         UILineRenderer data2 = obj.GetComponent<UILineRenderer>();
-                        data2.color = new Color(0.2f, 0.2f, 0.2f, 0.8f);
+                        data2.color = new Color(0.1f, 0.1f, 0.1f, 0.9f);
                         data2.points[0] = new Vector2((SterPos[a - 1].transform.position.x - Screen.width / 2) / Screen.width * CanvasRect.sizeDelta.x, (SterPos[a - 1].transform.position.y - Screen.height / 2) / Screen.height * CanvasRect.sizeDelta.y);
                         data2.points[1] = new Vector2((SterPos[b - 1].transform.position.x - Screen.width / 2) / Screen.width * CanvasRect.sizeDelta.x, (SterPos[b - 1].transform.position.y - Screen.height / 2) / Screen.height * CanvasRect.sizeDelta.y);
 

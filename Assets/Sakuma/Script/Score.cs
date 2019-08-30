@@ -59,14 +59,14 @@ public class Score : MonoBehaviour
                     break;
                 case 4:
                     data.color = new Color(1, 1, 1, 1);
-                    if (StageCobtroller.Score < 15&& StageCobtroller.Win)
+                    if (StageCobtroller.Score < 20&& StageCobtroller.Win)
                     {
                         data.sprite = image[0];
-                    }else if (StageCobtroller.Score < 20 && StageCobtroller.Win)
+                    }else if (StageCobtroller.Score < 25 && StageCobtroller.Win)
                     {
                         data.sprite = image[1];
                     }
-                    else if (StageCobtroller.Score < 25 && StageCobtroller.Win)
+                    else if (StageCobtroller.Score < 30 && StageCobtroller.Win)
                     {
                         data.sprite = image[2];
                     }
