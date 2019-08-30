@@ -477,7 +477,7 @@ public class GameController : MonoBehaviour
         if (startPas == 0&&!StageCobtroller .Shooting )
         {
             textPr.SetActive(true);
-            NewTextObj.GetComponent<NewTextData>().TextDataRead("MainStage/Stage"+StageCobtroller .stageNum .ToString ()+"-2");
+            NewTextObj.GetComponent<NewTextData>().TextDataRead("MainStage/1Stage"+StageCobtroller .stageNum .ToString ()+"-2");
             startPas = 1;
         }
 
@@ -553,7 +553,7 @@ public class GameController : MonoBehaviour
             if (!StageCobtroller .Shooting)
             {
                 folderName = "MainStage";
-                fileName = "Stage"+ StageCobtroller .stageNum.ToString ()+"-1";
+                fileName = "1Stage"+ StageCobtroller .stageNum.ToString ()+"-1";
                 if (StageCobtroller.stageNum  == 1)
                 {
                     StageCobtroller.Score = 0;
