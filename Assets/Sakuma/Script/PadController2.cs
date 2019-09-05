@@ -76,7 +76,7 @@ public class PadController2 : MonoBehaviour
     [SerializeField]
     private GameObject underPos;
 
-    private bool move = false;
+    //private bool move = false;
 
 
     public bool sumonMode = false;
@@ -123,7 +123,7 @@ public class PadController2 : MonoBehaviour
     [SerializeField]
     private float BLineTime;
 
-    private int deleteSterNum=-1;
+    //private int deleteSterNum=-1;
     [SerializeField]
     private GameObject falseLineP;
 
@@ -142,6 +142,9 @@ public class PadController2 : MonoBehaviour
     [SerializeField]
     private GameObject nazoP;
 
+    private GameObject TapSter;
+    [SerializeField]
+    private GameObject SterPrn;
     // Start is called before the first frame update
     void Start()
     {
@@ -204,26 +207,28 @@ public class PadController2 : MonoBehaviour
 
                 if (Vector2.Distance(new Vector2(touch.position.x, touch.position.y), new Vector2(boardObj.transform.position.x, boardObj.transform.position.y)) < radius + 50)
                 {
+                    float SterRad = SterRadius;
                     for (int i = 0; i < SterPos.Length; i++)
                     {
-                        if (Vector2.Distance(new Vector2(touch.position.x, touch.position.y), SterPos[i].transform.position) < SterRadius)
+                        if (Vector2.Distance(new Vector2(touch.position.x, touch.position.y), SterPos[i].transform.position) < SterRad )
                         {
+                            SterRad = Vector2.Distance(new Vector2(touch.position.x, touch.position.y), SterPos[i].transform.position);
                             SterController = 1;
                             catchster = i + 1;
                             AudioManager.Instance.PlaySE(AudioManager.SeName.Follow);
 
                             oneLineCheck = true;
 
-                            if (glowStar[catchster - 1] == true)
-                            {
-                                move = true;
-                            }
-                            else
-                            {
-                                move = false;
-                                glowStar[catchster - 1] = true;
-                                deleteSterNum = catchster - 1;
-                            }
+                            //if (glowStar[catchster - 1] == true)
+                            //{
+                            //    move = true;
+                            //}
+                            //else
+                            //{
+                            //    move = false;
+                                
+                            //    deleteSterNum = catchster - 1;
+                            //}
 
 
                             SterEfAnime[catchster - 1].SetBool("Change", true);
@@ -235,6 +240,20 @@ public class PadController2 : MonoBehaviour
                             
                         }
                     }
+
+
+                    TapSter = Instantiate(SterPos[catchster - 1], SterPos[catchster - 1].transform .position ,Quaternion .identity ,SterPrn.transform);
+                    TapSter.GetComponent<Image>().enabled = true;
+                    Destroy(TapSter.transform.GetChild(0));
+                    //if (glowStar[catchster - 1] != true)
+                    //{
+                    //    glowStar[catchster - 1] = true;
+                    //}
+
+
+
+
+
                     //if (catchster != 0)
                     //{
                     //    glowStar[catchster - 1] = true;
@@ -286,8 +305,8 @@ public class PadController2 : MonoBehaviour
                     }
                     if (moveFlg)
                     {
-                        deleteSterNum = -1;
-                        move = true;
+                        //deleteSterNum = -1;
+                        //move = true;
                         glowStar[catchster2 - 1] = true;
                         glowStar[catchster - 1] = true;
 
@@ -401,6 +420,15 @@ public class PadController2 : MonoBehaviour
             //終了時
             else if (touch.phase == TouchPhase.Ended)
             {
+                if (SterPrn.transform.childCount > 0)
+                {
+
+                    foreach (Transform n in SterPrn.transform)
+                    {
+                        GameObject.Destroy(n.gameObject);
+                    }
+
+                }
                 if (summon)
                 {
                     summon = false;
@@ -421,14 +449,14 @@ public class PadController2 : MonoBehaviour
                     //{
                     //    glowStar[catchster - 1] = false;
                     //}
+                    
+                    //if (deleteSterNum != -1)
+                    //{
+                    //    glowStar[deleteSterNum] = false;
+                    //    deleteSterNum = -1;
 
-                    if(deleteSterNum != -1)
-                    {
-                        glowStar[deleteSterNum] = false;
-                        deleteSterNum = -1;
-
-                        //Debug.Log("   aa  ");
-                    }
+                    //    //Debug.Log("   aa  ");
+                    //}
                 }
                 if (angleController)
                 {
@@ -440,6 +468,7 @@ public class PadController2 : MonoBehaviour
                     SterEfAnime[i].SetBool("Change", false);
                 }
             }
+
 
 
 
@@ -494,6 +523,7 @@ public class PadController2 : MonoBehaviour
 
 
         }
+
 
 
         for (int i = 0; i < glowSterImage.Length; i++)
@@ -629,7 +659,15 @@ public class PadController2 : MonoBehaviour
                 n.gameObject.GetComponent<LineUPdate>().falseLine = true;
             }
 
+            if (SterPrn.transform.childCount > 0)
+            {
 
+                foreach (Transform n in SterPrn.transform)
+                {
+                    GameObject.Destroy(n.gameObject);
+                }
+
+            }
 
             AudioManager.Instance.PlaySE(AudioManager.SeName .enemy_Deathblow );
             BoardReset();
