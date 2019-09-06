@@ -16,8 +16,8 @@
         }
        
 	ZWrite Off
-        Blend One OneMinusSrcAlpha //乗算済みアルファ
-
+        //Blend One OneMinusSrcAlpha //乗算済みアルファ
+			Blend One OneMinusSrcColor
         Pass {
         CGPROGRAM
             #pragma vertex vert
@@ -99,7 +99,7 @@
 
 
 
-				c.rgb *= c.a;
+				//c.rgb *= c.a;
 
                 return c;
             }
