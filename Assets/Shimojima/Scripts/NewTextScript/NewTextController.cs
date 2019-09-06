@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class NewTextController : MonoBehaviour
 {
@@ -86,6 +87,7 @@ public class NewTextController : MonoBehaviour
     private bool auto = false;  //オート機能のON,OFF切り替え用
 
     public static bool end;
+    
 
     void Start()
     {
@@ -131,24 +133,45 @@ public class NewTextController : MonoBehaviour
         {
             if (Input.GetTouch(0).phase == TouchPhase.Began)
             {
-                if (!auto)
+                PointerEventData pointer = new PointerEventData(EventSystem.current);
+                pointer.position = Input.GetTouch(0).position;
+                List<RaycastResult> result = new List<RaycastResult>();
+                EventSystem.current.RaycastAll(pointer, result);
+
+                foreach (RaycastResult raycastResult in result)
                 {
-                    TextSkip();
+                    if (raycastResult.gameObject.name == "ScenarioText")
+                    {
+                        if (!auto)
+                        {
+                            TextSkip();
+                        }
+                    }
                 }
             }
         }
 #endif
 
 #if UNITY_EDITOR
-        if (Input.GetKeyDown(KeyCode.Alpha1))
+        if (Input.GetMouseButtonDown(0))
         {
-            if (!auto)
+            PointerEventData pointer = new PointerEventData(EventSystem.current);
+            pointer.position = Input.mousePosition;
+            List<RaycastResult> result = new List<RaycastResult>();
+            EventSystem.current.RaycastAll(pointer, result);
+
+            foreach (RaycastResult raycastResult in result)
             {
-                TextSkip();
+                if (raycastResult.gameObject.name == "ScenarioText")
+                {
+                    if (!auto)
+                    {
+                        TextSkip();
+                    }
+                }
             }
         }
 #endif
-
         if (nowIndex < sDataIndex)
         {
             SetText();
@@ -402,5 +425,4 @@ public class NewTextController : MonoBehaviour
         tState = TextState.end;
         end = true;
     }
-
 }
