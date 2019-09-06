@@ -29,7 +29,8 @@ public class NewTextController : MonoBehaviour
     private Image image2;
 
     //シナリオデータを各データごとに格納する為の構造体
-    private struct ScenarioData
+    [System.Serializable]
+    public struct ScenarioData
     {
         public string originText;
         public string characterName;
@@ -37,7 +38,7 @@ public class NewTextController : MonoBehaviour
         public int imageNumber;
     }
 
-    ScenarioData[] sData;
+    public ScenarioData[] sData;
 
     private enum TextState
     {
@@ -107,12 +108,15 @@ public class NewTextController : MonoBehaviour
     {
         scenarioText.text = "";
         tState = TextState.next;
+        texts = new string[0];
         commandLineCount = new List<int>();
         sDataIndex = 0;
         nowIndex = 0;
         time = 0;
         image.sprite = null;
         image2.sprite = null;
+        image.color = new Color(1, 1, 1, 0);
+        image2.color = new Color(1, 1, 1, 0);
         end = false;
     }
 
@@ -171,22 +175,22 @@ public class NewTextController : MonoBehaviour
                 {
                     image.sprite = useSprite[sData[nowIndex].imageNumber - 1];
                     image.color = new Color(1,1,1,1);
-                    image2.sprite = null;
                     image2.color = new Color(1, 1, 1, 0);
+                    image2.sprite = null;
                 }
                 else if (sData[nowIndex].imageNumber == 4)
                 {
-                    image.sprite = null;
                     image.color = new Color(1, 1, 1, 0);
+                    image.sprite = null;
                     image2.sprite = useSprite[sData[nowIndex].imageNumber - 1];
                     image2.color = new Color(1, 1, 1, 1);
                 }
                 else if (sData[nowIndex].imageNumber == 99)
                 {
-                    image.sprite = null;
                     image.color = new Color(1, 1, 1, 0);
-                    image2.sprite = null;
+                    image.sprite = null;
                     image2.color = new Color(1, 1, 1, 0);
+                    image2.sprite = null;
                 }
                 //表示スペースの調整
                 scenarioText.text += " ";
@@ -261,7 +265,7 @@ public class NewTextController : MonoBehaviour
         if (tState == TextState.next)
         {
             //配列の初期化
-            texts = new string[sData[nowIndex].originText.Length];
+            texts = new string[sData[nowIndex].originText.Length - 1];
 
             if (sData[nowIndex].originText.Substring(0, 1) != "{")
             {
@@ -288,6 +292,10 @@ public class NewTextController : MonoBehaviour
                         break;
                 }
             }
+        }
+        else if (tState == TextState.standby)
+        {
+            texts = new string[0];
         }
     }
 
