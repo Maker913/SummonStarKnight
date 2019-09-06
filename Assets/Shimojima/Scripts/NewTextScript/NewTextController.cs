@@ -320,10 +320,6 @@ public class NewTextController : MonoBehaviour
                 }
             }
         }
-        else if (tState == TextState.standby)
-        {
-            texts = new string[0];
-        }
     }
 
     /// <summary>
