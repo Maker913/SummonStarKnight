@@ -257,7 +257,11 @@ public class NewTextController : MonoBehaviour
             tState = TextState.standby;
             scenarioText.text = "";
 
-            if (sData[nowIndex].page == 0)
+            if (sData.Length == 0)
+            {
+                return;
+            }
+            else if (sData[nowIndex].page == 0)
             {
                 for (int i = 0; i < commandLineCount[0]; i++)
                 {
