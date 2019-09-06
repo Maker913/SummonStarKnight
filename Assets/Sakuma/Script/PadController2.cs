@@ -334,7 +334,7 @@ public class PadController2 : MonoBehaviour
                                         UILineRenderer data2 = obj.GetComponent<UILineRenderer>();
                                         data2.points[0] = new Vector2((SterPos[catchster - 1].transform.position.x - Screen.width / 2) / Screen.width * CanvasRect.sizeDelta.x, (SterPos[catchster - 1].transform.position.y - Screen.height / 2) / Screen.height * CanvasRect.sizeDelta.y);
                                         data2.points[1] = new Vector2((SterPos[catchster2 - 1].transform.position.x - Screen.width / 2) / Screen.width * CanvasRect.sizeDelta.x, (SterPos[catchster2 - 1].transform.position.y - Screen.height / 2) / Screen.height * CanvasRect.sizeDelta.y);
-                                        //DeleteCheck(num,obj);
+                                        DeleteCheck(num,obj);
                                     }
                                     else
                                     {
@@ -360,7 +360,7 @@ public class PadController2 : MonoBehaviour
                                             data2.points[0] = new Vector2((SterPos[catchster - 1].transform.position.x - Screen.width / 2) / Screen.width * CanvasRect.sizeDelta.x, (SterPos[catchster - 1].transform.position.y - Screen.height / 2) / Screen.height * CanvasRect.sizeDelta.y);
                                             data2.points[1] = new Vector2((SterPos[catchster2 - 1].transform.position.x - Screen.width / 2) / Screen.width * CanvasRect.sizeDelta.x, (SterPos[catchster2 - 1].transform.position.y - Screen.height / 2) / Screen.height * CanvasRect.sizeDelta.y);
                                             //obj.transform.parent = lineParent.transform;
-                                            //DeleteCheck(num,obj);
+                                            DeleteCheck(num,obj);
                                         }
                                         else
                                         {

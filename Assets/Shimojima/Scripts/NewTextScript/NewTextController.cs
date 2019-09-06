@@ -28,6 +28,8 @@ public class NewTextController : MonoBehaviour
     private Image image;
     [SerializeField]
     private Image image2;
+    [SerializeField]
+    private Image image3;
 
     //シナリオデータを各データごとに格納する為の構造体
     [System.Serializable]
@@ -115,10 +117,12 @@ public class NewTextController : MonoBehaviour
         sDataIndex = 0;
         nowIndex = 0;
         time = 0;
-        image.sprite = null;
-        image2.sprite = null;
         image.color = new Color(1, 1, 1, 0);
         image2.color = new Color(1, 1, 1, 0);
+        image3.color = new Color(1, 1, 1, 0);
+        image.sprite = null;
+        image2.sprite = null;
+        image3.sprite = null;
         end = false;
     }
 
@@ -194,17 +198,30 @@ public class NewTextController : MonoBehaviour
                     nameText.text = sData[nowIndex].characterName;
                 }
 
-                if (sData[nowIndex].imageNumber != 0 && sData[nowIndex].imageNumber != 99 && sData[nowIndex].imageNumber != 4)
+                if (sData[nowIndex].imageNumber != 0 && sData[nowIndex].imageNumber != 99 && sData[nowIndex].imageNumber != 4 && sData[nowIndex].imageNumber != 1)
                 {
                     image.sprite = useSprite[sData[nowIndex].imageNumber - 1];
                     image.color = new Color(1,1,1,1);
                     image2.color = new Color(1, 1, 1, 0);
                     image2.sprite = null;
+                    image3.color = new Color(1, 1, 1, 0);
+                    image3.sprite = null;
+                }
+                else if (sData[nowIndex].imageNumber == 1)
+                {
+                    image.color = new Color(1, 1, 1, 0);
+                    image.sprite = null;
+                    image2.color = new Color(1, 1, 1, 0);
+                    image2.sprite = null;
+                    image3.sprite = useSprite[sData[nowIndex].imageNumber - 1];
+                    image3.color = new Color(1, 1, 1, 1);
                 }
                 else if (sData[nowIndex].imageNumber == 4)
                 {
                     image.color = new Color(1, 1, 1, 0);
                     image.sprite = null;
+                    image3.color = new Color(1, 1, 1, 0);
+                    image3.sprite = null;
                     image2.sprite = useSprite[sData[nowIndex].imageNumber - 1];
                     image2.color = new Color(1, 1, 1, 1);
                 }
@@ -214,6 +231,8 @@ public class NewTextController : MonoBehaviour
                     image.sprite = null;
                     image2.color = new Color(1, 1, 1, 0);
                     image2.sprite = null;
+                    image3.color = new Color(1, 1, 1, 0);
+                    image3.sprite = null;
                 }
                 //表示スペースの調整
                 scenarioText.text += " ";
@@ -257,11 +276,7 @@ public class NewTextController : MonoBehaviour
             tState = TextState.standby;
             scenarioText.text = "";
 
-            if (sData.Length == 0)
-            {
-                return;
-            }
-            else if (sData[nowIndex].page == 0)
+            if (sData[nowIndex].page == 0)
             {
                 for (int i = 0; i < commandLineCount[0]; i++)
                 {
