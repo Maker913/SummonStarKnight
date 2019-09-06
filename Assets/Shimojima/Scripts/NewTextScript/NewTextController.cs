@@ -157,24 +157,24 @@ public class NewTextController : MonoBehaviour
 #endif
 
 #if UNITY_EDITOR
-        if (Input.GetMouseButtonDown(0))
-        {
-            PointerEventData pointer = new PointerEventData(EventSystem.current);
-            pointer.position = Input.mousePosition;
-            List<RaycastResult> result = new List<RaycastResult>();
-            EventSystem.current.RaycastAll(pointer, result);
+        //if (Input.GetMouseButtonDown(0))
+        //{
+        //    PointerEventData pointer = new PointerEventData(EventSystem.current);
+        //    pointer.position = Input.mousePosition;
+        //    List<RaycastResult> result = new List<RaycastResult>();
+        //    EventSystem.current.RaycastAll(pointer, result);
 
-            foreach (RaycastResult raycastResult in result)
-            {
-                if (raycastResult.gameObject.name == "ScenarioText")
-                {
-                    if (!auto)
-                    {
-                        TextSkip();
-                    }
-                }
-            }
-        }
+        //    foreach (RaycastResult raycastResult in result)
+        //    {
+        //        if (raycastResult.gameObject.name == "ScenarioText")
+        //        {
+        //            if (!auto)
+        //            {
+        //                TextSkip();
+        //            }
+        //        }
+        //    }
+        //}
 #endif
         if (nowIndex < sDataIndex)
         {
@@ -237,6 +237,7 @@ public class NewTextController : MonoBehaviour
                 //表示スペースの調整
                 scenarioText.text += " ";
             }
+            Debug.Log(1);
             scenarioText.text += texts[charCount];
             charCount++;
             targetTime = time + displayTextInterval;
