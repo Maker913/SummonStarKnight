@@ -56,7 +56,7 @@ public class Enj : MonoBehaviour
     private void Update()
     {
 
-        if (gameController.gameMode ==2&&padController.sumonMode ==false&&TutorialFlg.FastGageStop)
+        if (gameController.gameMode ==2&&padController.sumonMode ==false&&TutorialFlg.FastGageStop&&!TutorialFlg .CantAnyButton )
         {
             time -= Time.deltaTime;
             image.fillAmount =1- time / statusManager.gageSpeed;

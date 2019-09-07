@@ -11,7 +11,8 @@ public class TutorialFlg : MonoBehaviour
     static public bool SummonOpen = false;
     static public bool FastGageStop = false;
     static public bool FastSummonMiss = false;
-
+    static public bool CantAnyButton = false;
+    static public bool CantButton = false;
     static public void TutorialReSet()
     {
         SummonBefore = false;

@@ -145,6 +145,10 @@ public class PadController2 : MonoBehaviour
     private GameObject TapSter;
     [SerializeField]
     private GameObject SterPrn;
+
+    [SerializeField]
+    GameObject Cant;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -171,7 +175,7 @@ public class PadController2 : MonoBehaviour
         //Debug.Log(SterLine[0] + " " + SterLine[1] + " " + SterLine[2] + " " + SterLine[3] + " " + SterLine[4] + " " + SterLine[5] + " " + SterLine[6]);
 
 
-        if (Input.touchCount > 0 && Pad && sumonbd == false&& summonRem==false )
+        if (Input.touchCount > 0 && Pad && sumonbd == false&& summonRem==false &&!TutorialFlg .CantAnyButton )
         {
 
 
@@ -980,7 +984,7 @@ public class PadController2 : MonoBehaviour
 
     public void SummonCast()
     {
-        if (sumonMode == false && StageCobtroller.Shooting == false&&Pad&&statusManager .summonGage >=100)
+        if (sumonMode == false && StageCobtroller.Shooting == false&&Pad&&statusManager .summonGage >=100&&!TutorialFlg .CantButton )
         {
             if(sumonbd == false)
             {
@@ -991,7 +995,7 @@ public class PadController2 : MonoBehaviour
                 sumonbd = true;
                 newsummonanime.SetBool("Open", true);
                 newsummonanime.SetBool("Close", false );
-
+                Cant.SetActive(false);
             }
             else
             {

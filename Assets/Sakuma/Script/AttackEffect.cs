@@ -12,7 +12,7 @@ public class AttackEffect : MonoBehaviour
     [SerializeField]
     GameObject[] EndPosObj;
     [SerializeField]
-    GameObject EffectPr;
+    GameObject[] EffectPr;
     [SerializeField]
     GameObject ReversePr;
 
@@ -22,7 +22,7 @@ public class AttackEffect : MonoBehaviour
     float Spead;
 
     [SerializeField ]
-    GameObject bomPr;
+    GameObject[] bomPr;
     [SerializeField]
     GameObject statusManagerObj;
     StatusManager statusManager;
@@ -53,7 +53,7 @@ public class AttackEffect : MonoBehaviour
 
     float reverseSpeed;
 
-
+    GameObject game;
     private void Start()
     {
         padController2 = padController2Obj.GetComponent<PadController2>();
@@ -66,7 +66,7 @@ public class AttackEffect : MonoBehaviour
     {
         effectOn = true;
         AttackTrue = true;
-        EffectObj = Instantiate(EffectPr ,AttackObj[StageCobtroller .stageNum-1 ].transform.position ,Quaternion.identity );
+        EffectObj = Instantiate(EffectPr[StageCobtroller .stageNum -1] ,AttackObj[StageCobtroller .stageNum-1 ].transform.position ,Quaternion.identity );
         time = 0;
         dis = Vector3.Distance(EffectObj.transform.position, ReverseObj[StageCobtroller.stageNum - 1].transform.position);
         reverse = false;
@@ -76,7 +76,7 @@ public class AttackEffect : MonoBehaviour
     {
         effectOn = true;
         AttackTrue = false ;
-        EffectObj = Instantiate(EffectPr, AttackObj[StageCobtroller.stageNum - 1].transform.position, Quaternion.identity);
+        EffectObj = Instantiate(EffectPr[StageCobtroller.stageNum - 1], AttackObj[StageCobtroller.stageNum - 1].transform.position, Quaternion.identity);
         time = 0;
         dis = Vector3.Distance(EffectObj.transform.position, ReverseObj[StageCobtroller.stageNum - 1].transform.position);
         reverse = false;
@@ -112,7 +112,8 @@ public class AttackEffect : MonoBehaviour
 
                     if (time >= 1 / reverseSpeed)
                     {
-                        Instantiate(bomPr, EffectObj.transform.position, Quaternion.identity);
+                        game= Instantiate(bomPr[StageCobtroller.stageNum - 1], EffectObj.transform.position, Quaternion.identity);
+                        Invoke("EfDl", 1);
                         Destroy(EffectObj);
                         effectOn = false;
 
@@ -166,7 +167,9 @@ public class AttackEffect : MonoBehaviour
                     effectOn = false;
 
 
-                    Instantiate(bomPr, EffectObj.transform.position, Quaternion.identity);
+                    game=Instantiate(bomPr[StageCobtroller.stageNum - 1], EffectObj.transform.position, Quaternion.identity);
+                    Invoke("EfDl", 1);
+
                     statusManager.playerHP -= statusManager.enemyAtk;
                     statusManager.BarrierCheck();
 
@@ -210,7 +213,9 @@ public class AttackEffect : MonoBehaviour
 
 
 
-
+    public  void EfDl() {
+        Destroy(game.gameObject);
+    }
 
 
     public void bttrue(float time)

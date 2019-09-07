@@ -42,13 +42,15 @@ public class Menu : MonoBehaviour
 
     public void MenuOn()
     {
-        animationManager.Stop();
+        if (!TutorialFlg.CantAnyButton) {
+            animationManager.Stop();
 
-        if (Game.gameMode ==2&&Pad .sumonbd ==false ) {
-            Pad.Pad = false;
-            Game.ModeChange(5, 0);
-            menu.SetActive(true);
-            menuanime.SetBool("Change", true);
+            if (Game.gameMode == 2 && Pad.sumonbd == false) {
+                Pad.Pad = false;
+                Game.ModeChange(5, 0);
+                menu.SetActive(true);
+                menuanime.SetBool("Change", true);
+            }
         }
     }
 

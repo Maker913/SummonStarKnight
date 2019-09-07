@@ -139,6 +139,11 @@ public class GameController : MonoBehaviour
     [SerializeField]
     float[] damagedirayTime = new float[3];
 
+    [SerializeField]
+    GameObject Cant;
+
+
+
     static public string result = "NULL";
     [Space(10)]
     [Header("ここからエフェクト")]
@@ -353,6 +358,7 @@ public class GameController : MonoBehaviour
     {
         if (startPas == 0 && !StageCobtroller.Shooting)
         {
+            TutorialFlg.CantButton = true;
             textPr.SetActive(true);
             NewTextObj.GetComponent<NewTextData>().TextDataRead("Tutorial/SyoukanMENUwo dasita ato");
             TutorialFlg.SummonOpen  = true;
@@ -382,6 +388,7 @@ public class GameController : MonoBehaviour
 
         if (startPas == 0 && !StageCobtroller.Shooting)
         {
+            TutorialFlg.CantAnyButton = true;
             textPr.SetActive(true);
             NewTextObj.GetComponent<NewTextData>().TextDataRead("Tutorial/SyoukanGAGEga tamattatoki");
             TutorialFlg.GageMax  = true;
@@ -397,6 +404,7 @@ public class GameController : MonoBehaviour
         textPadObj.SetActive(false);
         if (NewTextController.end || Input.GetKeyDown(KeyCode.Escape))
         {
+            Cant.SetActive(true);
             textPr.SetActive(false);
             animationManager.ReState();
 
@@ -508,6 +516,8 @@ public class GameController : MonoBehaviour
     {
         if (startPas == 0)
         {
+            TutorialFlg.CantButton = false;
+            TutorialFlg.CantAnyButton = false;
             textPr.SetActive(true);
 
             NewTextObj.GetComponent<NewTextData>().TextDataRead("Tutorial/SummonB");
