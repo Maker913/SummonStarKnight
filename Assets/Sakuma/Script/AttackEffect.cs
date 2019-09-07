@@ -114,6 +114,13 @@ public class AttackEffect : MonoBehaviour
                     {
                         game= Instantiate(bomPr[StageCobtroller.stageNum - 1], EffectObj.transform.position, Quaternion.identity);
                         Invoke("EfDl", 1);
+
+                        statusManager.summonGage += Random.Range(30, 40);
+                        if (statusManager.summonGage > 100) {
+                            statusManager.summonGage = 100;
+                        }
+
+
                         Destroy(EffectObj);
                         effectOn = false;
 
@@ -169,6 +176,11 @@ public class AttackEffect : MonoBehaviour
 
                     game=Instantiate(bomPr[StageCobtroller.stageNum - 1], EffectObj.transform.position, Quaternion.identity);
                     Invoke("EfDl", 1);
+
+                    statusManager.summonGage += Random.Range(10, 20);
+                    if (statusManager.summonGage > 100) {
+                        statusManager.summonGage = 100;
+                    }
 
                     statusManager.playerHP -= statusManager.enemyAtk;
                     statusManager.BarrierCheck();

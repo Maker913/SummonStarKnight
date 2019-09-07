@@ -142,7 +142,8 @@ public class GameController : MonoBehaviour
     [SerializeField]
     GameObject Cant;
 
-
+    [SerializeField]
+    GameObject tekiHPObj;
 
     static public string result = "NULL";
     [Space(10)]
@@ -484,6 +485,7 @@ public class GameController : MonoBehaviour
     {
         if (startPas == 0&&!StageCobtroller .Shooting )
         {
+            tekiHPObj.SetActive(false);
             textPr.SetActive(true);
             NewTextObj.GetComponent<NewTextData>().TextDataRead("MainStage/1Stage"+StageCobtroller .stageNum .ToString ()+"-2");
             startPas = 1;
@@ -884,11 +886,7 @@ public class GameController : MonoBehaviour
                 dcont = 0;
                 cameradTime = 0;
 
-                statusManager.summonGage += Random.Range(10, 20);
-                if (statusManager.summonGage > 100)
-                {
-                    statusManager.summonGage = 100;
-                }
+
                 //teki.GetComponent<Animator>().SetTrigger("Attack");
                 animationManager.AnimationStart(0, 0, "Attack");
                 animationManager.AnimationStart(damagedirayTime [StageCobtroller .stageNum -1], 1, "damage");
@@ -938,11 +936,7 @@ public class GameController : MonoBehaviour
                 dcont = 0;
                 cameradTime = 0;
 
-                statusManager.summonGage += Random .Range (30,40);
-                if (statusManager.summonGage > 100)
-                {
-                    statusManager.summonGage = 100;
-                }
+
                 animationManager.AnimationStart(0, 0, "Attack");
                 animationManager.AnimationStart(BreakdirayTime[StageCobtroller.stageNum -1], 0, "Damage");
                 animationManager.AnimationStart(refrectdirayTime[StageCobtroller.stageNum - 1], 1, "attack");
