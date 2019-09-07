@@ -22,5 +22,7 @@ public class TutorialFlg : MonoBehaviour
         SummonOpen = false;
         FastGageStop = false;
         FastSummonMiss = false;
+        CantAnyButton = false;
+        CantButton = false;
     }
 }
