@@ -414,7 +414,7 @@ public class GameController : MonoBehaviour
         textPadObj.SetActive(false);
         if (NewTextController.end || Input.GetKeyDown(KeyCode.Escape))
         {
-            Invoke("CantInv", 1.5f);
+            Invoke("CantInv", 0.99f);
             textPr.SetActive(false);
             animationManager.ReState();
 
