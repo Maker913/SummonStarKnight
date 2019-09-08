@@ -15,6 +15,8 @@ public class StatusManager : MonoBehaviour
 
     public int playerAtkDef;
 
+
+
     [System.Serializable]
     public struct Ability
     {
@@ -29,7 +31,8 @@ public class StatusManager : MonoBehaviour
 
     public int EnemyActionrange=4;
 
-
+    [SerializeField]
+    GameObject[] EffectPos;
 
 
 
@@ -144,6 +147,7 @@ public class StatusManager : MonoBehaviour
         //獅子
         if (reoSlip > 0)
         {
+            EffectControl.Instance.PlayEffect(EffectControl.Effect.Fire,EffectPos[StageCobtroller .stageNum-1].transform .position ,new Vector3 (0,0,0));
             reoSlip--;
             if (enemyHP > 10)
             {
@@ -154,6 +158,7 @@ public class StatusManager : MonoBehaviour
         //サソリ
         if (scorSlip > 0)
         {
+            EffectControl.Instance.PlayEffect(EffectControl.Effect.Poison, EffectPos[StageCobtroller.stageNum - 1].transform.position, new Vector3(0, 0, 0));
             scorSlip--;
             if (enemyHP > 10)
             {

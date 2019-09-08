@@ -11034,6 +11034,10 @@ MonoBehaviour:
     enemyHPDef: 130
     turn: 20
   EnemyActionrange: 4
+  EffectPos:
+  - {fileID: 1087921514}
+  - {fileID: 1172221738}
+  - {fileID: 1912473632}
   pisBarrier: 0
   yagichan: 0
 --- !u!4 &1682406967
@@ -12038,8 +12042,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 250, y: -100}
-  m_SizeDelta: {x: 500, y: 100}
+  m_AnchoredPosition: {x: 373, y: -100}
+  m_SizeDelta: {x: 800, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1848651072
 MonoBehaviour:

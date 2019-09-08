@@ -60,7 +60,7 @@ public class HPbar : MonoBehaviour
             HP = gameController.GetComponent<StatusManager>().playerHP;
             if (bar.value > HP)
             {
-                bar.value -= 10f * Time.deltaTime;
+                bar.value -= 20f * Time.deltaTime;
             }
         }
         else if (Flag == 4)
@@ -68,7 +68,7 @@ public class HPbar : MonoBehaviour
             HP = gameController.GetComponent<StatusManager>().enemyHP;
             if (bar.value > HP)
             {
-                bar.value -= 10f * Time.deltaTime;
+                bar.value -= 20f * Time.deltaTime;
             }
         }
     }
