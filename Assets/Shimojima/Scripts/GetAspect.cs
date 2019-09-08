@@ -24,17 +24,17 @@ public class GetAspect : MonoBehaviour
         float gcd = Euclidean(w,h);
         string aspect = (w / gcd + ":" + h / gcd).ToString();
 
-        Debug.Log(aspect);
+        //Debug.Log(aspect);
         switch (aspect)
         {
             case "5:8":
                 texts[0].fontSize = 30;
-                texts[1].fontSize = 42;
+                texts[1].fontSize = 48;
                 texts[2].fontSize = 30;
                 break;
             case "9:16":
                 texts[0].fontSize = 30;
-                texts[1].fontSize = 60;
+                texts[1].fontSize = 48;
                 texts[2].fontSize = 30;
                 break;
         }

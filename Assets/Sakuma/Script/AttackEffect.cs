@@ -112,8 +112,17 @@ public class AttackEffect : MonoBehaviour
 
                     if (time >= 1 / reverseSpeed)
                     {
+
+
+
                         game= Instantiate(bomPr[StageCobtroller.stageNum - 1], EffectObj.transform.position, Quaternion.identity);
                         Invoke("EfDl", 1);
+                        EffectObj.transform.GetChild(0).transform.GetChild(0).gameObject.SetActive(false);
+                        EffectObj.transform.GetChild(0).transform.GetChild(1).gameObject.SetActive(false);
+                        Invoke("EfDl2", 1);
+                        effectOn = false;
+
+
 
                         statusManager.summonGage += Random.Range(30, 40);
                         if (statusManager.summonGage > 100) {
@@ -121,8 +130,8 @@ public class AttackEffect : MonoBehaviour
                         }
 
 
-                        Destroy(EffectObj);
-                        effectOn = false;
+                        
+                        
 
                         if (padController2.oneLine)
                         {
@@ -170,12 +179,16 @@ public class AttackEffect : MonoBehaviour
 
                 if (time >= 1/Spead)
                 {
-                    Destroy(EffectObj);
-                    effectOn = false;
 
 
                     game=Instantiate(bomPr[StageCobtroller.stageNum - 1], EffectObj.transform.position, Quaternion.identity);
                     Invoke("EfDl", 1);
+                    Invoke("EfDl2", 1);
+                    EffectObj.transform.GetChild(0).transform.GetChild(0).gameObject.SetActive(false);
+                    EffectObj.transform.GetChild(0).transform.GetChild(1).gameObject.SetActive(false);
+                    effectOn = false;
+
+
 
                     statusManager.summonGage += Random.Range(10, 20);
                     if (statusManager.summonGage > 100) {
@@ -223,7 +236,10 @@ public class AttackEffect : MonoBehaviour
 
 
 
-
+    public void EfDl2()
+    {
+        Destroy(EffectObj.gameObject);
+    }
 
     public  void EfDl() {
         Destroy(game.gameObject);

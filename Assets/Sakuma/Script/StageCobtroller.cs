@@ -49,8 +49,9 @@ public class StageCobtroller : MonoBehaviour
 
     void Start()
     {
-        
-        Instantiate(stageObj[stageNum-1], stageParent.transform.position, Quaternion.identity, stageParent.transform);
+
+        GameObject data3 = Instantiate(stageObj[stageNum - 1], stageParent.transform.position, Quaternion.identity, stageParent.transform);
+
 
         GameObject data1 = (GameObject)Instantiate(playerObj , playerPos[stageNum -1]*0.33f + stageParent.transform.position, playerRot[stageNum - 1], stageParent.transform);
         if (StageCobtroller.Shooting == false)
@@ -59,8 +60,21 @@ public class StageCobtroller : MonoBehaviour
 
 
 
+            gamecontroller.GetComponent<GameController>().auraController = data1.transform.GetChild(3).gameObject.GetComponent<AuraController>();
+            mag.GetComponent<AnimationManager>().ModelSet(data,data1);
 
-                mag.GetComponent<AnimationManager>().ModelSet(data,data1);
+        }
+
+        if (stageNum == 1)
+        {
+            mag.GetComponent<AnimationManager>().takitoka[0] = data3.transform.GetChild(0).gameObject .transform.GetChild(4).gameObject;
+            mag.GetComponent<AnimationManager>().takitoka[1] = data3.transform.GetChild(0).gameObject .transform.GetChild(5).gameObject;
+            mag.GetComponent<AnimationManager>().takitoka[2] = data3.transform.GetChild(0).gameObject .transform.GetChild(6).gameObject;
+            mag.GetComponent<AnimationManager>().takitoka[3] = data3.transform.GetChild(0).gameObject .transform.GetChild(7).gameObject;
+
+
+
+
 
         }
 

@@ -145,6 +145,14 @@ public class GameController : MonoBehaviour
     [SerializeField]
     GameObject tekiHPObj;
 
+    public AuraController auraController;
+
+    [SerializeField]
+    Sprite[] countdown;
+    [SerializeField]
+    GameObject countObjct;
+    Image countinage;
+
     static public string result = "NULL";
     [Space(10)]
     [Header("ここからエフェクト")]
@@ -162,8 +170,9 @@ public class GameController : MonoBehaviour
         if(StageCobtroller .stageNum ==1&&StageCobtroller .Shooting ==false)
         {
             TutorialFlg.TutorialReSet();
+            StageCobtroller .Technique = new int[3]{ 0,-1,-1};
         }
-
+        countinage = countObjct.GetComponent<Image>();
         enemyTurn = Random.Range(2, 5);
         gaged = gageobj.GetComponent<Image>();
         animationManager = animeCon.GetComponent<AnimationManager>();
@@ -405,7 +414,7 @@ public class GameController : MonoBehaviour
         textPadObj.SetActive(false);
         if (NewTextController.end || Input.GetKeyDown(KeyCode.Escape))
         {
-            Cant.SetActive(true);
+            Invoke("CantInv", 1.5f);
             textPr.SetActive(false);
             animationManager.ReState();
 
@@ -416,7 +425,10 @@ public class GameController : MonoBehaviour
 
     }
 
-
+    private void CantInv()
+    {
+        Cant.SetActive(true);
+    }
     private void FastAtk()
     {
 
@@ -614,21 +626,21 @@ public class GameController : MonoBehaviour
     private void ShootingEndCount()
     {
         padController2.Pad = false;
-        countObj.SetActive(true);
-        countObj.GetComponent<Text>().text = "GAME SET";
+        //countObj.SetActive(true);
+        //countObj.GetComponent<Text>().text = "GAME SET";
         if (startPas==0) {
-            //endef.GetComponent<Animator>().SetTrigger("set");
+            endef.GetComponent<Animator>().SetTrigger("set");
             startPas = 1;
         }
         ShootingTime += Time.deltaTime;
-        if (ShootingTime > 1.5f)
+        if (ShootingTime > 1.3f)
         {
             countObj.SetActive(false);
 
             int datanum;
             do
             {
-                datanum = Random.Range(0, technique.Length);
+                datanum =  Random.Range(0, technique.Length);
             } while (datanum == StageCobtroller.Technique[0]|| datanum == StageCobtroller.Technique[1]|| datanum == StageCobtroller.Technique[2]);
 
             StageCobtroller.Technique[StageCobtroller.stageNum] = datanum;
@@ -638,10 +650,12 @@ public class GameController : MonoBehaviour
 
     private void Shootingcountdown()
     {
+        countObjct.SetActive(true);
         textPadObj.SetActive(false);
-        countObj.SetActive(true);
+        //countObj.SetActive(true);
         ShootingTime += Time.deltaTime;
-        countObj.GetComponent<Text>().text = (3 - countNum).ToString();
+        //countObj.GetComponent<Text>().text = (3 - countNum).ToString();
+        countinage.sprite = countdown[countNum];
         if (ShootingTime>1)
         {
             countNum++;
@@ -650,6 +664,7 @@ public class GameController : MonoBehaviour
             {
                 ModeChange(15, 0);
                 countObj.SetActive(false );
+                countObjct.SetActive(false );
             }
             else
             {
@@ -663,7 +678,7 @@ public class GameController : MonoBehaviour
 
         resultObj.SetActive(true);
         
-        resultObjtext.GetComponent<Text>().text = "結果\n\n\n" + shooting.lineNum + "\n\n\n"+technique [StageCobtroller.Technique[StageCobtroller.stageNum]].Name  +"を召喚できるようになりました";
+        resultObjtext.GetComponent<Text>().text = " スコア : " + shooting.lineNum + "\n\n "+technique [StageCobtroller.Technique[StageCobtroller.stageNum]].Name  +"を召喚できるようになりました";
 
         if (Input.touchCount != 0)
         {
@@ -708,10 +723,10 @@ public class GameController : MonoBehaviour
     {
         textPr.SetActive(false);
         ModeChange(18, 1.5f);
-        //startef.GetComponent<Animator>().SetTrigger("set");
+        startef.GetComponent<Animator>().SetTrigger("set");
         //text.text = "BONUS GAME";
-        countObj.SetActive(true);
-        countObj.GetComponent<Text>().text = "BONUS GAME";
+        //countObj.SetActive(true);
+        //countObj.GetComponent<Text>().text = "BONUS GAME";
         //textPadObj.SetActive(true);
         ShootingTime = 0;
         countNum = 0;
@@ -728,6 +743,7 @@ public class GameController : MonoBehaviour
             
             text.text = statusManager.EnemyAction(Random.Range(StageCobtroller.stageNum, statusManager .EnemyActionrange+StageCobtroller .stageNum ));
             textPadObj.SetActive(true);
+            Invoke("textpadOff", 2f);
             ModeChange(12, 2);
             enemyTurn = Random.Range(2, 5);
         }
@@ -740,9 +756,17 @@ public class GameController : MonoBehaviour
     }
 
 
+    private void textpadOff()
+    {
+        textPadObj.SetActive(false );
+    }
+
     private void Battlesoon()
     {
-
+        if(statusManager .yagichan)
+        {
+            statusManager.summonGage += 20;
+        }
         if(!TutorialFlg.GageMax&&statusManager.summonGage >=100)
         {
             textPadObj.SetActive(false);
@@ -784,6 +808,7 @@ public class GameController : MonoBehaviour
         //EffectControl.Instance.PlayEffect(EffectControl.Effect .Aura_Red,AttackEfPos ,Vector3 .zero);
 
         enj.GetComponent<Animator>().SetBool("Open", true);
+        auraController.AuraOn(weapon);
         string textdata=statusManager.SummonCheck(weapon);
         text.text = textdata;
         nametext.text = " "+technique[weapon].Name + "の力";
@@ -837,9 +862,9 @@ public class GameController : MonoBehaviour
 
     private void Win()
     {
-        
-        //SceneControl.Instance.LoadScene(SceneControl.SceneName.Stage1, true);
 
+        //SceneControl.Instance.LoadScene(SceneControl.SceneName.Stage1, true);
+        //animationManager.AnimationStart(0, 1, "victory");
         ModeChange(25, 0);
     }
 

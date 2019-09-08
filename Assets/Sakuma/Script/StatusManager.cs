@@ -44,6 +44,7 @@ public class StatusManager : MonoBehaviour
     private int virgoBarrier;
     private int LibraTurn;
     private int aquariTurn;
+    public bool yagichan = false;
     //private int cancerAtk;
     //private int taurusAtk;
     //private int sagiAtk;
@@ -93,7 +94,8 @@ public class StatusManager : MonoBehaviour
                 break;
             case 5:
                 //山羊　Capri　制限ターン2のびる
-                text = "山羊座の力を借りました\n制限ターンを2ターン伸ばしました";
+                text = "山羊座の力を借りました\n召喚ゲージを毎ターン少しづつ取得できます";
+                yagichan = true;
                 break;
             case 6:
                 //乙女
@@ -117,7 +119,12 @@ public class StatusManager : MonoBehaviour
                 break;
             case 10:
                 //牡羊 Aries 制限ターン5のびる
-                text = "牡羊座の力を借りました\n制限ターンが5ターン伸びました";
+                text = "牡羊座の力を借りました\n体力を回復しました";
+                playerHP += 30;
+                if (playerHP > 100)
+                {
+                    playerHP = 100;
+                }
                 break;
             case 11:
                 //牡牛

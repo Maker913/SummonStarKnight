@@ -9,16 +9,33 @@ public class SummonGage : MonoBehaviour
     private StatusManager statusManager;
 
     private Material material;
+
+    float gage = 0;
+    float nowGage = 0;
     // Start is called before the first frame update
     void Start()
     {
         statusManager = statusObj.GetComponent<StatusManager>();
         material = GetComponent<Image>().material;
+        gage = 0;
     }
 
     // Update is called once per frame
     void Update()
     {
-        material.SetFloat("_Gage", statusManager.summonGage /100);
+        gage = statusManager.summonGage ;
+
+        if(nowGage < gage-1)
+        {
+            nowGage+=2;
+        }
+
+        if (nowGage > gage+1)
+        {
+            nowGage-=2;
+        }
+
+        material.SetFloat("_Gage", nowGage  /100);
+
     }
 }

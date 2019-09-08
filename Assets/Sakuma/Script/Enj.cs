@@ -61,6 +61,11 @@ public class Enj : MonoBehaviour
             time -= Time.deltaTime;
             image.fillAmount =1- time / statusManager.gageSpeed;
         }
+        else
+        {
+            image.fillAmount = 0;
+        }
+
         if (time < 0)
         {
             sumonbdobj.SetActive(false);
@@ -101,7 +106,7 @@ public class Enj : MonoBehaviour
 
     public void RandSelect()
     {
-
+        image.fillAmount = 0;
         time = statusManager.gageSpeed;
         summonNum =  Random.Range(0, gameController.nomalAttack.Length);
         RectTransform CanvasRect = canvas.GetComponent<RectTransform>();

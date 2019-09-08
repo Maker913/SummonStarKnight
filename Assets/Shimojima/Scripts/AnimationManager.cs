@@ -6,18 +6,30 @@ public class AnimationManager : MonoBehaviour
 {
     public Animator model;
     public Animator player;
-    
+    public GameObject[] takitoka=new GameObject [4]; 
+
     void Update()
     {
     }
 
     public void Stop()
     {
+
         if (!StageCobtroller.Shooting)
         {
             player.SetFloat("Spead", 0);
                 model.SetFloat("Spead", 0);
                 player.SetFloat("Spead", 0);
+
+            if(StageCobtroller .stageNum == 1)
+            {
+                for(int i=0;i<takitoka.Length;i++)
+                {
+                    takitoka[i].transform.GetChild(0).GetComponent<ParticleSystem>().Pause();
+                }
+            }
+
+
         }
     }
     public void ReState()
@@ -27,8 +39,14 @@ public class AnimationManager : MonoBehaviour
             player.SetFloat("Spead", 1);
 
                 model.SetFloat("Spead", 1);
+            if (StageCobtroller.stageNum == 1)
+            {
+                for (int i = 0; i < takitoka.Length; i++)
+                {
+                    takitoka[i].transform.GetChild(0).GetComponent<ParticleSystem>().Play();
+                }
+            }
 
-            
         }
     }
 

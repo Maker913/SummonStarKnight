@@ -861,6 +861,7 @@ public class PadController2 : MonoBehaviour
         }
         if (check == bfList.Length)
         {
+            Destroy(TapSter.gameObject);
             AudioManager.Instance.PlaySE(AudioManager.SeName.gauge);
             shooting.lineNum++;
             shooting.BoardReset();

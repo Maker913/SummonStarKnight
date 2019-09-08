@@ -237,7 +237,7 @@ public class NewTextController : MonoBehaviour
                 //表示スペースの調整
                 scenarioText.text += " ";
             }
-            Debug.Log(1);
+            //Debug.Log(1);
             scenarioText.text += texts[charCount];
             charCount++;
             targetTime = time + displayTextInterval;
