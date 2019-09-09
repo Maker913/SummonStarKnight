@@ -11,6 +11,7 @@ public class SceneControl : MonoBehaviour
     private Texture2D blackTexture;
     private float fadeAlpha = 0;
     private bool isFading = false;
+    public bool IsFading { get { return isFading; } }
 
     private void Awake()
     {
