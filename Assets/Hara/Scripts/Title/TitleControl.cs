@@ -55,8 +55,11 @@ public class TitleControl : MonoBehaviour
     /// </summary>
     public void ButtonAction()
     {
-        AudioManager.Instance.PlaySE(AudioManager.SeName.button);
-        // シーン遷移
-        SceneControl.Instance.LoadScene(scene, true);
+        if (!SceneControl.Instance.IsFading)
+        {
+            AudioManager.Instance.PlaySE(AudioManager.SeName.button);
+            // シーン遷移
+            SceneControl.Instance.LoadScene(scene, true);
+        }
     }
 }
