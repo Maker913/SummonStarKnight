@@ -9,7 +9,8 @@ public class AudioManager : MonoBehaviour
 
     public enum BgmName
     {
-        ThemeBGM = 0
+        TitleBGM = 0,
+        ThemeBGM = 1,
     }
     public enum SeName
     {
@@ -20,7 +21,9 @@ public class AudioManager : MonoBehaviour
         result,             //リザルト
         Follow,             //なぞる
         success,            //成功
-        gauge               //ゲージ
+        gauge,              //ゲージ
+        Explosion,          //カウンターヒット
+        Counterattack       //カウンターする
     }
 
     private void Awake()

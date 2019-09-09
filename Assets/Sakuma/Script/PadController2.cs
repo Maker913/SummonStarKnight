@@ -985,7 +985,7 @@ public class PadController2 : MonoBehaviour
 
     public void SummonCast()
     {
-        if (sumonMode == false && StageCobtroller.Shooting == false&&Pad&&statusManager .summonGage >=100&&!TutorialFlg .CantButton )
+        if (sumonMode == false && StageCobtroller.Shooting == false&&Pad&&statusManager .summonGage >=100&&!TutorialFlg.CantButton)
         {
             if(sumonbd == false)
             {

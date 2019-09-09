@@ -144,7 +144,11 @@ public class NewTextController : MonoBehaviour
 
                 foreach (RaycastResult raycastResult in result)
                 {
-                    if (raycastResult.gameObject.name == "ScenarioText")
+                    if (raycastResult.gameObject.name == "Auto")
+                    {
+                        break;
+                    }
+                    else if (raycastResult.gameObject.name == "BgPanel")
                     {
                         if (!auto)
                         {
