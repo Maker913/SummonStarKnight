@@ -98,6 +98,8 @@ public class AttackEffect : MonoBehaviour
 
                     if (time >= 1 / Spead)
                     {
+                        AudioManager.Instance.PlaySE(AudioManager.SeName.Counterattack);
+
                         reverse = true;
                         time = 0;
                         dis= Vector3.Distance(EffectObj.transform.position, EndPosObj[StageCobtroller.stageNum - 1].transform.position);
@@ -113,7 +115,7 @@ public class AttackEffect : MonoBehaviour
                     if (time >= 1 / reverseSpeed)
                     {
 
-
+                        AudioManager.Instance.PlaySE(AudioManager.SeName.Explosion);
 
                         game= Instantiate(bomPr[StageCobtroller.stageNum - 1], EffectObj.transform.position, Quaternion.identity);
                         Invoke("EfDl", 1);
@@ -179,9 +181,9 @@ public class AttackEffect : MonoBehaviour
 
                 if (time >= 1/Spead)
                 {
+                    AudioManager.Instance.PlaySE(AudioManager.SeName.Explosion);
 
-
-                    game=Instantiate(bomPr[StageCobtroller.stageNum - 1], EffectObj.transform.position, Quaternion.identity);
+                    game =Instantiate(bomPr[StageCobtroller.stageNum - 1], EffectObj.transform.position, Quaternion.identity);
                     Invoke("EfDl", 1);
                     Invoke("EfDl2", 1);
                     EffectObj.transform.GetChild(0).transform.GetChild(0).gameObject.SetActive(false);

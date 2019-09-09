@@ -24,6 +24,7 @@ public class TitleControl : MonoBehaviour
         {
             obj.SetActive(false);
         }
+        AudioManager.Instance.PlayBGM(AudioManager.BgmName.TitleBGM);
     }
 
     private void Update()
@@ -59,7 +60,7 @@ public class TitleControl : MonoBehaviour
         {
             AudioManager.Instance.PlaySE(AudioManager.SeName.button);
             // シーン遷移
-            SceneControl.Instance.LoadScene(scene, true);
+            SceneControl.Instance.LoadScene(scene, true, unityAction:AudioManager.Instance.StopBGM);
         }
     }
 }

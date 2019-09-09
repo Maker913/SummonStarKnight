@@ -992,6 +992,7 @@ public class PadController2 : MonoBehaviour
                 if(!TutorialFlg .SummonOpen)
                 {
                     gameController .ModeChange(29, 1);
+                    TutorialFlg.CantButton = true;
                 }
                 sumonbd = true;
                 newsummonanime.SetBool("Open", true);

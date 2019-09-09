@@ -368,7 +368,7 @@ public class GameController : MonoBehaviour
     {
         if (startPas == 0 && !StageCobtroller.Shooting)
         {
-            TutorialFlg.CantButton = true;
+            
             textPr.SetActive(true);
             NewTextObj.GetComponent<NewTextData>().TextDataRead("Tutorial/SyoukanMENUwo dasita ato");
             TutorialFlg.SummonOpen  = true;
@@ -917,7 +917,7 @@ public class GameController : MonoBehaviour
                 animationManager.AnimationStart(damagedirayTime [StageCobtroller .stageNum -1], 1, "damage");
                 //textPadObj.SetActive(true);
                 //text.text = "ダメージアニメーション予定地";
-                AudioManager.Instance.PlaySE(AudioManager.SeName.player_attack);
+                //AudioManager.Instance.PlaySE(AudioManager.SeName.player_attack);
                 ///
                 ModeChange(99, 0);
             }
@@ -966,7 +966,7 @@ public class GameController : MonoBehaviour
                 animationManager.AnimationStart(BreakdirayTime[StageCobtroller.stageNum -1], 0, "Damage");
                 animationManager.AnimationStart(refrectdirayTime[StageCobtroller.stageNum - 1], 1, "attack");
                 //animationManager.AnimationStart(0, 0, "Damage");
-                AudioManager.Instance.PlaySE(AudioManager.SeName.player_attack);
+                //AudioManager.Instance.PlaySE(AudioManager.SeName.player_attack);
 
                 //textPadObj.SetActive(true);
                 //text.text = "攻撃アニメーション予定地";
