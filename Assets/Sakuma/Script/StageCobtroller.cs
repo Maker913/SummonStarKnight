@@ -8,7 +8,7 @@ public class StageCobtroller : MonoBehaviour
 
     static public int stageNum = 1;
 
-    static public bool Shooting =false;//*/true ;
+    static public bool Shooting =false ;//*/true ;
 
     static public int[] Technique= { 0,-1,-1};
 
