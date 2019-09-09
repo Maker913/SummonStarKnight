@@ -63,7 +63,7 @@ public class Enj : MonoBehaviour
         }
         else
         {
-            image.fillAmount = 0;
+            //image.fillAmount = 0;
         }
 
         if (time < 0)
